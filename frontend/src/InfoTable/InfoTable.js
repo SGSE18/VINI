@@ -30,7 +30,7 @@ class InfoTable extends React.Component {
             Inspection1: false,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -42,7 +42,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "invalide"
+            state: "invalid"
 
         },
         {
@@ -54,7 +54,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -66,7 +66,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -78,7 +78,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -90,7 +90,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "invalid"
 
         },
         {
@@ -102,7 +102,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -114,7 +114,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -126,7 +126,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -138,7 +138,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         },
         {
@@ -150,7 +150,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "valid"
 
         }]
 
@@ -189,20 +189,21 @@ class InfoTable extends React.Component {
         ]
 
 
-        const translations = { previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...', pageText: 'Seite', ofText: 'von', rowsText: 'Einträge' };
+        const translationTexts = { previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...', 
+                                pageText: 'Seite', ofText: 'von', rowsText: 'Einträge' };
+
         return <ReactTable
-            {...translations}
+            {...translationTexts}
             data={data}
             columns={columns}
             noDataText="Keine Daten vorhanden"
             getTrProps={ (state, rowInfo, column) => {
                 return {
                     style: {
-                        background: rowInfo != null && rowInfo.row.state === "invalide" ? "#d8d8d8" : ""
+                        background: rowInfo != null && rowInfo.row.state === "invalid" ? "#d8d8d8" : ""
                     }
                 };
-            }
-            }
+            }}
         />
     }
 }

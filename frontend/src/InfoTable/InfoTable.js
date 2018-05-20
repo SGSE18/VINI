@@ -44,6 +44,114 @@ class InfoTable extends React.Component {
             oilChange: false,
             state: "valide"
 
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: "valide"
+
         }]
 
         const columns = [{
@@ -80,9 +188,12 @@ class InfoTable extends React.Component {
         }
         ]
 
+        const translations = {previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'LOADING...', pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'};
         return <ReactTable
+            {...translations}
             data={data}
             columns={columns}
+            noDataText="Keine Daten!"
         />
     }
 }

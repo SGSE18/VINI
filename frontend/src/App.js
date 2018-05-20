@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to VINI</h1>
+          <h1 className="App-title">Vehicle Identification Number Index</h1>
         </header>
         <p className="App-intro">
           <div className="searchbar-container">

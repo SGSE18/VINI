@@ -42,7 +42,7 @@ class InfoTable extends React.Component {
             Inspection1: true,
             Inspection2: false,
             oilChange: false,
-            state: "valide"
+            state: "invalide"
 
         },
         {
@@ -188,12 +188,21 @@ class InfoTable extends React.Component {
         }
         ]
 
-        const translations = {previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...', pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'};
+
+        const translations = { previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...', pageText: 'Seite', ofText: 'von', rowsText: 'Einträge' };
         return <ReactTable
             {...translations}
             data={data}
             columns={columns}
             noDataText="Keine Daten vorhanden"
+            getTrProps={ (state, rowInfo, column) => {
+                return {
+                    style: {
+                        background: rowInfo != null && rowInfo.row.state === "invalide" ? "#d8d8d8" : ""
+                    }
+                };
+            }
+            }
         />
     }
 }

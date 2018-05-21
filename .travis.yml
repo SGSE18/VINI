@@ -8,7 +8,6 @@ before_install:
   - cd frontend
 script:
   - npm install
-  - npm test
   - npm run build
 deploy:
   provider: pages
@@ -17,3 +16,4 @@ deploy:
   local_dir: build
   on:
     branch: master
+	

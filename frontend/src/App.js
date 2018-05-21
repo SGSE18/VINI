@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Vehicle Identification Number Index</h1>
+          <h1 className="App-title">VINI</h1>
           <LoginButton className="main-login-button"/>
         </header>
         <p className="App-intro">

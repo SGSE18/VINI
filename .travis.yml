@@ -4,8 +4,9 @@ node_js:
 cache:
   directories:
   - node_modules
-script:
+before_install:
   - cd frontend
+script:
   - npm install
   - npm test
   - npm run build
@@ -14,6 +15,5 @@ deploy:
   skip_cleanup: true
   github_token: $github_token
   local_dir: build
-   path: "frontend/build"
   on:
     branch: master

@@ -16,6 +16,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://p-vogt.github.io/VINI/"
+  "homepage": "https://sgse18.github.io/VINI/"
 
 }

@@ -2,13 +2,152 @@ import React from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
+const TRANSACTION_VALID_TEXT = "valid";
+const TRANSACTION_INVALID_TEXT = "invalid";
+const TRANSACTION_PENDING_TEXT = "pending";
+
 class InfoTable extends React.Component {
     constructor() {
         super();
-        this.state = {
+        // TODO remove
+        const data = [{
+            date: "20.05.2018",
+            mileage: 100000,
+            preowner: 1,
+            entrant: "STVA",
+            mainInspection: true,
+            Inspection1: false,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_PENDING_TEXT
 
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_INVALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_INVALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        },
+        {
+            date: "19.05.2018",
+            mileage: 90000,
+            preowner: 1,
+            entrant: "Werkstatt",
+            mainInspection: false,
+            Inspection1: true,
+            Inspection2: false,
+            oilChange: false,
+            state: TRANSACTION_VALID_TEXT
+
+        }]
+        this.state = {
+            data
         };
+        this.columns = this.getColumnDefinition();
     }
+
 
     checkBox = (data) => {
         return (
@@ -20,141 +159,8 @@ class InfoTable extends React.Component {
             />
         );
     }
-    render() {
-        const data = [{
-            date: "20.05.2018",
-            mileage: 100000,
-            preowner: 1,
-            entrant: "STVA",
-            mainInspection: true,
-            Inspection1: false,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "invalid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "invalid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: "valid"
-
-        }]
-
-        const columns = [{
+    getColumnDefinition() {
+        return [{
             Header: 'Datum',
             accessor: 'date' // String-based value accessors!
         }, {
@@ -186,21 +192,36 @@ class InfoTable extends React.Component {
             Header: 'Status',
             accessor: 'state'
         }
-        ]
+        ];
+    }
+    determineCellBackgroundColor(rowInfo) {
+        let backgroundColor = "";
+        if (rowInfo != null) {
+            if (rowInfo.row.state === TRANSACTION_INVALID_TEXT) {
+                backgroundColor = "#ff3c3c";
+            } else if (rowInfo.row.state === TRANSACTION_PENDING_TEXT) {
+                backgroundColor = "#d8d8d8";
+            }
+        }
+        return backgroundColor;
+    }
 
-
-        const translationTexts = { previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...', 
-                                pageText: 'Seite', ofText: 'von', rowsText: 'Einträge' };
+    render() {
+        const translationTexts = {
+            previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
+            pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
+        };
 
         return <ReactTable
             {...translationTexts}
-            data={data}
-            columns={columns}
+            data={this.state.data}
+            columns={this.columns}
             noDataText="Keine Daten vorhanden"
-            getTrProps={ (state, rowInfo, column) => {
+            getTrProps={(state, rowInfo, column) => {
+                let backgroundColor = this.determineCellBackgroundColor(rowInfo)
                 return {
                     style: {
-                        background: rowInfo != null && rowInfo.row.state === "invalid" ? "#d8d8d8" : ""
+                        backgroundColor
                     }
                 };
             }}

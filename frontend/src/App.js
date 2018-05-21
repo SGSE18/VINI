@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import logo from './media/logo.png';
-import InfoTable from './InfoTable/InfoTable';
+import { InfoTable, LoginButton } from './components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
+
 import './App.css';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Vehicle Identification Number Index</h1>
+          <LoginButton className="main-login-button"/>
         </header>
         <p className="App-intro">
           <div className="searchbar-container">

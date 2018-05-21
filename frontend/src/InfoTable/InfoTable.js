@@ -5,10 +5,15 @@ import "react-table/react-table.css";
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
 const TRANSACTION_PENDING_TEXT = "pending";
+const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
 class InfoTable extends React.Component {
     constructor() {
         super();
+        this.translationTexts = {
+            previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
+            pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
+        };
         // TODO remove
         const data = [{
             date: "20.05.2018",
@@ -207,22 +212,15 @@ class InfoTable extends React.Component {
     }
 
     render() {
-        const translationTexts = {
-            previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
-            pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
-        };
-
         return <ReactTable
-            {...translationTexts}
+            {...this.translationTexts}
             data={this.state.data}
             columns={this.columns}
-            noDataText="Keine Daten vorhanden"
+            noDataText= {NO_DATA_AVAILABLE_TEXT}
             getTrProps={(state, rowInfo, column) => {
                 let backgroundColor = this.determineCellBackgroundColor(rowInfo)
                 return {
-                    style: {
-                        backgroundColor
-                    }
+                    style: {backgroundColor}
                 };
             }}
         />

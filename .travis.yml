@@ -3,8 +3,7 @@ node_js:
   - "stable"
 branches:
   only:
-    - gh-pages
-    - /.*/
+    - master
 cache:
   directories:
   - node_modules

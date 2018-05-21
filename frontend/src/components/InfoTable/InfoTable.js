@@ -216,6 +216,7 @@ class InfoTable extends React.Component {
             {...this.translationTexts}
             data={this.state.data}
             columns={this.columns}
+            defaultPageSize = {10}
             noDataText= {NO_DATA_AVAILABLE_TEXT}
             getTrProps={(state, rowInfo, column) => {
                 let backgroundColor = this.determineCellBackgroundColor(rowInfo)

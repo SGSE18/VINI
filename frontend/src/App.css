@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 80px;
+  margin-top: 10px; 
+}
+
+.App-header {
+  background-color: #222;
+  height: 80px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.searchbar-container {
+  width: 50%;
+  margin: auto;
+}
+
+.searchbar {
+  width: 50%;
+  padding-right: 10px;
+}

@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - "stable"
+branches:
+  only:
+    - gh-pages
+    - /.*/
 cache:
   directories:
   - node_modules

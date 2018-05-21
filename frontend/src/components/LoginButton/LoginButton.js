@@ -19,6 +19,7 @@ class LoginButton extends React.Component {
             case 2: return "TÜV"
             case 3: return "STVA"
             case 4: return "Admin STVA"
+            default: return ""
         }
     }
     handleClick() {

@@ -4,7 +4,7 @@ import "react-table/react-table.css";
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
-const TRANSACTION_PENDING_TEXT = "pending";
+const TRANSACTION_PENDING_TEXT = "offen";
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
 class InfoTable extends React.Component {

@@ -1,12 +1,10 @@
 import React from 'react';
-import logo from '../media/logo.png';
-import WebFrame from '../components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const Login = (props) => {
     return (
-        <WebFrame>
+        <React.Fragment>
             <div className="Login-Page">
                 <TextField
                     id="email"
@@ -43,8 +41,7 @@ const Login = (props) => {
                     Passwort zurücksetzen
             </Button>
             </div>
-            <img src={logo} className="App-logo" alt="logo" />
-        </WebFrame>
+        </React.Fragment>
     )
 }
 

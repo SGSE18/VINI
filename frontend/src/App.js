@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import logo from './media/logo.png';
-import { InfoTable, WebFrame } from './components';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { WebFrame } from './components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-
+import { Home, Login } from './pages';
+import logo from './media/logo.png';
 import './App.css';
 
 class App extends Component {
@@ -24,7 +25,12 @@ class App extends Component {
             Suche
         </Button>
         </div>
-        <InfoTable />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/Login" component={Login} />
+          </Switch>
+        </BrowserRouter>
         <img src={logo} className="App-logo" alt="logo" />
       </WebFrame>
     );

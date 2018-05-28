@@ -25,7 +25,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_PENDING_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -37,7 +36,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_INVALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -49,7 +47,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -61,7 +58,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -73,7 +69,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -85,7 +80,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_INVALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -97,7 +91,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -109,7 +102,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -121,7 +113,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -133,7 +124,6 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         },
         {
             date: "19.05.2018",
@@ -145,14 +135,12 @@ class InfoTable extends React.Component {
             Inspection2: false,
             oilChange: false,
             state: TRANSACTION_VALID_TEXT
-
         }]
         this.state = {
             data
         };
         this.columns = this.getColumnDefinition();
     }
-
 
     checkBox = (data) => {
         return (

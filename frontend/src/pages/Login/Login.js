@@ -27,7 +27,7 @@ const Login = (props) => {
             </Button>
             </div>
             <img src={logo} className="App-logo" alt="logo" />
-            </WebFrame
+            </WebFrame>
         )
 }
 

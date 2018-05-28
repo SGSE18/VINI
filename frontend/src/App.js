@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './media/logo.png';
-import { InfoTable, LoginButton } from './components';
+import { InfoTable, WebFrame } from './components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
@@ -10,12 +10,7 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">VINI</h1>
-          <LoginButton className="main-login-button"/>
-        </header>
-        <p className="App-intro">
+        <WebFrame>
           <div className="searchbar-container">
             <TextField
               id="search"
@@ -31,8 +26,7 @@ class App extends Component {
           </div>
           <InfoTable />
           <img src={logo} className="App-logo" alt="logo" />
-        </p>
-      </div>
+      </WebFrame>
     );
   }
 }

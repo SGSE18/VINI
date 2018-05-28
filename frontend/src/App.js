@@ -10,23 +10,23 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-        <WebFrame>
-          <div className="searchbar-container">
-            <TextField
-              id="search"
-              label="FIN eingeben"
-              type="search"
-              margin="normal"
-              className="searchbar"
-            />
-            <Button variant="raised" style= {{marginLeft: '10px'}}>
-              <Search />
-              Suche
-            </Button>
-          </div>
-          <InfoTable />
-          <img src={logo} className="App-logo" alt="logo" />
-      </WebFrame>
+      <WebFrame>
+      <div className="searchbar-container">
+        <TextField
+          id="search"
+          label="FIN eingeben"
+          type="search"
+          margin="normal"
+          className="searchbar"
+        />
+        <Button variant="raised" style= {{marginLeft: '10px'}}>
+          <Search />
+          Suche
+        </Button>
+      </div>
+      <InfoTable />
+      <img src={logo} className="App-logo" alt="logo" />
+  </WebFrame>
     );
   }
 }

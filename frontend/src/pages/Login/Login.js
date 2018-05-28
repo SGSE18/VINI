@@ -5,24 +5,41 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const Login = (props) => {   
-        return (
+        return (    
             <WebFrame>
             <div className="Login-Page">
             <TextField
             id="email"
             label="E-Mail Adresse"
-            className="useremail"
+            margin="normal"
+            className="useremail"      
+            style={{width:'30em'}}
             />
+            <br></br>
             <TextField
             id="password"
             label="Passwort"
             type="password"
-            className="userpass"
+            margin="normal"
+            className="userpass"      
+            style={{width:'30em'}}
             />
-            <Button variant="raised" >
+            <br></br>
+            <Button 
+            variant="raised"
+            margin="normal"
+            className="button"
+            style={{width:'30em'}}
+             >
               Login
             </Button>
-            <Button variant="raised" >
+            <br></br>
+            <Button 
+            variant="raised"
+            margin="normal"
+            className="button"      
+            style={{width:'30em'}}
+             >
               Passwort zurücksetzen
             </Button>
             </div>

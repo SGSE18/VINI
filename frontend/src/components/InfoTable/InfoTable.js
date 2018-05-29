@@ -142,12 +142,13 @@ class InfoTable extends React.Component {
         this.columns = this.getColumnDefinition();
     }
 
-    checkBox = (data) => {
+
+    checkBox = (cell) => {
         return (
             <input
                 type="checkbox"
                 className="checkbox"
-                checked={data.value}
+                checked={cell.value}
                 readOnly={true}
             />
         );

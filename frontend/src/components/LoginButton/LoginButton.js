@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Home from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 
 class LoginButton extends React.Component {
@@ -8,9 +11,11 @@ class LoginButton extends React.Component {
         this.state = {
             isLoggedIn: false,
             authorityLevel: 0
-
         }
         this.handleClick = this.handleClick.bind(this);
+    }
+    isAtLogin() {
+        return window.location.pathname === "/Login";
     }
     getAuthorityString() {
         switch (this.state.authorityLevel) {
@@ -24,23 +29,31 @@ class LoginButton extends React.Component {
     }
     handleClick() {
         // logout
-        if(this.state.isLoggedIn) {
-            this.setState({authorityLevel: 0})
-        } else {
-            // login
-            this.setState({authorityLevel: 1})    
+        if (this.state.isLoggedIn) {
+            this.setState({ authorityLevel: 0 })
         }
- 
-        this.setState({ isLoggedIn: !this.state.isLoggedIn })
-        
+        if (this.isAtLogin()) {
+            this.props.history.push('/');
+            this.setState({ isLoggedIn: !this.state.isLoggedIn })
+        } else {
+            this.props.history.push('/Login')
+        }
     }
     render() {
         return (
-            <div className="LoginButton">
-                <Button variant="raised" style={{ marginLeft: '10px' }} onClick={this.handleClick}>
-                    <AccountCircle className="login-icon" />
-                    {this.state.isLoggedIn ? "Logout" : "Login"}
+            <div className="login-button">
+                {this.isAtLogin()
+                    ?
+                    <Button variant="raised" style={{ marginLeft: '10px' }} onClick={this.handleClick}>
+                        <Home className="login-icon" />
+                        Home
                 </Button>
+                    :
+                    <Button variant="raised" style={{ marginLeft: '10px' }} onClick={this.handleClick}>
+                        <AccountCircle className="login-icon" />
+                        {this.state.isLoggedIn ? "Logout" : "Login"}
+                    </Button>
+                }
                 <div className="authority-level-text">
                     {this.getAuthorityString()}
                 </div>
@@ -48,5 +61,9 @@ class LoginButton extends React.Component {
         )
     }
 }
-
-export default LoginButton;
+LoginButton.contextTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    })
+}
+export default withRouter(LoginButton);

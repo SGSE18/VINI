@@ -173,15 +173,15 @@ class UserInfoTable extends React.Component {
 
         switch (cell.value) {
             case TRANSACTION_VALID_TEXT:
-                text = "Annulierung beantragen";
+                text = "Annullierung beantragen";
                 className = "annulment-link";
                 onClick = this.onAnnulmentClick;
                 break;
             case TRANSACTION_INVALID_TEXT:
-                text = "Bereits annuliert";
+                text = "Bereits annulliert";
                 break;
             case TRANSACTION_PENDING_TEXT:
-                text = "Annulierung beantragt"
+                text = "Annullierung beantragt"
                 break;
             default:
                 text = "invalid state";
@@ -229,7 +229,7 @@ class UserInfoTable extends React.Component {
 
         if (this.props.userLevel > 0) {
             columnDefinition.push({
-                Header: 'Annulieren',
+                Header: 'Annullieren',
                 accessor: 'state',
                 Cell: this.annulmentCell
             });
@@ -261,8 +261,8 @@ class UserInfoTable extends React.Component {
                     aria-describedby="simple-modal-description"
                     isOpen={this.state.isPopupVisible}
                     onClose={this.onModalClose}
-                    title="Transaktion annulieren"
-                    description="Soll die Transaktion wirklich annuliert werden?"
+                    title="Transaktion annullieren"
+                    description="Soll die Transaktion wirklich annulliert werden?"
                 />
                 <ReactTable
                     {...this.translationTexts}

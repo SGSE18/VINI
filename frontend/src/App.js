@@ -13,6 +13,7 @@ class App extends Component {
         <Switch>
           <WebFrame>
             <Redirect from="/" to={HOME_PATH} />
+            <Redirect from="/VINI/" to={HOME_PATH} />
             <Route exact path={HOME_PATH} component={Home} />
             <Route exact path={LOGIN_PATH} component={Login} />
             <img src={logo} className="App-logo" alt="logo" />

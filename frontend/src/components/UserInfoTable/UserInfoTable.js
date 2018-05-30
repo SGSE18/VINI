@@ -4,6 +4,8 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import "./UserInfoTable.css";
 import { ModalPopup } from '../';
+import { observer } from 'mobx-react';
+import { authenticationStore } from '../../stores';
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
@@ -11,8 +13,10 @@ const TRANSACTION_PENDING_TEXT = "offen";
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
 class UserInfoTable extends React.Component {
+
     constructor(props) {
         super(props);
+
         this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
@@ -145,7 +149,6 @@ class UserInfoTable extends React.Component {
             data,
             isPopupVisible: false
         };
-        this.columns = this.getColumnDefinition();
     }
 
 
@@ -224,7 +227,7 @@ class UserInfoTable extends React.Component {
             accessor: 'oilChange',
             Cell: this.checkBox
         }];
-        console.log(this.props)
+
         if (this.props.userLevel > 0) {
             columnDefinition.push({
                 Header: 'Annulieren',
@@ -251,7 +254,6 @@ class UserInfoTable extends React.Component {
         }
         this.setState({ isPopupVisible: false })
     }
-
     render() {
         return (
             <React.Fragment>
@@ -266,7 +268,7 @@ class UserInfoTable extends React.Component {
                 <ReactTable
                     {...this.translationTexts}
                     data={this.state.data}
-                    columns={this.columns}
+                    columns={ this.getColumnDefinition() }
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {
@@ -275,6 +277,7 @@ class UserInfoTable extends React.Component {
                             style: { backgroundColor }
                         };
                     }}
+
                 />
             </ React.Fragment>
         )
@@ -284,4 +287,5 @@ class UserInfoTable extends React.Component {
 UserInfoTable.propTypes = {
     userLevel: PropTypes.number.isRequired
 }
-export default UserInfoTable;
+
+export default observer(UserInfoTable);

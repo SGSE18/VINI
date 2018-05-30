@@ -3,6 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
 import { UserInfoTable } from '../../components/'
+import { authenticationStore } from '../../stores';
+import { observer } from 'mobx-react';
 
 const Home = (props) => {
     return (
@@ -20,9 +22,9 @@ const Home = (props) => {
                     Suche
                 </Button>
             </div>
-            <UserInfoTable userLevel={props.userLevel} />
+            <UserInfoTable userLevel={authenticationStore.userLevel} />
         </div>
     )
 }
 
-export default Home;
+export default observer(Home);

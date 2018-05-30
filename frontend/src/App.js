@@ -12,8 +12,8 @@ class App extends Component {
       <BrowserRouter>
         <Switch exact>
           <WebFrame>
-            <Route exact path={HOME_PATH} render={(props) => <Home {...props} userLevel={this.props.userLevel} />} />
-            <Route exact path={LOGIN_PATH} render={(props) => <Login {...props} userLevel={this.props.userLevel} />} />
+            <Route exact path={HOME_PATH} component={Home} />
+            <Route exact path={LOGIN_PATH} component={Login} />
             <img src={logo} className="App-logo" alt="logo" />
           </WebFrame>
         </Switch>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { WebFrame } from './components';
 import { Home, Login } from './pages';
 import logo from './media/logo.png';
@@ -10,10 +10,8 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Switch>
+        <Switch exact>
           <WebFrame>
-            <Redirect from="/" to={HOME_PATH} />
-            <Redirect from="/VINI/" to={HOME_PATH} />
             <Route exact path={HOME_PATH} component={Home} />
             <Route exact path={LOGIN_PATH} component={Login} />
             <img src={logo} className="App-logo" alt="logo" />

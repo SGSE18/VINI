@@ -18,9 +18,9 @@ const Home = (props) => {
                 <Button variant="raised" style={{ marginLeft: '10px' }}>
                     <Search />
                     Suche
-        </Button>
+                </Button>
             </div>
-            <UserInfoTable userLevel={props.userLevel}/>
+            <UserInfoTable userLevel={props.userLevel} />
         </div>
     )
 }

@@ -2,7 +2,9 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-import { InfoTable } from '../../components/'
+import { UserInfoTable } from '../../components/'
+import { authenticationStore } from '../../stores';
+import { observer } from 'mobx-react';
 
 const Home = (props) => {
     return (
@@ -18,11 +20,11 @@ const Home = (props) => {
                 <Button variant="raised" style={{ marginLeft: '10px' }}>
                     <Search />
                     Suche
-        </Button>
+                </Button>
             </div>
-            <InfoTable />
+            <UserInfoTable userLevel={authenticationStore.userLevel} />
         </div>
     )
 }
 
-export default Home;
+export default observer(Home);

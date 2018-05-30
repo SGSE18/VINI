@@ -1,15 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import "./UserInfoTable.css";
+import { ModalPopup } from '../';
+import { observer } from 'mobx-react';
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
 const TRANSACTION_PENDING_TEXT = "offen";
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
-class InfoTable extends React.Component {
-    constructor() {
-        super();
+class UserInfoTable extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
+        this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
@@ -137,9 +145,9 @@ class InfoTable extends React.Component {
             state: TRANSACTION_VALID_TEXT
         }]
         this.state = {
-            data
+            data,
+            isPopupVisible: false
         };
-        this.columns = this.getColumnDefinition();
     }
 
 
@@ -153,8 +161,43 @@ class InfoTable extends React.Component {
             />
         );
     }
+
+    onAnnulmentClick() {
+        this.setState({ isPopupVisible: true })
+    }
+
+    annulmentCell = (cell) => {
+        let text;
+        let onClick = null;
+        let className = "";
+
+        switch (cell.value) {
+            case TRANSACTION_VALID_TEXT:
+                text = "Annulierung beantragen";
+                className = "annulment-link";
+                onClick = this.onAnnulmentClick;
+                break;
+            case TRANSACTION_INVALID_TEXT:
+                text = "Bereits annuliert";
+                break;
+            case TRANSACTION_PENDING_TEXT:
+                text = "Annulierung beantragt"
+                break;
+            default:
+                text = "invalid state";
+                break;
+        }
+        return (
+            <div
+                className={className} // mimic anchor tag style for annulment links
+                onClick={onClick}     // 
+            >
+                {text}
+            </div>
+        );
+    }
     getColumnDefinition() {
-        return [{
+        let columnDefinition = [{
             Header: 'Datum',
             accessor: 'date' // String-based value accessors!
         }, {
@@ -182,11 +225,16 @@ class InfoTable extends React.Component {
             Header: 'Ölwechsel',
             accessor: 'oilChange',
             Cell: this.checkBox
-        }, {
-            Header: 'Status',
-            accessor: 'state'
+        }];
+
+        if (this.props.userLevel > 0) {
+            columnDefinition.push({
+                Header: 'Annulieren',
+                accessor: 'state',
+                Cell: this.annulmentCell
+            });
         }
-        ];
+        return columnDefinition;
     }
     determineCellBackgroundColor(rowInfo) {
         let backgroundColor = "";
@@ -199,22 +247,44 @@ class InfoTable extends React.Component {
         }
         return backgroundColor;
     }
-
-    render() {
-        return <ReactTable
-            {...this.translationTexts}
-            data={this.state.data}
-            columns={this.columns}
-            defaultPageSize = {10}
-            noDataText= {NO_DATA_AVAILABLE_TEXT}
-            getTrProps={(state, rowInfo, column) => {
-                let backgroundColor = this.determineCellBackgroundColor(rowInfo)
-                return {
-                    style: {backgroundColor}
-                };
-            }}
-        />
+    onModalClose(isActionConfirmed) {
+        if (isActionConfirmed === true) {
+            alert("Simulierte REST-Anfrage... :)");
+        }
+        this.setState({ isPopupVisible: false })
     }
+    render() {
+        return (
+            <React.Fragment>
+                <ModalPopup
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    isOpen={this.state.isPopupVisible}
+                    onClose={this.onModalClose}
+                    title="Transaktion annulieren"
+                    description="Soll die Transaktion wirklich annuliert werden?"
+                />
+                <ReactTable
+                    {...this.translationTexts}
+                    data={this.state.data}
+                    columns={ this.getColumnDefinition() }
+                    defaultPageSize={10}
+                    noDataText={NO_DATA_AVAILABLE_TEXT}
+                    getTrProps={(state, rowInfo, column) => {
+                        let backgroundColor = this.determineCellBackgroundColor(rowInfo)
+                        return {
+                            style: { backgroundColor }
+                        };
+                    }}
+
+                />
+            </ React.Fragment>
+        )
+    }
+};
+
+UserInfoTable.propTypes = {
+    userLevel: PropTypes.number.isRequired
 }
 
-export default InfoTable;
+export default observer(UserInfoTable);

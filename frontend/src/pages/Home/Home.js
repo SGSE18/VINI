@@ -20,7 +20,7 @@ const Home = (props) => {
                     Suche
         </Button>
             </div>
-            <UserInfoTable />
+            <UserInfoTable userLevel={props.userLevel}/>
         </div>
     )
 }

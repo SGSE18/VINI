@@ -4,5 +4,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// TODO 
+let userLevel = 1;
+ReactDOM.render(<App userLevel={userLevel}/>, document.getElementById('root'));
 registerServiceWorker();

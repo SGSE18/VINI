@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import "./UserInfoTable.css";
@@ -10,8 +11,8 @@ const TRANSACTION_PENDING_TEXT = "offen";
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
 class UserInfoTable extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
@@ -160,7 +161,7 @@ class UserInfoTable extends React.Component {
     }
 
     onAnnulmentClick() {
-        this.setState({ isPopupVisible: true})
+        this.setState({ isPopupVisible: true })
     }
 
     annulmentCell = (cell) => {
@@ -194,7 +195,7 @@ class UserInfoTable extends React.Component {
         );
     }
     getColumnDefinition() {
-        return [{
+        let columnDefinition = [{
             Header: 'Datum',
             accessor: 'date' // String-based value accessors!
         }, {
@@ -222,12 +223,16 @@ class UserInfoTable extends React.Component {
             Header: 'Ölwechsel',
             accessor: 'oilChange',
             Cell: this.checkBox
-        }, {
-            Header: 'Annulieren',
-            accessor: 'state',
-            Cell: this.annulmentCell
+        }];
+        console.log(this.props)
+        if (this.props.userLevel > 0) {
+            columnDefinition.push({
+                Header: 'Annulieren',
+                accessor: 'state',
+                Cell: this.annulmentCell
+            });
         }
-        ];
+        return columnDefinition;
     }
     determineCellBackgroundColor(rowInfo) {
         let backgroundColor = "";
@@ -241,10 +246,10 @@ class UserInfoTable extends React.Component {
         return backgroundColor;
     }
     onModalClose(isActionConfirmed) {
-        if(isActionConfirmed === true) {
+        if (isActionConfirmed === true) {
             alert("Simulierte REST-Anfrage... :)");
         }
-        this.setState({ isPopupVisible: false})
+        this.setState({ isPopupVisible: false })
     }
 
     render() {
@@ -274,6 +279,9 @@ class UserInfoTable extends React.Component {
             </ React.Fragment>
         )
     }
-}
+};
 
+UserInfoTable.propTypes = {
+    userLevel: PropTypes.number.isRequired
+}
 export default UserInfoTable;

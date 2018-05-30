@@ -5,7 +5,6 @@ import "react-table/react-table.css";
 import "./UserInfoTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { authenticationStore } from '../../stores';
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import "./UserInfoTable.css";
-import Modal from '@material-ui/core/Modal';
+import { ModalPopup } from '../';
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
@@ -12,6 +12,8 @@ const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 class UserInfoTable extends React.Component {
     constructor() {
         super();
+        this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
+        this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
@@ -139,7 +141,8 @@ class UserInfoTable extends React.Component {
             state: TRANSACTION_VALID_TEXT
         }]
         this.state = {
-            data
+            data,
+            isPopupVisible: false
         };
         this.columns = this.getColumnDefinition();
     }
@@ -157,7 +160,7 @@ class UserInfoTable extends React.Component {
     }
 
     onAnnulmentClick() {
-        alert("Simulierte REST-Anfrage... :)")
+        this.setState({ isPopupVisible: true})
     }
 
     annulmentCell = (cell) => {
@@ -182,7 +185,7 @@ class UserInfoTable extends React.Component {
                 break;
         }
         return (
-            <div 
+            <div
                 className={className} // mimic anchor tag style for annulment links
                 onClick={onClick}     // 
             >
@@ -237,21 +240,39 @@ class UserInfoTable extends React.Component {
         }
         return backgroundColor;
     }
+    onModalClose(isActionConfirmed) {
+        if(isActionConfirmed === true) {
+            alert("Simulierte REST-Anfrage... :)");
+        }
+        this.setState({ isPopupVisible: false})
+    }
 
     render() {
-        return <ReactTable
-            {...this.translationTexts}
-            data={this.state.data}
-            columns={this.columns}
-            defaultPageSize={10}
-            noDataText={NO_DATA_AVAILABLE_TEXT}
-            getTrProps={(state, rowInfo, column) => {
-                let backgroundColor = this.determineCellBackgroundColor(rowInfo)
-                return {
-                    style: { backgroundColor }
-                };
-            }}
-        />
+        return (
+            <React.Fragment>
+                <ModalPopup
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    isOpen={this.state.isPopupVisible}
+                    onClose={this.onModalClose}
+                    title="Transaktion annulieren"
+                    description="Soll die Transaktion wirklich annuliert werden?"
+                />
+                <ReactTable
+                    {...this.translationTexts}
+                    data={this.state.data}
+                    columns={this.columns}
+                    defaultPageSize={10}
+                    noDataText={NO_DATA_AVAILABLE_TEXT}
+                    getTrProps={(state, rowInfo, column) => {
+                        let backgroundColor = this.determineCellBackgroundColor(rowInfo)
+                        return {
+                            style: { backgroundColor }
+                        };
+                    }}
+                />
+            </ React.Fragment>
+        )
     }
 }
 

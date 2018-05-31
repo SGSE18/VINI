@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import "./UserInfoTable.css";
+import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 
@@ -11,7 +11,7 @@ const TRANSACTION_INVALID_TEXT = "invalid";
 const TRANSACTION_PENDING_TEXT = "offen";
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
-class UserInfoTable extends React.Component {
+class TransactionOverviewTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -283,8 +283,8 @@ class UserInfoTable extends React.Component {
     }
 };
 
-UserInfoTable.propTypes = {
+TransactionOverviewTable.propTypes = {
     userLevel: PropTypes.number.isRequired
 }
 
-export default observer(UserInfoTable);
+export default observer(TransactionOverviewTable);

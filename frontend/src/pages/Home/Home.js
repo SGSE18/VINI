@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-import { UserInfoTable } from '../../components/'
+import { TransactionOverviewTable } from '../../components/'
 import { authenticationStore } from '../../stores';
 import { observer } from 'mobx-react';
 
@@ -22,7 +22,7 @@ const Home = (props) => {
                     Suche
                 </Button>
             </div>
-            <UserInfoTable userLevel={authenticationStore.userLevel} />
+            <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
         </div>
     )
 }

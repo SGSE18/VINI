@@ -29,15 +29,20 @@ class UnstyledModalPopup extends React.Component {
 
     handleOk = () => {
         this.props.onClose(true);
-    };
+    }
     handleCancel = () => {
         this.props.onClose(false);
-    };
+    }
+    onKeyDown(e) {
+        if (e.keyCode === 27) { // ESC
+            this.handleCancel();
+        }
+    }
 
     render() {
         const { classes } = this.props;
         return (
-            <Modal open={this.props.isOpen}>
+            <Modal open={this.props.isOpen} onKeyDown={this.onKeyDown.bind(this)}>
                 <div style={getModalStyle()} className={classes.modal}>
                     <Typography variant="headline">
                         {this.props.title}
@@ -48,7 +53,13 @@ class UnstyledModalPopup extends React.Component {
                     </Typography>
                     <p />
                     <Button variant="raised" onClick={this.handleOk} style={{ marginRight: '10px' }}>OK</Button>
-                    <Button variant="raised" color="secondary" onClick={this.handleCancel}>Abbrechen</Button>
+                    {
+                        this.props.showCancelButton === undefined || this.props.showCancelButton
+                            ?
+                            <Button variant="raised" color="secondary" onClick={this.handleCancel}>Abbrechen</Button>
+                            :
+                            null
+                    }
                 </div>
             </Modal>
         );
@@ -60,6 +71,8 @@ ModalPopup.propTypes = {
     onClose: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    showCancelButton: PropTypes.bool
 }
 
 export default ModalPopup;

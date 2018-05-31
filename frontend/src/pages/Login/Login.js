@@ -57,7 +57,7 @@ class Login extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.setState({
                 isPopupVisible: true,
-                popupDescription: "Bitte gültige E-Mail eingeben"
+                popupDescription: "Bitte gültige E-Mail Adresse eingeben"
             })
         } else {
             alert("Simulierte REST-Anfrage für den PW Reset :)")
@@ -67,7 +67,7 @@ class Login extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.setState({
                 isPopupVisible: true,
-                popupDescription: "Bitte gültige E-Mail eingeben"
+                popupDescription: "Bitte gültige E-Mail Adresse eingeben"
             })
         } else if (this.state.password === "") {
             this.setState({
@@ -106,7 +106,7 @@ class Login extends React.Component {
                             error={this.state.isEmailInvalid}
                             onFocus={this.resetMailInvalid}
                             onBlur={this.validateEmail}
-                            helperText={this.state.isEmailInvalid ? "Ungültige E-Mail" : null}
+                            helperText={this.state.isEmailInvalid ? "Ungültige E-Mail Adresse" : null}
                         />
                         <br></br>
                         <TextField

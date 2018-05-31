@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 
 class Login extends React.Component {
@@ -12,10 +13,17 @@ class Login extends React.Component {
             password: "",
             isEmailInvalid: false,
             passwordErrorText: "",
+            isPopupVisible: false,
+            popupDescription: ""
         }
 
         this.validateEmail = this.validateEmail.bind(this);
         this.resetMailInvalid = this.resetMailInvalid.bind(this);
+        this.onResetPasswordClick = this.onResetPasswordClick.bind(this);
+        this.onLoginClick = this.onLoginClick.bind(this);
+        this.onEmailInputChanged = this.onEmailInputChanged.bind(this);
+        this.onPasswordInputChanged = this.onPasswordInputChanged.bind(this);
+        this.onModalClose = this.onModalClose.bind(this);
     }
 
     isEmailValid(email) {
@@ -26,17 +34,57 @@ class Login extends React.Component {
     validateEmail(event) {
         if (event.target.value !== "") {
             this.setState({
-                isEmailInvalid: this.isEmailValid(event.target.value)
+                isEmailInvalid: this.isEmailValid(event.target.value),
             })
         }
     }
     resetMailInvalid() {
         this.setState({ isEmailInvalid: false });
     }
+    onEmailInputChanged(event) {
+        this.setState({
+            email: event.target.value
+        })
+    }
+    onPasswordInputChanged(event) {
+        this.setState({
+            password: event.target.value
+        })
+    }
+    onResetPasswordClick() {
+        alert("Simulierte REST-Anfrage für den PW Reset :)")
+    }
+    onLoginClick() {
+        if (this.state.email === "" || this.state.isEmailInvalid) {
+            this.setState({
+                isPopupVisible: true,
+                popupDescription: "Bitte gültige E-Mail eingeben"
+            })
+        } else if (this.state.password === "") {
+            this.setState({
+                isPopupVisible: true,
+                popupDescription: "Bitte Passwort eingeben"
+            })
+        } else {
+            alert("Simulierte REST-Anfrage für den Login :)")
+        }
+    }
+    onModalClose() {
+        this.setState({ isPopupVisible: false });
+    }
     render() {
         return (
             <React.Fragment>
                 <div className="Login-Page">
+                    <ModalPopup
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        isOpen={this.state.isPopupVisible}
+                        onClose={this.onModalClose}
+                        title="Eingabe ungültig"
+                        description={this.state.popupDescription}
+                        showCancelButton={false}
+                    />
                     <form>
                         <TextField
                             autoFocus
@@ -45,6 +93,7 @@ class Login extends React.Component {
                             margin="normal"
                             className="useremail"
                             style={{ width: '30em' }}
+                            onChange={this.onEmailInputChanged}
                             error={this.state.isEmailInvalid}
                             onFocus={this.resetMailInvalid}
                             onBlur={this.validateEmail}
@@ -59,6 +108,7 @@ class Login extends React.Component {
                             className="userpass"
                             autoComplete="on"
                             style={{ width: '30em' }}
+                            onChange={this.onPasswordInputChanged}
                             text={this.state.password}
                         />
                         <br></br>
@@ -67,6 +117,7 @@ class Login extends React.Component {
                             margin="normal"
                             className="button"
                             style={{ width: '30em' }}
+                            onClick={this.onLoginClick}
                         >
                             Login
                     </Button>
@@ -76,6 +127,7 @@ class Login extends React.Component {
                             margin="normal"
                             className="button"
                             style={{ width: '30em' }}
+                            onClick={this.onResetPasswordClick}
                         >
                             Passwort zurücksetzen
             </Button>

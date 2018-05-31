@@ -47,12 +47,21 @@ class Login extends React.Component {
         })
     }
     onPasswordInputChanged(event) {
-        this.setState({
-            password: event.target.value
-        })
+        if (this.state.email) {
+            this.setState({
+                password: event.target.value
+            })
+        }
     }
     onResetPasswordClick() {
-        alert("Simulierte REST-Anfrage für den PW Reset :)")
+        if (this.state.email === "" || this.state.isEmailInvalid) {
+            this.setState({
+                isPopupVisible: true,
+                popupDescription: "Bitte gültige E-Mail eingeben"
+            })
+        } else {
+            alert("Simulierte REST-Anfrage für den PW Reset :)")
+        }
     }
     onLoginClick() {
         if (this.state.email === "" || this.state.isEmailInvalid) {
@@ -130,7 +139,7 @@ class Login extends React.Component {
                             onClick={this.onResetPasswordClick}
                         >
                             Passwort zurücksetzen
-            </Button>
+                    </Button>
                     </form>
                 </div>
             </React.Fragment>

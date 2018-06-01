@@ -14,6 +14,7 @@ class Login extends React.Component {
             isEmailInvalid: false,
             passwordErrorText: "",
             isPopupVisible: false,
+            popupTitle: "",
             popupDescription: ""
         }
 
@@ -41,6 +42,16 @@ class Login extends React.Component {
     resetMailInvalid() {
         this.setState({ isEmailInvalid: false });
     }
+    displayPopup(title, description) {
+        this.setState({
+            isPopupVisible: true,
+            popupTitle: title,
+            popupDescription: description
+        })
+    }
+    hidePopup() {
+        this.setState({ isPopupVisible: false });
+    }
     onEmailInputChanged(event) {
         this.setState({
             email: event.target.value
@@ -55,31 +66,25 @@ class Login extends React.Component {
     }
     onResetPasswordClick() {
         if (this.state.email === "" || this.state.isEmailInvalid) {
-            this.setState({
-                isPopupVisible: true,
-                popupDescription: "Bitte gültige E-Mail Adresse eingeben"
-            })
+            this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
             alert("Simulierte REST-Anfrage für den PW Reset :)")
         }
     }
     onLoginClick() {
-        if (this.state.email === "" || this.state.isEmailInvalid) {
-            this.setState({
-                isPopupVisible: true,
-                popupDescription: "Bitte gültige E-Mail Adresse eingeben"
-            })
-        } else if (this.state.password === "") {
-            this.setState({
-                isPopupVisible: true,
-                popupDescription: "Bitte Passwort eingeben"
-            })
+        if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
+            this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
-            alert("Simulierte REST-Anfrage für den Login :)")
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
+                .then(response => response.json())
+                .then(json => {
+                    this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
+                })
+                .catch(message => alert(message)) // TODO
         }
     }
     onModalClose() {
-        this.setState({ isPopupVisible: false });
+        this.hidePopup();
     }
     render() {
         return (
@@ -90,7 +95,7 @@ class Login extends React.Component {
                         aria-describedby="simple-modal-description"
                         isOpen={this.state.isPopupVisible}
                         onClose={this.onModalClose}
-                        title="Eingabe ungültig"
+                        title={this.state.popupTitle}
                         description={this.state.popupDescription}
                         showCancelButton={false}
                     />

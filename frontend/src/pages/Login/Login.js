@@ -10,12 +10,12 @@ class Login extends React.Component {
 
         this.state = {
             email: "",
-            password: "",
             isEmailInvalid: false,
-            passwordErrorText: "",
             isPopupVisible: false,
-            popupTitle: "",
-            popupDescription: ""
+            password: "",
+            passwordErrorText: "",
+            popupDescription: "",
+            popupTitle: ""
         }
 
         this.validateEmail = this.validateEmail.bind(this);
@@ -68,7 +68,12 @@ class Login extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            alert("Simulierte REST-Anfrage für den PW Reset :)")
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
+                .then(response => response.json())
+                .then(json => {
+                    this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
+                })
+                .catch(message => alert(message)) // TODO
         }
     }
     onLoginClick() {

@@ -1,22 +1,19 @@
 import React from 'react';
-import { TransactionOverviewTable } from '../../components/'
+import { TransactionOverviewTable, AddEntryContainer } from '../../components/'
 import { authenticationStore } from '../../stores';
 import { observer } from 'mobx-react';
-import { VinSearch } from '../../components';
-import { AddEntryButton } from '../../components';
 
-import './Home.css';
+import './AddEntryPage.css';
 
-const Home = (props) => {
+const AddEntryPage = (props) => {
     return (
         <div className="Home-Page">
             <div className="searchbar-container">
-                <VinSearch />
-                <AddEntryButton />
+                <AddEntryContainer />
             </div>
             <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
         </div>
     )
 }
 
-export default observer(Home);
+export default observer(AddEntryPage);

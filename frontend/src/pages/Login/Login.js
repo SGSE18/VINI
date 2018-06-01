@@ -110,7 +110,6 @@ class Login extends React.Component {
                             id="email"
                             label="E-Mail Adresse"
                             margin="normal"
-                            className="useremail"
                             style={{ width: '30em' }}
                             onChange={this.onEmailInputChanged}
                             error={this.state.isEmailInvalid}
@@ -124,7 +123,6 @@ class Login extends React.Component {
                             label="Passwort"
                             type="password"
                             margin="normal"
-                            className="userpass"
                             autoComplete="on"
                             style={{ width: '30em' }}
                             onChange={this.onPasswordInputChanged}
@@ -139,7 +137,7 @@ class Login extends React.Component {
                             onClick={this.onLoginClick}
                         >
                             Login
-                    </Button>
+                        </Button>
                         <br></br>
                         <Button
                             variant="raised"

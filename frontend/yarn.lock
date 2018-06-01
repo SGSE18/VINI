@@ -66,6 +66,10 @@
   dependencies:
     csstype "^2.2.0"
 
+"@types/react@^15.0.34":
+  version "15.6.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.6.16.tgz#35f62d2f34e1fa3af390b7fb70d0ff88ff3c5d22"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -2105,6 +2109,13 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
+doctrine@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-0.7.2.tgz#7cb860359ba3be90e040b26b729ce4bfa654c523"
+  dependencies:
+    esutils "^1.1.6"
+    isarray "0.0.1"
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
@@ -2523,6 +2534,10 @@ esrecurse@^4.1.0:
 estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.2.0.tgz#0dee3fed31fcd469618ce7342099fc1afa0bdb13"
+
+esutils@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/esutils/-/esutils-1.1.6.tgz#c01ccaa9ae4b897c6d0c3e210ae52f3c7a844375"
 
 esutils@^2.0.2:
   version "2.0.2"
@@ -2973,6 +2988,10 @@ gauge@~2.7.3:
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
+
+get-comments@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/get-comments/-/get-comments-1.0.1.tgz#196759101bbbc4facf13060caaedd4870dee55be"
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -4442,7 +4461,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-"lodash@>=3.5 <5", lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
+"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -4706,6 +4725,10 @@ mobx-react@^5.1.2:
 mobx@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.3.0.tgz#50a5e63fd0197a83c68166ff83ada45b65c859f8"
+
+moment@^2.13.0, moment@^2.22.2:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
 ms@2.0.0:
   version "2.0.0"
@@ -5738,6 +5761,18 @@ raw-body@2.3.2:
     iconv-lite "0.4.19"
     unpipe "1.0.0"
 
+rc-datepicker@^5.0.13:
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/rc-datepicker/-/rc-datepicker-5.0.13.tgz#db4e0d8ca6c4f7a5d3b40fdfe785893b516e694e"
+  dependencies:
+    classnames "^2.2.5"
+    lodash "^4.13.1"
+    moment "^2.13.0"
+    react-flexview "^1.0.1"
+    revenge "^0.4.4"
+    tcomb "^3.2.1"
+    tcomb-react "^0.9.0"
+
 rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.7.tgz#8a10ca30d588d00464360372b890d06dacd02297"
@@ -5791,6 +5826,16 @@ react-event-listener@^0.5.1:
     fbjs "^0.8.16"
     prop-types "^15.6.0"
     warning "^3.0.0"
+
+react-flexview@^1.0.1:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/react-flexview/-/react-flexview-1.0.13.tgz#50a2926e0d1dfc175c4f85471c39caf9eab0bb16"
+  dependencies:
+    "@types/react" "^15.0.34"
+    classnames "^2.2.5"
+    lodash "^4.15.0"
+    sass-flex-mixins "^0.1.0"
+    tcomb-react "^0.9.3"
 
 react-jss@^8.1.0:
   version "8.4.0"
@@ -5904,7 +5949,7 @@ react-transition-group@^2.2.1:
     loose-envify "^1.3.1"
     prop-types "^15.6.1"
 
-react@^16.3.2:
+react@>=0.13.0, react@^16.3.2:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.0.tgz#402c2db83335336fba1962c08b98c6272617d585"
   dependencies:
@@ -6215,6 +6260,14 @@ ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
 
+revenge@^0.4.4:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/revenge/-/revenge-0.4.5.tgz#0a14bfa8d43fa9a6aa40abc8115f12b4d988d542"
+  dependencies:
+    debug "^2.2.0"
+    lodash "^4.6.1"
+    tcomb "^3.0.0"
+
 right-align@^0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/right-align/-/right-align-0.1.3.tgz#61339b722fe6a3515689210d24e14c96148613ef"
@@ -6279,6 +6332,10 @@ sane@~1.6.0:
     minimist "^1.1.1"
     walker "~1.0.5"
     watch "~0.10.0"
+
+sass-flex-mixins@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/sass-flex-mixins/-/sass-flex-mixins-0.1.0.tgz#bd1b8cbd0b080692b57ca258f403a355d553008f"
 
 sax@^1.2.1, sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
@@ -6815,6 +6872,32 @@ tar@^4:
     mkdirp "^0.5.0"
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
+
+tcomb-doc@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/tcomb-doc/-/tcomb-doc-0.5.2.tgz#d58a653a3007e3649127864010c558a7bf666d1e"
+  dependencies:
+    tcomb "^3.0.0"
+
+tcomb-react@^0.9.0, tcomb-react@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/tcomb-react/-/tcomb-react-0.9.3.tgz#44713e1d2e8c2ff744b8ed6579bf77aed23b0efc"
+  dependencies:
+    doctrine "0.7.2"
+    get-comments "1.0.1"
+    react ">=0.13.0"
+    tcomb-doc "^0.5.0"
+    tcomb-validation "^3.0.0"
+
+tcomb-validation@^3.0.0:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/tcomb-validation/-/tcomb-validation-3.4.1.tgz#a7696ec176ce56a081d9e019f8b732a5a8894b65"
+  dependencies:
+    tcomb "^3.0.0"
+
+tcomb@^3.0.0, tcomb@^3.2.1:
+  version "3.2.27"
+  resolved "https://registry.yarnpkg.com/tcomb/-/tcomb-3.2.27.tgz#f4928bfc536b959d21a47e5f5f1ca2b2e4b7188a"
 
 term-size@^1.2.0:
   version "1.2.0"

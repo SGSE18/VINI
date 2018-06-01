@@ -25,13 +25,3 @@
 .App-intro {
   font-size: large;
 }
-
-.searchbar-container {
-  width: 50%;
-  margin: auto;
-}
-
-.searchbar {
-  width: 50%;
-  padding-right: 10px;
-}

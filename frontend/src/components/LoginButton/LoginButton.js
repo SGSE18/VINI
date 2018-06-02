@@ -5,6 +5,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Home from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { LOGIN_PATH, HOME_PATH } from '../../app-config';
+import { USER_LEVEL } from '../../constants';
 
 class LoginButton extends React.Component {
     constructor() {
@@ -20,11 +21,11 @@ class LoginButton extends React.Component {
     }
     getAuthorityString() {
         switch (this.state.authorityLevel) {
-            case 0: return "Ausgeloggt"
-            case 1: return "ZWS"
-            case 2: return "TÜV"
-            case 3: return "STVA"
-            case 4: return "Admin STVA"
+            case USER_LEVEL.NOT_LOGGED_IN: return "Ausgeloggt"
+            case USER_LEVEL.ZWS: return "ZWS"
+            case USER_LEVEL.TUEV: return "TÜV"
+            case USER_LEVEL.STVA: return "STVA"
+            case USER_LEVEL.ASTVA: return "Admin STVA"
             default: return ""
         }
     }

@@ -1,22 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './AddEntryContainer.css'
 import { HOME_PATH } from '../../app-config';
-import moment from 'moment';
+import { USER_LEVEL } from '../../constants';
 import { withRouter } from 'react-router-dom'
 import { ModalPopup } from '../';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Search from '@material-ui/icons/Search';
-import { DatePickerInput } from 'rc-datepicker';
-import 'rc-datepicker/lib/style.css';
-import 'moment/locale/de.js'
+import { authenticationStore } from '../../stores';
+import AddEntryTUEV from './AddEntryTUEV/AddEntryTUEV';
+import AddEntryZWS from './AddEntryZWS/AddEntryZWS';
+import AddEntrySTVA from './AddEntrySTVA/AddEntrySTVA';
 
 class AddEntryContainer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            selectedDate: moment(),
+            selectedDate: "2018-06-02",
             isPopupVisible: false
         }
         this.handleClick = this.handleClick.bind(this);
@@ -26,7 +27,12 @@ class AddEntryContainer extends React.Component {
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.hidePopup = this.hidePopup.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
+        // references to the child components to retreive the data
+        this.zwsRef = new React.createRef();
+        this.tuevRef = new React.createRef();
+        this.stvaRef = new React.createRef();
     }
+
 
     handleClick() {
         this.setState({ isPopupVisible: true });
@@ -44,17 +50,30 @@ class AddEntryContainer extends React.Component {
     }
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
-            // TODO submit data
+            // TODO validate and submit data
+            // access ref: this.tuevRef.current
             this.props.history.push(HOME_PATH)
         }
         this.hidePopup();
     }
-    handleCalendarChange(date) {
+    handleCalendarChange(e) {
         this.setState({
-            startDate: date
+            selectedDate: e.target.value
         });
     }
-
+    getUserLevelSpecificComponent() {
+        switch (authenticationStore.userLevel) {
+            case USER_LEVEL.ZWS:
+                return <AddEntryZWS ref={this.zwsRef} />;
+            case USER_LEVEL.TUEV:
+                return <AddEntryTUEV ref={this.tuevRef} />;
+            case USER_LEVEL.STVA:
+            case USER_LEVEL.ASTVA:
+                return <AddEntrySTVA preownerCount={this.props.preownerCount} ref={this.stvaRef} />;
+            default:
+                return <React.Fragment />
+        }
+    }
     render() {
         return (
             <React.Fragment>
@@ -78,23 +97,20 @@ class AddEntryContainer extends React.Component {
                     value="100000"
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />
-                <div style={{ display: 'inline-block' }}>
-                    <div style={{ display: 'block', fontSize: '0.8em', userSelect: 'none' }}>
-                        HU/AU
-                    </div>
-                    <Checkbox
-                        style={{ margin: '-5px' }}
-                        checked={this.state.checkedA}
-                        onChange={this.handleCheckboxChange}
-                        value="checkedA"
-                    />
-                </div>
+                {
+                    this.getUserLevelSpecificComponent()
+                }
                 <div style={{ width: '100px', display: 'inline', marginLeft: '2em', marginRight: '2em' }}>
-                    <DatePickerInput
-                        locale='de'
+                    <TextField
+                        id="date"
+                        label="Datum"
+                        type="date"
+                        defaultValue="2017-05-24"
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
-                        className="date-picker"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
                 </ div>
                 <Button
@@ -119,4 +135,7 @@ class AddEntryContainer extends React.Component {
     }
 }
 
+AddEntryContainer.propTypes = {
+    preownerCount: PropTypes.number.isRequired
+}
 export default withRouter(AddEntryContainer);

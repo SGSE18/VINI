@@ -7,6 +7,6 @@ export let authenticationStore = observable({
 });
 
 export let dataStore = observable({
-    vin: "",
+    vin: "W0L000051T2123456", // TODO remove default value
     setVin: action((newVal) => dataStore.vin = newVal)
 })

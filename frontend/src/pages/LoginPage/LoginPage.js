@@ -90,7 +90,26 @@ class LoginPage extends React.Component {
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
                     //TODO validate
-                    authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+
+                    //TODO delete this
+                    switch(this.state.email) {
+                        case 'user@zws.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                            break;
+                        case 'user@stva.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.STVA);
+                            break;
+                        case 'user@astva.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
+                            break;
+                        case 'user@tuev.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.TUEV);
+                            break;
+                        default:
+                            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+                            break;
+                    }
+
                     this.props.history.push(HOME_PATH);
                 })
                 .catch(message => alert(message)) // TODO
@@ -157,6 +176,15 @@ class LoginPage extends React.Component {
                             Passwort zurücksetzen
                     </Button>
                     </form>
+                </div>
+                {/* TODO DELETE*/}
+                <div>
+                    <div>user@zws.com</div>
+                    <div>user@stva.com</div>
+                    <div>user@astva.com</div>
+                    <div>user@tuev.com</div>
+                    <div>Else: not logged in</div>
+                    <div>Any password.</div>
                 </div>
             </React.Fragment>
         )

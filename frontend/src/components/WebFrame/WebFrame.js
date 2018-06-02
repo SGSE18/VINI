@@ -7,7 +7,7 @@ const WebFrame = (props) => {
         <div className="App">
             <header className="App-header">
                 <h1 className="App-title">VINI</h1>
-                <LoginButton authorityLevel={authenticationStore.userLevel} className="main-login-button" />
+                <LoginButton onLogOut={() => authenticationStore.setUserLevel(0)} authorityLevel={authenticationStore.userLevel} className="main-login-button" />
             </header>
             {props.children}
         </div>

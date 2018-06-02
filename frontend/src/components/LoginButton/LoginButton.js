@@ -7,20 +7,21 @@ import Button from '@material-ui/core/Button';
 import { LOGIN_PATH, HOME_PATH } from '../../app-config';
 import { USER_LEVEL } from '../../constants';
 
+// TODO DELETE-------------------------------------------
+import { authenticationStore } from '../../stores';
+//-------------------------------------------------------
+
 class LoginButton extends React.Component {
-    constructor(props) {
+    constructor(props, test) {
+        console.log(test)
         super(props);
-        this.state = {
-            isLoggedIn: false,
-            authorityLevel: this.props.authorityLevel
-        }
         this.handleClick = this.handleClick.bind(this);
     }
     isAtLogin() {
         return window.location.pathname === LOGIN_PATH;
     }
     getAuthorityString() {
-        switch (this.state.authorityLevel) {
+        switch (this.props.authorityLevel) {
             case USER_LEVEL.NOT_LOGGED_IN: return "Ausgeloggt"
             case USER_LEVEL.ZWS: return "ZWS"
             case USER_LEVEL.TUEV: return "TÜV"
@@ -30,13 +31,13 @@ class LoginButton extends React.Component {
         }
     }
     handleClick() {
-        // logout
-        if (this.state.isLoggedIn) {
-            this.setState({ authorityLevel: 0 })
+        // log out
+        if (this.props.authorityLevel !== USER_LEVEL.NOT_LOGGED_IN) {
+            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+            this.props.onLogOut();
         }
         if (this.isAtLogin()) {
             this.props.history.push(HOME_PATH);
-            this.setState({ isLoggedIn: !this.state.isLoggedIn })
         } else {
             this.props.history.push(LOGIN_PATH)
         }
@@ -53,7 +54,7 @@ class LoginButton extends React.Component {
                     :
                     <Button variant="raised" style={{ marginLeft: '10px' }} onClick={this.handleClick}>
                         <AccountCircle className="login-icon" />
-                        {this.state.isLoggedIn ? "Logout" : "Login"}
+                        {this.props.authorityLevel !== USER_LEVEL.NOT_LOGGED_IN ? "Logout" : "Login"}
                     </Button>
                 }
                 <div className="authority-level-text">
@@ -66,7 +67,10 @@ class LoginButton extends React.Component {
 LoginButton.contextTypes = {
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
-    }),
-    authorityLevel: PropTypes.number.isRequired
+    })
+}
+LoginButton.propTypes = {
+    authorityLevel: PropTypes.number.isRequired,
+    onLogOut: PropTypes.func.isRequired
 }
 export default withRouter(LoginButton);

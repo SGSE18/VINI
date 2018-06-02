@@ -6,13 +6,21 @@ import { VinSearch } from '../../components';
 import { AddEntryButton } from '../../components';
 
 import './Home.css';
+import { USER_LEVEL } from '../../constants';
 
 const Home = (props) => {
     return (
         <div className="Home-Page">
             <div className="searchbar-container">
                 <VinSearch />
-                <AddEntryButton />
+                {
+                    authenticationStore.userLevel !== USER_LEVEL.NOT_LOGGED_IN
+                        ?
+                        <AddEntryButton />
+                        :
+                        null
+                }
+
             </div>
             <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
         </div>

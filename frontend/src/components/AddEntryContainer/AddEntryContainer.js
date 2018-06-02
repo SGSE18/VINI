@@ -79,6 +79,7 @@ class AddEntryContainer extends React.Component {
             case USER_LEVEL.STVA:
             case USER_LEVEL.ASTVA:
                 return <AddEntrySTVA labelStyle={entryLabelStyle} preownerCount={this.props.preownerCount} ref={this.stvaRef} />;
+            case USER_LEVEL.NOT_LOGGED_IN:
             default:
                 return <React.Fragment />
         }

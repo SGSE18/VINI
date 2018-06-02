@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import { authenticationStore } from '../../stores';
+import { authenticationStore, dataStore } from '../../stores';
 import Button from '@material-ui/core/Button';
 import Add from '@material-ui/icons/Add';
 import { ADD_ENTRY_PATH } from '../../app-config';
@@ -14,7 +14,12 @@ class AddEntryButton extends React.Component {
     }
 
     handleClick() {
-        this.props.history.push(ADD_ENTRY_PATH)
+        const regexIsVinValid = /^[1234567890ABCDEFGHJKLMNPRSTUVWXYZ]{17}$/;
+        if (regexIsVinValid.test(dataStore.vin)) {
+            this.props.history.push(ADD_ENTRY_PATH)
+        } else {
+            alert("FIN ungültig!");
+        }
     }
 
     render() {

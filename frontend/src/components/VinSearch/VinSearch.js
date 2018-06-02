@@ -9,7 +9,7 @@ class VinSearch extends React.Component {
     constructor() {
         super();
         this.state = {
-            vin: "",
+            vin: dataStore.vin,
             isVinInvalid: false,
         }
         this.handleClick = this.handleClick.bind(this);
@@ -35,6 +35,7 @@ class VinSearch extends React.Component {
                 <TextField
                     autoFocus
                     id="search"
+                    defaultValue={dataStore.vin}
                     label="FIN eingeben"
                     type="search"
                     margin="normal"

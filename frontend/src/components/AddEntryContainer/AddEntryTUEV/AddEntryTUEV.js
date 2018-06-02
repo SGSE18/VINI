@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './AddEntryTUEV.css'
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -21,7 +22,7 @@ class AddEntryTUEV extends React.Component {
     render() {
         return (
             <div style={{ display: 'inline-block' }}>
-                <div style={{ display: 'block', fontSize: '0.8em', userSelect: 'none' }}>
+                <div style={this.props.labelStyle}>
                     HU/AU
                 </div>
                 <Checkbox
@@ -33,5 +34,7 @@ class AddEntryTUEV extends React.Component {
         )
     }
 }
-
+AddEntryTUEV.propTypes = {
+    labelStyle: PropTypes.object.isRequired
+}
 export default AddEntryTUEV;

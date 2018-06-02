@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './AddEntryZWS.css'
 import Checkbox from '@material-ui/core/Checkbox';
 
 class AddEntryZWS extends React.Component {
+
     constructor() {
         super();
         this.state = {
@@ -39,8 +41,8 @@ class AddEntryZWS extends React.Component {
     render() {
         return (
             <div style={{ display: 'inline-block' }}>
-                <div style={{ display: 'inline-block' }}>
-                    <div style={{ display: 'block', fontSize: '0.8em', userSelect: 'none' }}>
+                <div style={{ display: 'inline-block', marginLeft: '8px', }}>
+                    <div style={this.props.labelStyle}>
                         Service I
                     </div>
                     <Checkbox
@@ -49,8 +51,8 @@ class AddEntryZWS extends React.Component {
                         checked={this.state.isService1Checked}
                     />
                 </div>
-                <div style={{ display: 'inline-block', marginLeft: '15px' }}>
-                    <div style={{ display: 'block', fontSize: '0.8em', userSelect: 'none' }}>
+                <div style={{ display: 'inline-block', marginLeft: '15px', }}>
+                    <div style={this.props.labelStyle}>
                         Service II
                     </div>
                     <Checkbox
@@ -59,8 +61,8 @@ class AddEntryZWS extends React.Component {
                         checked={this.state.isService2Checked}
                     />
                 </div>
-                <div style={{ display: 'inline-block', marginLeft: '15px' }}>
-                    <div style={{ display: 'block', fontSize: '0.8em', userSelect: 'none' }}>
+                <div style={{ display: 'inline-block', marginLeft: '15px', }}>
+                    <div style={this.props.labelStyle}>
                         Ölwechsel
                     </div>
                     <Checkbox
@@ -73,5 +75,7 @@ class AddEntryZWS extends React.Component {
         )
     }
 }
-
+AddEntryZWS.propTypes = {
+    labelStyle: PropTypes.object.isRequired
+}
 export default AddEntryZWS;

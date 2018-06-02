@@ -13,6 +13,15 @@ import AddEntryTUEV from './AddEntryTUEV/AddEntryTUEV';
 import AddEntryZWS from './AddEntryZWS/AddEntryZWS';
 import AddEntrySTVA from './AddEntrySTVA/AddEntrySTVA';
 
+const entryLabelStyle = {
+    color: 'rgba(0, 0, 0, 0.54)',
+    padding: '0',
+    fontSize: '0.8rem',
+    fontFamily: '"Roboto", "Helvetica", "Arial", "sans-serif"',
+    userSelect: 'none',
+    display: 'block'
+}
+
 class AddEntryContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -64,17 +73,19 @@ class AddEntryContainer extends React.Component {
     getUserLevelSpecificComponent() {
         switch (authenticationStore.userLevel) {
             case USER_LEVEL.ZWS:
-                return <AddEntryZWS ref={this.zwsRef} />;
+                return <AddEntryZWS labelStyle={entryLabelStyle} ref={this.zwsRef} />;
             case USER_LEVEL.TUEV:
-                return <AddEntryTUEV ref={this.tuevRef} />;
+                return <AddEntryTUEV labelStyle={entryLabelStyle} ref={this.tuevRef} />;
             case USER_LEVEL.STVA:
             case USER_LEVEL.ASTVA:
-                return <AddEntrySTVA preownerCount={this.props.preownerCount} ref={this.stvaRef} />;
+                return <AddEntrySTVA labelStyle={entryLabelStyle} preownerCount={this.props.preownerCount} ref={this.stvaRef} />;
             default:
                 return <React.Fragment />
         }
     }
     render() {
+        const today = new Date()
+        const todayStr = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         return (
             <React.Fragment>
                 <ModalPopup
@@ -105,7 +116,7 @@ class AddEntryContainer extends React.Component {
                         id="date"
                         label="Datum"
                         type="date"
-                        defaultValue="2017-05-24"
+                        defaultValue={todayStr}
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
                         InputLabelProps={{

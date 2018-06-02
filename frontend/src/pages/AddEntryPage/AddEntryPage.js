@@ -1,6 +1,6 @@
 import React from 'react';
 import { TransactionOverviewTable, AddEntryContainer } from '../../components/'
-import { authenticationStore } from '../../stores';
+import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 
 import './AddEntryPage.css';
@@ -10,7 +10,7 @@ const AddEntryPage = (props) => {
         <div className="Home-Page">
             <div className="searchbar-container">
                 {/* TODO determine preowner count from table */}
-                <AddEntryContainer preownerCount={0} />
+                <AddEntryContainer vin={dataStore.vin} preownerCount={0} />
             </div>
             <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
         </div>

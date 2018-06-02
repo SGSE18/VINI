@@ -12,8 +12,7 @@ import { authenticationStore } from '../../stores';
 //-------------------------------------------------------
 
 class LoginButton extends React.Component {
-    constructor(props, test) {
-        console.log(test)
+    constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }

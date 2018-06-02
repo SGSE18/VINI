@@ -22,11 +22,21 @@ const entryLabelStyle = {
     display: 'block'
 }
 
+const getCurrentDate = () => {
+    const today = new Date()
+    const todayStr = today.getFullYear() + '-';
+    let month = today.getMonth() + 1;
+    month = month < 10 ? "0" + month : month;
+    let day = today.getDate();
+    day = day < 10 ? "0" + day : day
+    return todayStr + month + '-' + day;
+}
 class AddEntryContainer extends React.Component {
     constructor(props) {
         super(props);
+        const todayStr = getCurrentDate();
         this.state = {
-            selectedDate: "2018-06-02",
+            selectedDate: todayStr,
             isPopupVisible: false
         }
         this.handleClick = this.handleClick.bind(this);
@@ -85,8 +95,6 @@ class AddEntryContainer extends React.Component {
         }
     }
     render() {
-        const today = new Date()
-        const todayStr = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         return (
             <React.Fragment>
                 <ModalPopup
@@ -99,14 +107,12 @@ class AddEntryContainer extends React.Component {
                     disabled
                     label="FIN"
                     margin="normal"
-                    onChange={this.onVinInputChanged}
-                    value="test"
+                    value={this.props.vin}
                 />
                 <TextField
                     label="KM"
                     margin="normal"
                     onChange={this.validateKmValue}
-                    value="100000"
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />
                 {
@@ -117,7 +123,6 @@ class AddEntryContainer extends React.Component {
                         id="date"
                         label="Datum"
                         type="date"
-                        defaultValue={todayStr}
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
                         InputLabelProps={{
@@ -148,6 +153,7 @@ class AddEntryContainer extends React.Component {
 }
 
 AddEntryContainer.propTypes = {
-    preownerCount: PropTypes.number.isRequired
+    preownerCount: PropTypes.number.isRequired,
+    vin: PropTypes.string.isRequired
 }
 export default withRouter(AddEntryContainer);

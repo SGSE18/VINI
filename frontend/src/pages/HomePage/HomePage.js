@@ -1,18 +1,18 @@
 import React from 'react';
 import { TransactionOverviewTable } from '../../components/'
-import { authenticationStore } from '../../stores';
+import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
 import { AddEntryButton } from '../../components';
 
-import './Home.css';
+import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 
-const Home = (props) => {
+const HomePage = (props) => {
     return (
         <div className="Home-Page">
             <div className="searchbar-container">
-                <VinSearch />
+                <VinSearch vin={dataStore.vin} />
                 {
                     authenticationStore.userLevel !== USER_LEVEL.NOT_LOGGED_IN
                         ?
@@ -27,4 +27,4 @@ const Home = (props) => {
     )
 }
 
-export default observer(Home);
+export default observer(HomePage);

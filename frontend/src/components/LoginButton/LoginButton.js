@@ -8,11 +8,11 @@ import { LOGIN_PATH, HOME_PATH } from '../../app-config';
 import { USER_LEVEL } from '../../constants';
 
 class LoginButton extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isLoggedIn: false,
-            authorityLevel: 0
+            authorityLevel: this.props.authorityLevel
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -66,6 +66,7 @@ class LoginButton extends React.Component {
 LoginButton.contextTypes = {
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
-    })
+    }),
+    authorityLevel: PropTypes.number.isRequired
 }
 export default withRouter(LoginButton);

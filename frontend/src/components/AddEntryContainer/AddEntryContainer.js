@@ -112,6 +112,7 @@ class AddEntryContainer extends React.Component {
                 <TextField
                     label="KM"
                     margin="normal"
+                    autoFocus
                     onChange={this.validateKmValue}
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />

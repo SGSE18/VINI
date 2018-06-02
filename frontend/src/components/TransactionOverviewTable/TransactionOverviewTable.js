@@ -5,6 +5,7 @@ import "react-table/react-table.css";
 import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
+import { USER_LEVEL } from '../../constants';
 
 const TRANSACTION_VALID_TEXT = "valid";
 const TRANSACTION_INVALID_TEXT = "invalid";
@@ -266,8 +267,13 @@ class TransactionOverviewTable extends React.Component {
                 />
                 <ReactTable
                     {...this.translationTexts}
-                    data={this.state.data}
-                    columns={ this.getColumnDefinition() }
+                    data= { this.props.userLevel === USER_LEVEL.NOT_LOGGED_IN
+                            ?
+                            this.state.data.filter(data => data.state === TRANSACTION_VALID_TEXT)
+                            :
+                            this.state.data
+                    }
+                    columns={this.getColumnDefinition()}
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {
@@ -275,8 +281,8 @@ class TransactionOverviewTable extends React.Component {
                         return {
                             style: { backgroundColor }
                         };
-                    }}
-
+                    }
+                    }
                 />
             </ React.Fragment>
         )

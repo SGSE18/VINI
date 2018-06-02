@@ -108,8 +108,8 @@ class TransactionOverviewTable extends React.Component {
             entrant: "Werkstatt",
             mainInspection: false,
             Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
+            Inspection2: true,
+            oilChange: true,
             state: TRANSACTION_VALID_TEXT
         },
         {

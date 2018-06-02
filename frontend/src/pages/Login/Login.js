@@ -1,8 +1,12 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
+import { authenticationStore } from '../../stores';
+import { USER_LEVEL } from '../../constants';
+import { HOME_PATH } from '../../app-config';
 
 class Login extends React.Component {
     constructor(props) {
@@ -84,6 +88,9 @@ class Login extends React.Component {
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
+                    //TODO validate
+                    authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                    this.props.history.push(HOME_PATH);
                 })
                 .catch(message => alert(message)) // TODO
         }
@@ -110,7 +117,6 @@ class Login extends React.Component {
                             id="email"
                             label="E-Mail Adresse"
                             margin="normal"
-                            className="useremail"
                             style={{ width: '30em' }}
                             onChange={this.onEmailInputChanged}
                             error={this.state.isEmailInvalid}
@@ -124,7 +130,6 @@ class Login extends React.Component {
                             label="Passwort"
                             type="password"
                             margin="normal"
-                            className="userpass"
                             autoComplete="on"
                             style={{ width: '30em' }}
                             onChange={this.onPasswordInputChanged}
@@ -139,7 +144,7 @@ class Login extends React.Component {
                             onClick={this.onLoginClick}
                         >
                             Login
-                    </Button>
+                        </Button>
                         <br></br>
                         <Button
                             variant="raised"
@@ -158,4 +163,4 @@ class Login extends React.Component {
 
 }
 
-export default observer(Login);
+export default withRouter(observer(Login));

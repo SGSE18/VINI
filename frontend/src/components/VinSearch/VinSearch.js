@@ -30,7 +30,7 @@ class VinSearch extends React.Component {
     }
     render() {
         return (
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', display: 'inline' }}>
                 <TextField
                     autoFocus
                     id="search"
@@ -39,7 +39,7 @@ class VinSearch extends React.Component {
                     margin="normal"
                     onChange={this.onVinInputChanged}
                     error={this.state.isVinInvalid}
-                    style={{ width: '80%' }}
+                    style={{ width: '50%' }}
                     helperText={this.state.isVinInvalid ? "VIN ungültig" : null}
                 />
                 <Button

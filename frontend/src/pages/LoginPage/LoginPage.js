@@ -7,8 +7,9 @@ import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
 import { USER_LEVEL } from '../../constants';
 import { HOME_PATH } from '../../app-config';
+import './LoginPage.css'
 
-class Login extends React.Component {
+class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -163,4 +164,4 @@ class Login extends React.Component {
 
 }
 
-export default withRouter(observer(Login));
+export default withRouter(observer(LoginPage));

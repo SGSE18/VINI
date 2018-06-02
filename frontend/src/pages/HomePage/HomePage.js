@@ -5,10 +5,10 @@ import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
 import { AddEntryButton } from '../../components';
 
-import './Home.css';
+import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 
-const Home = (props) => {
+const HomePage = (props) => {
     return (
         <div className="Home-Page">
             <div className="searchbar-container">
@@ -27,4 +27,4 @@ const Home = (props) => {
     )
 }
 
-export default observer(Home);
+export default observer(HomePage);

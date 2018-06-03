@@ -86,7 +86,7 @@ class LoginPage extends React.Component {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
              //TODO
-            fetch('https://vini-backend.azurewebsites.net/users')
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
                 .then(response => {console.log(response);response.json()})
                 .then(json => {
                     console.log(json)

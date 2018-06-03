@@ -42,7 +42,7 @@ class UnstyledModalPopup extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Modal open={this.props.isOpen} onKeyDown={this.onKeyDown.bind(this)}>
+            <Modal id="Modal" open={this.props.isOpen} onKeyDown={this.onKeyDown.bind(this)}>
                 <div style={getModalStyle()} className={classes.modal}>
                     <Typography variant="headline">
                         {this.props.title}
@@ -52,11 +52,11 @@ class UnstyledModalPopup extends React.Component {
                         {this.props.description}
                     </Typography>
                     <p />
-                    <Button variant="raised" onClick={this.handleOk} style={{ marginRight: '10px' }}>OK</Button>
+                    <Button id="btnOk" variant="raised" onClick={this.handleOk} style={{ marginRight: '10px' }}>OK</Button>
                     {
                         this.props.showCancelButton === undefined || this.props.showCancelButton
                             ?
-                            <Button variant="raised" color="secondary" onClick={this.handleCancel}>Abbrechen</Button>
+                            <Button variant="raised" id="btnCancel" color="secondary" onClick={this.handleCancel}>Abbrechen</Button>
                             :
                             null
                     }

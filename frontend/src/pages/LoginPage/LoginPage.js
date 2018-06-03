@@ -73,7 +73,7 @@ class LoginPage extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch('https://jsonplaceholder.typicode.com/posts/1')
+            fetch('https://vini-backend.azurewebsites.net/users')
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -85,9 +85,11 @@ class LoginPage extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
-            fetch('https://jsonplaceholder.typicode.com/posts/1')
-                .then(response => response.json())
+             //TODO
+            fetch('https://vini-backend.azurewebsites.net/users')
+                .then(response => {console.log(response);response.json()})
                 .then(json => {
+                    console.log(json)
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
                     //TODO validate
 

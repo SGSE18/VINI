@@ -8,28 +8,34 @@ import { AddEntryButton } from '../../components';
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 import { Button } from '@material-ui/core';
+import ManageUserButton from '../../components/ManageUserButton/ManageUserButton';
 
-const HomePage = (props) => {
-    return (
-        <div className="Home-Page">
-            <div className="searchbar-container">
-                <VinSearch vin={dataStore.vin} />
-                {
-                    authenticationStore.userLevel !== USER_LEVEL.NOT_LOGGED_IN
-                        ?
-                        <AddEntryButton />
-                        :
-                        null
-                }
-                
-            </div>
-            {authenticationStore.userLevel === USER_LEVEL.ASTVA ? <Button variant="raised"
+class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div className="Home-Page">
+                <div className="searchbar-container">
+                    <VinSearch vin={dataStore.vin} />
+                    {
+                        authenticationStore.userLevel !== USER_LEVEL.NOT_LOGGED_IN
+                            ?
+                            <AddEntryButton />
+                            :
+                            null
+                    }
+
+                </div>
+                {authenticationStore.userLevel === USER_LEVEL.ASTVA ? <Button variant="raised"
                     margin="normal"
                     className="button"
-                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> : ''}
-            <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
-        </div>
-    )
+                    onClick={function () { alert() }}
+                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> : ''
+                }
+                <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+            </div >)
+    }
 }
-
 export default observer(HomePage);

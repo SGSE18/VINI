@@ -34,7 +34,7 @@ class UnstyledModalPopup extends React.Component {
         this.props.onClose(false);
     }
     onKeyDown(e) {
-        if (e.keyCode === 27) { // ESC
+        if (e.keyCode === 27 || e.keyCode === 8 ) { // ESC (27) and backspace (8)
             this.handleCancel();
         }
         if (e.keyCode === 13) { //Enter

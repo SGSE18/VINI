@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ManageUserButton } from '..';
+import ManageUserButton  from './ManageUserButton';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

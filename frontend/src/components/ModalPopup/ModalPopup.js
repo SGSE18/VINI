@@ -37,6 +37,9 @@ class UnstyledModalPopup extends React.Component {
         if (e.keyCode === 27) { // ESC
             this.handleCancel();
         }
+        if (e.keyCode === 13) { //Enter
+            this.handleOk();
+        }
     }
 
     render() {

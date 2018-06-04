@@ -9,25 +9,32 @@ const ManageUserForm = (props) => {
             <TextField
                 id="lastname"
                 label="Nachname" />
+            <br></br>
             <TextField
                 id="firstname"
                 label="Vorname" />
+            <br></br>
             <TextField
                 id="company"
                 label="Unternehmen" />
+            <br></br>
             <TextField
+            autoFocus
                 id="email"
                 label="E-Mail" />
+            <br></br>
             <TextField
                 id="authoritylevel"
                 label="Authoritätslevel"
             />
+            <br></br>
             {/* // DropDownMenu would be better, but for some reason its not working */}
             <TextField id="password"
                 label="Passwort"
                 type='password' />
-            <Button id="save"
-            label="Speichern"/>
+            <br></br>
+            <Button variant="raised" id="save"
+                 >Speichern</Button>
         </div>
     )
 }

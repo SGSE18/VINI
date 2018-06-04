@@ -1,8 +1,5 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Search from '@material-ui/icons/Search';
-import { dataStore } from '../../stores';
 import './ManageUserButton.css';
 
 class ManageUserButton extends React.Component {

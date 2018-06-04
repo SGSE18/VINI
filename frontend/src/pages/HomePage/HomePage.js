@@ -7,8 +7,7 @@ import { AddEntryButton } from '../../components';
 
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
-import { Button, TextField } from '@material-ui/core';
-import ManageUserButton from '../../components/ManageUserButton/ManageUserButton';
+import { Button } from '@material-ui/core';
 
 class HomePage extends React.Component {
     constructor(props) {

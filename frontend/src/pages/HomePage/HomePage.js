@@ -7,6 +7,7 @@ import { AddEntryButton } from '../../components';
 
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
+import { Button } from '@material-ui/core';
 
 const HomePage = (props) => {
     return (
@@ -20,8 +21,12 @@ const HomePage = (props) => {
                         :
                         null
                 }
-
+                
             </div>
+            {authenticationStore.userLevel === USER_LEVEL.ASTVA ? <Button variant="raised"
+                    margin="normal"
+                    className="button"
+                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> : ''}
             <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
         </div>
     )

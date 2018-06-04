@@ -7,8 +7,7 @@ import { AddEntryButton } from '../../components';
 
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
-import { Button, TextField } from '@material-ui/core';
-import ManageUserButton from '../../components/ManageUserButton/ManageUserButton';
+import { Button } from '@material-ui/core';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -20,17 +19,10 @@ class HomePage extends React.Component {
 
         this.toggleUserGUI = this.toggleUserGUI.bind(this);
     }
-    toggleUserGUI(){
-        if(this.state.isUserManagmentGUIOpen){
-            this.setState({
-                isUserManagmentGUIOpen: false,
-            });
-        }else{
-            this.setState({
-                isUserManagmentGUIOpen: true,
-            });
-        }
-       
+    toggleUserGUI() {
+        this.setState({
+            isUserManagmentGUIOpen: !this.state.isUserManagmentGUIOpen,
+        });
     }
     render() {
         return (
@@ -52,7 +44,7 @@ class HomePage extends React.Component {
                     onClick={this.toggleUserGUI}
                     style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> : ''
                 }
-                {this.state.isUserManagmentGUIOpen?'Here be stuff':''}
+                {this.state.isUserManagmentGUIOpen ? 'Here be stuff' : ''}
                 <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
             </div >)
     }

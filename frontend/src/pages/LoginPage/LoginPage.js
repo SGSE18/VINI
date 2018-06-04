@@ -93,13 +93,30 @@ class LoginPage extends React.Component {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
             //TODO
-            fetch('https://jsonplaceholder.typicode.com/posts/1')
-                .then(response => { console.log(response); response.json() })
+            var details = {
+                'grant_type': 'password',
+                'username': this.state.email,
+                'password': this.state.password,
+                'client_id': null,
+                'client_secret': null
+            };
+            
+            var formBody = [];
+            for (var property in details) {
+              var encodedKey = encodeURIComponent(property);
+              var encodedValue = encodeURIComponent(details[property]);
+              formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+            fetch('https://vini-backend.azurewebsites.net/auth/login',
+                {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formBody
+                })
+                .then(response => response.json() )
                 .then(json => {
-                    console.log(json)
-                    this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
                     //TODO validate
-
                     //TODO delete this
                     switch (this.state.email) {
                         case 'user@zws.com':

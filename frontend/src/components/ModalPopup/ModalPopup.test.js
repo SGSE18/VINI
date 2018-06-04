@@ -6,15 +6,14 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('ModalPopip', () => {
+describe('ModalPopup', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ModalPopup onClose={()=>{}} title="" description="" isOpen={false} />, div);
+    ReactDOM.render(<ModalPopup onClose={() => { }} title="" description="" isOpen={false} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
   it('doesnt render the cancel button when showCancelButton is false', () => {
-
-    const wrapper = shallow(<ModalPopup onClose={()=>{}} title="" description="" isOpen={false} showCancelButton={false} />);
+    const wrapper = shallow(<ModalPopup onClose={() => { }} title="" description="" isOpen={false} showCancelButton={false} />);
     const btnCancel = wrapper.dive().find('#btnCancel');
     expect(btnCancel.length).toBe(0);
   });
@@ -53,7 +52,7 @@ describe('ModalPopip', () => {
   it('calls onClose with parameter false when pressing ESC', () => {
     const onCloseDummy = jest.fn();
     const wrapper = shallow(<ModalPopup onClose={onCloseDummy} title="" description="" isOpen={false} />);
-    wrapper.dive().find('#Modal').simulate('keyDown', {keyCode: 27});
+    wrapper.dive().find('#Modal').simulate('keyDown', { keyCode: 27 });
     expect(onCloseDummy).toBeCalledWith(false);
   });
 

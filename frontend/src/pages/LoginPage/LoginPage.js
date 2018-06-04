@@ -30,13 +30,14 @@ class LoginPage extends React.Component {
         this.onEmailInputChanged = this.onEmailInputChanged.bind(this);
         this.onPasswordInputChanged = this.onPasswordInputChanged.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
-        this.passwordKeyPress=this.passwordKeyPress.bind(this);
+        this.passwordKeyPress = this.passwordKeyPress.bind(this);
     }
-    passwordKeyPress(key){
-        var keyCode=key.keyCode;
-        if(keyCode==13) {//Enter
+    passwordKeyPress(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 13) {//Enter
             this.onLoginClick();
         }
+
     }
     isEmailValid(email) {
         // http://emailregex.com
@@ -91,16 +92,16 @@ class LoginPage extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
-             //TODO
+            //TODO
             fetch('https://jsonplaceholder.typicode.com/posts/1')
-                .then(response => {console.log(response);response.json()})
+                .then(response => { console.log(response); response.json() })
                 .then(json => {
                     console.log(json)
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
                     //TODO validate
 
                     //TODO delete this
-                    switch(this.state.email) {
+                    switch (this.state.email) {
                         case 'user@zws.com':
                             authenticationStore.setUserLevel(USER_LEVEL.ZWS);
                             break;

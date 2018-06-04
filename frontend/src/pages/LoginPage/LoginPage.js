@@ -33,10 +33,13 @@ class LoginPage extends React.Component {
         this.passwordKeyPress = this.passwordKeyPress.bind(this);
     }
     passwordKeyPress(e) {
-        var keyCode = e.keyCode;
-        if (keyCode === 13) {//Enter
-            this.onLoginClick();
+        if (!this.isPopupVisible) {
+            var keyCode = e.keyCode;
+            if (keyCode === 13) {//Enter
+                this.onLoginClick();
+            }
         }
+
 
     }
     isEmailValid(email) {
@@ -62,7 +65,7 @@ class LoginPage extends React.Component {
         })
     }
     hidePopup() {
-        this.setState({ isPopupVisible: false });
+        setTimeout(function () { this.setState({ isPopupVisible: false }); }.bind(this), 250);
     }
     onEmailInputChanged(event) {
         this.setState({

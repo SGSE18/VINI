@@ -22,7 +22,7 @@ class TransactionOverviewTable extends React.Component {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
         };
-        // TODO remove
+        // TODO remove (when getting data from backend works)
         const data = [{
             date: "20.05.2018",
             mileage: 100000,

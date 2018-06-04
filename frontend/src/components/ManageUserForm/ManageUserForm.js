@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import './ManageUserButton.css';
+import './ManageUserForm.css';
 
-const ManageUserButton = (props) => {
+const ManageUserForm = (props) => {
     return (
         <div className="Home-Page">
             Hallo Welt!!
@@ -10,4 +10,4 @@ const ManageUserButton = (props) => {
     )
 }
 
-export default ManageUserButton;
+export default ManageUserForm;

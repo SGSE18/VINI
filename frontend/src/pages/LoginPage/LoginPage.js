@@ -30,8 +30,14 @@ class LoginPage extends React.Component {
         this.onEmailInputChanged = this.onEmailInputChanged.bind(this);
         this.onPasswordInputChanged = this.onPasswordInputChanged.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
+        this.passwordKeyPress=this.passwordKeyPress.bind(this);
     }
-
+    passwordKeyPress(key){
+        var keyCode=key.keyCode;
+        if(keyCode==13) {//Enter
+            this.onLoginClick();
+        }
+    }
     isEmailValid(email) {
         // http://emailregex.com
         const isEmailInvalidRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -155,6 +161,7 @@ class LoginPage extends React.Component {
                             autoComplete="on"
                             style={{ width: '30em' }}
                             onChange={this.onPasswordInputChanged}
+                            onKeyUp={this.passwordKeyPress}
                             text={this.state.password}
                         />
                         <br></br>

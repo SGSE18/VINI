@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
-import LoginPage from './LoginPage';
+import { default as LoginPage, LoginPageNoRouter } from './LoginPage';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
@@ -12,11 +12,22 @@ describe('Login Page', () => {
         ReactDOM.render(<BrowserRouter><LoginPage /></BrowserRouter>, div);
         ReactDOM.unmountComponentAtNode(div);
     });
-    it.skip('returns false for invalid email', () => {
-        // how???
-        const test = <BrowserRouter><LoginPage /></BrowserRouter>;
-        const wrapper = shallow(test);
-        wrapper.dive().find('#email').simulate('change', { target: { value: 'a@.com' } });
-        expect(wrapper.state().isEmailInvalid).to.equal(false);
+    it('change email state when changeing the input', () => {
+        const wrapper = shallow(<LoginPageNoRouter />);
+        const value = "abc"
+        wrapper.find('#email').simulate('change', { target: { value: value } });
+        expect(wrapper.state().email).toBe(value)
     });
+    it('sets isEmailInvalid to true for an invalid email on blur', () => {
+        const wrapper = shallow(<LoginPageNoRouter />);
+        wrapper.find('#email').simulate('blur',{ target: { value: 'a.com' } });
+        wrapper.update();
+        expect(wrapper.state().isEmailInvalid).toBeTruthy()
+    });
+    it('sets isEmailInvalid to false for a valid email on blur', () => {
+        const wrapper = shallow(<LoginPageNoRouter />);
+        wrapper.find('#email').simulate('blur',{ target: { value: 'a@aol.com' } });
+        wrapper.update();
+        expect(wrapper.state().isEmailInvalid).toBeFalsy()
+    });   
 });

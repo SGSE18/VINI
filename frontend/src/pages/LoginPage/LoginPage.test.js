@@ -20,14 +20,14 @@ describe('Login Page', () => {
     });
     it('sets isEmailInvalid to true for an invalid email on blur', () => {
         const wrapper = shallow(<LoginPageNoRouter />);
-        wrapper.find('#email').simulate('blur',{ target: { value: 'a.com' } });
+        wrapper.find('#email').simulate('blur', { target: { value: 'a.com' } });
         wrapper.update();
         expect(wrapper.state().isEmailInvalid).toBeTruthy()
     });
     it('sets isEmailInvalid to false for a valid email on blur', () => {
         const wrapper = shallow(<LoginPageNoRouter />);
-        wrapper.find('#email').simulate('blur',{ target: { value: 'a@aol.com' } });
+        wrapper.find('#email').simulate('blur', { target: { value: 'a@aol.com' } });
         wrapper.update();
         expect(wrapper.state().isEmailInvalid).toBeFalsy()
-    });   
+    });
 });

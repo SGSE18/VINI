@@ -9,7 +9,7 @@ import { USER_LEVEL } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
 
-class LoginPage extends React.Component {
+export class LoginPageNoRouter extends React.Component {
     constructor(props) {
         super(props);
 
@@ -222,4 +222,4 @@ class LoginPage extends React.Component {
 
 }
 
-export default withRouter(observer(LoginPage));
+export default withRouter(observer(LoginPageNoRouter));

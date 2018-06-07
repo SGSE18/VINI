@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TextField from '@material-ui/core/TextField';
 import { VinSearch } from '..';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

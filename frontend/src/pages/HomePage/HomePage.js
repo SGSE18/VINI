@@ -30,7 +30,7 @@ class HomePage extends React.Component {
                 <div className="searchbar-container">
                     <VinSearch vin={dataStore.vin} />
                     {
-                        authenticationStore.userLevel !== USER_LEVEL.NOT_LOGGED_IN
+                        authenticationStore.userLevel > USER_LEVEL.NOT_LOGGED_IN
                             ?
                             <AddEntryButton />
                             :
@@ -38,11 +38,14 @@ class HomePage extends React.Component {
                     }
 
                 </div>
-                {authenticationStore.userLevel === USER_LEVEL.ASTVA ? <Button variant="raised"
+                {authenticationStore.userLevel === USER_LEVEL.ASTVA 
+                ? 
+                <Button variant="raised"
                     margin="normal"
                     className="button"
                     onClick={this.toggleUserGUI}
-                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> : ''
+                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> 
+                : ''
                 }
                 {this.state.isUserManagmentGUIOpen ? 'Here be stuff' : ''}
                 <TransactionOverviewTable userLevel={authenticationStore.userLevel} />

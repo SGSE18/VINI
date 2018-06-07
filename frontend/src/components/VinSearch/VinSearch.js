@@ -45,6 +45,7 @@ class VinSearch extends React.Component {
                     helperText={this.state.isVinInvalid ? "VIN ungültig" : null}
                 />
                 <Button
+                    id="btnSearch"
                     variant="raised"
                     style={{ marginLeft: '10px', height: '20px' }}
                     onClick={this.handleClick}

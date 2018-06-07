@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { LoginButton } from '../';
+import { BrowserRouter } from "react-router-dom";
 import WebFrame from './WebFrame';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -13,9 +14,9 @@ describe('WebFrame', () => {
     wrapper = shallow(<WebFrame />);
   })
 
-  it.skip('renders without crashing', () => {
+  it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<WebFrame> </WebFrame>, div);
+    ReactDOM.render(<BrowserRouter><WebFrame /></BrowserRouter>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 

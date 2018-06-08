@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 
 const ManageUserForm = (props) => {
     return (
-        <div className="Home-Page">
+        <div>
             <TextField
                 id="lastname"
                 label="Nachname" />

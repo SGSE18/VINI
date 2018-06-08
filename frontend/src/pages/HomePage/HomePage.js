@@ -3,12 +3,11 @@ import { TransactionOverviewTable } from '../../components/'
 import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
-import { AddEntryButton } from '../../components';
+import { AddEntryButton, ManageUserForm } from '../../components';
 
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 import { Button } from '@material-ui/core';
-import ManageUserForm from '../../components/ManageUserForm/ManageUserForm';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -39,17 +38,31 @@ class HomePage extends React.Component {
                     }
 
                 </div>
-                {authenticationStore.userLevel === USER_LEVEL.ASTVA 
-                ? 
-                <Button variant="raised"
-                    margin="normal"
-                    className="button"
-                    onClick={this.toggleUserGUI}
-                    style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> 
-                : ''
+                {
+                    authenticationStore.userLevel === USER_LEVEL.ASTVA
+                        ?
+                        <Button variant="raised"
+                            margin="normal"
+                            className="button"
+                            onClick={this.toggleUserGUI}
+                            style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button>
+                        :
+                        null
                 }
-                {this.state.isUserManagmentGUIOpen ? <ManageUserForm/> : ''}
-                <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+                <div style={{ display: 'flex', flexGrow: 1 }}>
+                    <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+                    {this.state.isUserManagmentGUIOpen
+                        ?
+                        <ManageUserForm
+                            style={{
+                                flexGrow: 0,
+                                width: '25%'
+                            }}
+                        />
+                        :
+                        null}
+                </div>
+
             </div >)
     }
 }

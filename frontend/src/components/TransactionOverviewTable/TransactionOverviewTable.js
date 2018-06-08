@@ -264,7 +264,8 @@ class TransactionOverviewTable extends React.Component {
                     title="Transaktion annullieren"
                     description="Soll die Transaktion wirklich annulliert werden?"
                 />
-                <ReactTable
+                <ReactTable 
+                    style={{ width: '100%' }} 
                     {...this.translationTexts}
                     data={this.state.data}
                     columns={this.getColumnDefinition()}

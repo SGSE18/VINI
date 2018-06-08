@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('ModalPopip', () => {
+describe('ModalPopup', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<ModalPopup onClose={()=>{}} title="" description="" isOpen={false} />, div);

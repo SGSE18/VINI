@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ManageUserButton  from './ManageUserButton';
+import ManageUserForm  from './ManageUserForm';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<ManageUserButton />, div);
+  ReactDOM.render(<ManageUserForm />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

@@ -8,6 +8,7 @@ import { AddEntryButton } from '../../components';
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 import { Button } from '@material-ui/core';
+import ManageUserForm from '../../components/ManageUserForm/ManageUserForm';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class HomePage extends React.Component {
                     style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button> 
                 : ''
                 }
-                {this.state.isUserManagmentGUIOpen ? 'Here be stuff' : ''}
+                {this.state.isUserManagmentGUIOpen ? <ManageUserForm/> : ''}
                 <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
             </div >)
     }

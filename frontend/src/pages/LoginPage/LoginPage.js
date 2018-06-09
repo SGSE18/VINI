@@ -136,7 +136,7 @@ export class LoginPageNoRouter extends React.Component {
             this.props.history.push(HOME_PATH);
             return;
             //////////////////////////////////////////////////////////////////////////////////////
-            fetch('https://vini-backend.azurewebsites.net/*auth/login',
+            /*fetch('https://vini-backend.azurewebsites.net/*auth/login',
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -168,7 +168,7 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .catch(message => {
                     alert(message) // TODO
-                }) 
+                }) */
         }
     }
     onModalClose() {

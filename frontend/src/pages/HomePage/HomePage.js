@@ -4,7 +4,7 @@ import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
 import { AddEntryButton, ManageUserForm } from '../../components';
-
+import PersonIcon from '@material-ui/icons/Person';
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';
 import { Button } from '@material-ui/core';
@@ -36,19 +36,23 @@ class HomePage extends React.Component {
                             :
                             null
                     }
-
+                    {
+                        authenticationStore.userLevel === USER_LEVEL.ASTVA
+                            ?
+                            <Button
+                                variant="raised"
+                                margin="normal"
+                                className="button"
+                                onClick={this.toggleUserGUI}
+                                style={{ marginLeft: '1em' }}
+                            >
+                                <PersonIcon />
+                                Benutzerverwaltung
+                        </Button>
+                            :
+                            null
+                    }
                 </div>
-                {
-                    authenticationStore.userLevel === USER_LEVEL.ASTVA
-                        ?
-                        <Button variant="raised"
-                            margin="normal"
-                            className="button"
-                            onClick={this.toggleUserGUI}
-                            style={{ width: '30em' }}>Benutzer hinzufügen/anpassen</Button>
-                        :
-                        null
-                }
                 <div style={{ display: 'flex', flexGrow: 1 }}>
                     <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
                     {this.state.isUserManagmentGUIOpen

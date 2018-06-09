@@ -1,8 +1,18 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import './ManageUserForm.css';
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
+import { USER_LEVEL, getAuthorityString } from '../../constants';
 
+let authoritylevels = [];
+for (var key in USER_LEVEL) {
+    var level = USER_LEVEL[key];
+    if (level !== USER_LEVEL.NOT_LOGGED_IN) {
+        authoritylevels.push(getAuthorityString(level));
+    }
+}
+
+// TODO class
 const ManageUserForm = (props) => {
     return (
         <div>
@@ -23,12 +33,15 @@ const ManageUserForm = (props) => {
                 id="email"
                 label="E-Mail" />
             <br></br>
-            <TextField
-                id="authoritylevel"
-                label="Authoritätslevel"
-            />
+            <FormControl style={{ width: '100%' }}>
+                <InputLabel htmlFor="age-simple">Authoritätslevel</InputLabel>
+                <Select
+                    id="authoritylevel"
+                >
+                    {authoritylevels.map((name, i) => <MenuItem style={{ backgroundColor: 'white' }} key={i}> {name}</MenuItem>)}
+                </Select>
+            </FormControl>
             <br></br>
-            {/* // DropDownMenu would be better, but for some reason its not working */}
             <TextField id="password"
                 label="Passwort"
                 type='password' />

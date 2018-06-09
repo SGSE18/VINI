@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransactionOverviewTable } from '../../components/'
+import { TransactionOverviewTable,UserOverviewTable } from '../../components/'
 import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
@@ -54,17 +54,20 @@ class HomePage extends React.Component {
                     }
                 </div>
                 <div style={{ display: 'flex', flexGrow: 1 }}>
-                    <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
                     {this.state.isUserManagmentGUIOpen
                         ?
-                        <ManageUserForm
-                            style={{
-                                flexGrow: 0,
-                                width: '25%'
-                            }}
-                        />
+                        <React.Fragment>
+                            <UserOverviewTable userLevel={authenticationStore.userLevel} />
+                            <ManageUserForm
+                                style={{
+                                    flexGrow: 0,
+                                    width: '25%'
+                                }}
+                            />
+                        </React.Fragment>
                         :
-                        null}
+                        <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+                    }
                 </div>
 
             </div >)

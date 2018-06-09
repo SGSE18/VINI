@@ -111,7 +111,32 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-            fetch('https://vini-backend.azurewebsites.net/auth/login',
+
+            // TEMP FIX as long as the backend server is down
+
+            //TODO validate
+            //TODO delete this
+            switch (this.state.email) {
+                case 'user@zws.com':
+                    authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                    break;
+                case 'user@stva.com':
+                    authenticationStore.setUserLevel(USER_LEVEL.STVA);
+                    break;
+                case 'user@astva.com':
+                    authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
+                    break;
+                case 'user@tuev.com':
+                    authenticationStore.setUserLevel(USER_LEVEL.TUEV);
+                    break;
+                default:
+                    authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+                    break;
+            }       
+            this.props.history.push(HOME_PATH);
+            return;
+            //////////////////////////////////////////////////////////////////////////////////////
+            fetch('https://vini-backend.azurewebsites.net/*auth/login',
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -141,7 +166,9 @@ export class LoginPageNoRouter extends React.Component {
 
                     this.props.history.push(HOME_PATH);
                 })
-                .catch(message => alert(message)) // TODO
+                .catch(message => {
+                    alert(message) // TODO
+                }) 
         }
     }
     onModalClose() {

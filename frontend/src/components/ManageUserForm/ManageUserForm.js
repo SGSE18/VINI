@@ -5,21 +5,21 @@ import { TextField } from '@material-ui/core';
 
 const ManageUserForm = (props) => {
     return (
-        <div className="Home-Page">
-            <TextField
-                id="lastname"
-                label="Nachname" />
-            <br></br>
+        <div>
             <TextField
                 id="firstname"
                 label="Vorname" />
+            <br></br>
+            <TextField
+                id="lastname"
+                label="Nachname" />
             <br></br>
             <TextField
                 id="company"
                 label="Unternehmen" />
             <br></br>
             <TextField
-            autoFocus
+                autoFocus
                 id="email"
                 label="E-Mail" />
             <br></br>
@@ -34,7 +34,7 @@ const ManageUserForm = (props) => {
                 type='password' />
             <br></br>
             <Button variant="raised" id="save"
-                 >Speichern</Button>
+            >Speichern</Button>
         </div>
     )
 }

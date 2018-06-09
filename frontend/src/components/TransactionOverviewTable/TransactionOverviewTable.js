@@ -165,27 +165,26 @@ class TransactionOverviewTable extends React.Component {
     onAnnulmentClick() {
         this.setState({ isPopupVisible: true })
     }
-
+    getAnullmentColumnText(cellValue) {
+        switch (cellValue) {
+            case TRANSACTION_VALID_TEXT:
+                return "Annullierung beantragen";
+            case TRANSACTION_INVALID_TEXT:
+                return "Bereits annulliert";
+            case TRANSACTION_PENDING_TEXT:
+                return "Annullierung beantragt"
+            default:
+                return "invalid state";
+        }
+    }
     annulmentCell = (cell) => {
-        let text;
         let onClick = null;
         let className = "";
+        const text = this.getAnullmentColumnText(cell.value);
 
-        switch (cell.value) {
-            case TRANSACTION_VALID_TEXT:
-                text = "Annullierung beantragen";
-                className = "annulment-link";
-                onClick = this.onAnnulmentClick;
-                break;
-            case TRANSACTION_INVALID_TEXT:
-                text = "Bereits annulliert";
-                break;
-            case TRANSACTION_PENDING_TEXT:
-                text = "Annullierung beantragt"
-                break;
-            default:
-                text = "invalid state";
-                break;
+        if(cell.value === TRANSACTION_VALID_TEXT) {
+            className = "annulment-link";
+            onClick = this.onAnnulmentClick;
         }
         return (
             <div
@@ -231,7 +230,8 @@ class TransactionOverviewTable extends React.Component {
             columnDefinition.push({
                 Header: 'Annullieren',
                 accessor: 'state',
-                Cell: this.annulmentCell
+                Cell: this.annulmentCell,
+                filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >=0
             });
         }
         return columnDefinition;
@@ -270,7 +270,7 @@ class TransactionOverviewTable extends React.Component {
                     data={this.state.data}
                     columns={this.getColumnDefinition()}
                     filterable
-                    defaultFilterMethod={(filter, row) => { return String(row[filter.id]).indexOf(String(filter.value)) >= 0}}
+                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value)).toUpperCase() >=0 }
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {

@@ -285,8 +285,8 @@ class TransactionOverviewTable extends React.Component {
     }
 };
 
-TransactionOverviewTable.propTypes = {
+const WrappedTransactionOverviewTable = observer(TransactionOverviewTable);
+WrappedTransactionOverviewTable.propTypes = {
     userLevel: PropTypes.number.isRequired
 }
-
-export default observer(TransactionOverviewTable);
+export default WrappedTransactionOverviewTable;

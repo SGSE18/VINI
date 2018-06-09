@@ -134,8 +134,9 @@ class UserOverviewTable extends React.Component {
     }
 };
 
-UserOverviewTable.propTypes = {
+const WrappedUserOverviewTable = observer(UserOverviewTable);
+WrappedUserOverviewTable.propTypes = {
     userLevel: PropTypes.number.isRequired
 }
 
-export default observer(UserOverviewTable);
+export default WrappedUserOverviewTable;

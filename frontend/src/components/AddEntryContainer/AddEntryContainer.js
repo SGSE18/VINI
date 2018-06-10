@@ -91,10 +91,11 @@ class AddEntryContainer extends React.Component {
                 this.zwsRef.current.submit(headerData);
                 break;
             case USER_LEVEL.TUEV:
-                this.tuevRef.current.submit(headerData)
+                this.tuevRef.current.submit(headerData);
                 break;
             case USER_LEVEL.STVA:
             case USER_LEVEL.ASTVA:
+            this.stvaRef.current.submit(headerData);
                 break;
             case USER_LEVEL.NOT_LOGGED_IN:
             default:

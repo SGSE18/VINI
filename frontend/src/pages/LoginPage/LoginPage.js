@@ -83,7 +83,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch('https://vini-backend.azurewebsites.net/users')
+            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users')
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -98,8 +98,8 @@ export class LoginPageNoRouter extends React.Component {
             //TODO
             let details = {
                 'grant_type': 'password',
-                'username': this.state.email,
-                'password': this.state.password,
+                'username': "testuser", //this.state.email, // TODO
+                'password': "abc123", //this.state.password,
                 'client_id': null,
                 'client_secret': null
             };
@@ -112,31 +112,7 @@ export class LoginPageNoRouter extends React.Component {
             }
             formBody = formBody.join("&");
 
-            // TEMP FIX as long as the backend server is down
-
-            //TODO validate
-            //TODO delete this
-            switch (this.state.email) {
-                case 'user@zws.com':
-                    authenticationStore.setUserLevel(USER_LEVEL.ZWS);
-                    break;
-                case 'user@stva.com':
-                    authenticationStore.setUserLevel(USER_LEVEL.STVA);
-                    break;
-                case 'user@astva.com':
-                    authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
-                    break;
-                case 'user@tuev.com':
-                    authenticationStore.setUserLevel(USER_LEVEL.TUEV);
-                    break;
-                default:
-                    authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
-                    break;
-            }       
-            this.props.history.push(HOME_PATH);
-            return;
-            //////////////////////////////////////////////////////////////////////////////////////
-            /*fetch('https://vini-backend.azurewebsites.net/*auth/login',
+            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -168,7 +144,7 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .catch(message => {
                     alert(message) // TODO
-                }) */
+                }) 
         }
     }
     onModalClose() {

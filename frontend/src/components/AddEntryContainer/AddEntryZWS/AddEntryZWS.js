@@ -37,7 +37,28 @@ class AddEntryZWS extends React.Component {
     handleOilChange(_, checked) {
         this.setState({ isOilChangeChecked: checked })
     }
+    submit(headerData) {
+        const body = {
+            ...headerData,
+            service1: this.state.isService1Checked,
+            service2: this.state.isService2Checked,
+            oilChange: this.state.isOilChangeChecked
+        };
+        fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/service',
+            {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(json => {
+                alert(JSON.stringify(json)) //TODO
+            })
+            .catch(message => {
+                alert(message) // TODO
+            })
 
+    }
     render() {
         return (
             <div style={{ display: 'inline-block' }}>

@@ -36,15 +36,20 @@ const ManageUserForm = (props) => {
             <FormControl style={{ width: '100%' }}>
                 <InputLabel htmlFor="age-simple">Authoritätslevel</InputLabel>
                 <Select
+                    value={authoritylevels[0]}
                     id="authoritylevel"
                 >
                     {authoritylevels.map((name, i) => <MenuItem style={{ backgroundColor: 'white' }} key={i}> {name}</MenuItem>)}
                 </Select>
             </FormControl>
             <br></br>
-            <TextField id="password"
-                label="Passwort"
-                type='password' />
+            <form>
+                <TextField id="password"
+                    label="Passwort"
+                    type='password'
+                    autocomplete
+                />
+            </form>
             <br></br>
             <Button variant="raised" id="save"
             >Speichern</Button>

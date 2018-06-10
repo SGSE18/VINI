@@ -88,13 +88,14 @@ class AddEntryContainer extends React.Component {
         };
         switch (authenticationStore.userLevel) {
             case USER_LEVEL.ZWS:
-            this.zwsRef.current.submit(headerData);
-            break;
+                this.zwsRef.current.submit(headerData);
+                break;
             case USER_LEVEL.TUEV:
-            break;
+                this.tuevRef.current.submit(headerData)
+                break;
             case USER_LEVEL.STVA:
             case USER_LEVEL.ASTVA:
-            break;               
+                break;
             case USER_LEVEL.NOT_LOGGED_IN:
             default:
                 break;

@@ -67,19 +67,32 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
-        if (!Number.isInteger(mileage)){
+        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway 
+            return false;
+        }       
+        if (isNaN(mileage)){ //do not allow updating if not a number
+            return false;
+        }else{
+            mileage=Number(mileage);
+        }
+        if(mileage<0){ //do not allow updating if negative
             return false;
         }
-        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway
-            return false;
-        }
-        var oldMileage = this.state.mileage;
-        if (mileage >= oldMileage || authenticationStore.userLevel === USER_LEVEL.ASTVA) {
+        var oldValue=this.state.mileage;
+        if(isNaN(oldValue)&&!isNaN(mileage)){//special case if mileage wasnt set before
+            return true;
+        }        
+        if(authenticationStore === USER_LEVEL.ASTVA){//ASTVA is allowed to do everything
+            return true;
+        }       
+        oldValue=Number(oldValue);
+        if (mileage >= oldValue) {//otherwise update is onle allowed if mileage increased
             return true;
         }
+
     }
     setKmValue(e) {        
-        var mileage=Number(e.target.value);
+        var mileage=e.target.value;        
         if (this.isNewMileageValid(mileage)) {
             this.setState({
                 mileage: e.target.value
@@ -129,7 +142,8 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateDateStr(dateStr) {
-        var dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;
+        //var dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;
+        var dateRegex = /^.*$/;//accept everything for now
         return dateRegex.test(dateStr);
 
     }

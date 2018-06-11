@@ -111,7 +111,6 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-
             fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
                 {
                     method: 'post',

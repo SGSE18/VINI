@@ -5,8 +5,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Home from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { LOGIN_PATH, HOME_PATH } from '../../app-config';
-import { USER_LEVEL } from '../../constants';
-
+import { USER_LEVEL, getAuthorityString } from '../../constants';
 // TODO DELETE-------------------------------------------
 import { authenticationStore } from '../../stores';
 //-------------------------------------------------------
@@ -19,16 +18,7 @@ class LoginButton extends React.Component {
     isAtLogin() {
         return window.location.pathname === LOGIN_PATH;
     }
-    getAuthorityString() {
-        switch (this.props.authorityLevel) {
-            case USER_LEVEL.NOT_LOGGED_IN: return "Ausgeloggt"
-            case USER_LEVEL.ZWS: return "ZWS"
-            case USER_LEVEL.TUEV: return "TÜV"
-            case USER_LEVEL.STVA: return "STVA"
-            case USER_LEVEL.ASTVA: return "Admin STVA"
-            default: return ""
-        }
-    }
+    
     handleClick() {
         // log out
         if (this.props.authorityLevel !== USER_LEVEL.NOT_LOGGED_IN) {
@@ -57,7 +47,7 @@ class LoginButton extends React.Component {
                     </Button>
                 }
                 <div className="authority-level-text">
-                    {this.getAuthorityString()}
+                    {getAuthorityString(this.props.authorityLevel)}
                 </div>
             </div>
         )

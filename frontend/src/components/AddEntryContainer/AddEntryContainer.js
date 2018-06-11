@@ -46,6 +46,7 @@ class AddEntryContainer extends React.Component {
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.hidePopup = this.hidePopup.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
+        this.submitData = this.submitData.bind(this);
         // references to the child components to retreive the data
         this.zwsRef = new React.createRef();
         this.tuevRef = new React.createRef();
@@ -62,7 +63,11 @@ class AddEntryContainer extends React.Component {
     handleCheckboxChange() {
 
     }
-    validateKmValue() {
+    validateKmValue(e) {
+        //TODO
+        this.setState({
+            mileage: e.target.value
+        });
     }
     hidePopup() {
         this.setState({ isPopupVisible: false });
@@ -70,10 +75,32 @@ class AddEntryContainer extends React.Component {
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
             // TODO validate and submit data
-            // access ref: this.tuevRef.current
+            this.submitData();
             this.props.history.push(HOME_PATH)
         }
         this.hidePopup();
+    }
+    submitData() {
+        const headerData = {
+            vin: this.props.vin,
+            mileage: this.state.mileage,
+            timestamp: this.state.selectedDate
+        };
+        switch (authenticationStore.userLevel) {
+            case USER_LEVEL.ZWS:
+                this.zwsRef.current.submit(headerData);
+                break;
+            case USER_LEVEL.TUEV:
+                this.tuevRef.current.submit(headerData);
+                break;
+            case USER_LEVEL.STVA:
+            case USER_LEVEL.ASTVA:
+            this.stvaRef.current.submit(headerData);
+                break;
+            case USER_LEVEL.NOT_LOGGED_IN:
+            default:
+                break;
+        }
     }
     handleCalendarChange(e) {
         this.setState({
@@ -114,6 +141,7 @@ class AddEntryContainer extends React.Component {
                     margin="normal"
                     autoFocus
                     onChange={this.validateKmValue}
+                    value={this.state.mileage}
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />
                 {

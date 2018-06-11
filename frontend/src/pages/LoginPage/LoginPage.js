@@ -83,7 +83,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch('https://vini-backend.azurewebsites.net/users')
+            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users')
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -98,8 +98,8 @@ export class LoginPageNoRouter extends React.Component {
             //TODO
             let details = {
                 'grant_type': 'password',
-                'username': this.state.email,
-                'password': this.state.password,
+                'username': "testuser", //this.state.email, // TODO
+                'password': "abc123", //this.state.password,
                 'client_id': null,
                 'client_secret': null
             };
@@ -111,7 +111,8 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-            fetch('https://vini-backend.azurewebsites.net/auth/login',
+
+            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -141,7 +142,9 @@ export class LoginPageNoRouter extends React.Component {
 
                     this.props.history.push(HOME_PATH);
                 })
-                .catch(message => alert(message)) // TODO
+                .catch(message => {
+                    alert(message) // TODO
+                }) 
         }
     }
     onModalClose() {

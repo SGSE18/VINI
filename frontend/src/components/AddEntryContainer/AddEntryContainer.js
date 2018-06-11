@@ -88,7 +88,7 @@ class AddEntryContainer extends React.Component {
     }
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
-            if (this.isNewMileageValid(this.state.mileage)) {
+            if (this.isNewMileageValid(this.state.mileage) && this.validateDateStr(this.state.dateStr)) {
                 this.submitData();
                 this.props.history.push(HOME_PATH)
             } else {

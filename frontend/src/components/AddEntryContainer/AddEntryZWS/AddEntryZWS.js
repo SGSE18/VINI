@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './AddEntryZWS.css'
 import Checkbox from '@material-ui/core/Checkbox';
+import { ADD_SERVICE_PATH } from '../../../constants';
 
 class AddEntryZWS extends React.Component {
 
@@ -44,7 +45,7 @@ class AddEntryZWS extends React.Component {
             service2: this.state.isService2Checked,
             oilChange: this.state.isOilChangeChecked
         };
-        fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/service',
+        fetch(ADD_SERVICE_PATH,
             {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },

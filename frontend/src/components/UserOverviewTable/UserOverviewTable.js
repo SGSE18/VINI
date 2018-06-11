@@ -5,7 +5,8 @@ import "react-table/react-table.css";
 import "./UserOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, getAuthorityString } from '../../constants';
+import { getAuthorityString } from '../../constants';
+import { READ_USER_PATH } from '../../constants';
 
 class UserOverviewTable extends React.Component {
 
@@ -18,21 +19,25 @@ class UserOverviewTable extends React.Component {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
         };
-        // TODO remove (when getting data from the backend works)
-        const data = [{
-            date: "20.05.2018",
-            forename: "Max",
-            surname: "Mustermann",
-            authorityLevel: USER_LEVEL.ASTVA,
-            action: "dummy",
-            email: "abc@asd.de",
-            company: "FH-Bielefeld"
-
-        }]
         this.state = {
-            data,
+            data: [],
             isPopupVisible: false
         };
+        fetch(READ_USER_PATH + "?username=" + this.props.email,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json.transactionPayload)
+                const data = json.transactionPayload;
+                data.transactionPayload.action= "dummy";
+                this.setState({data});
+            })
+            .catch(message => {
+                alert(message) // TODO
+            })
     }
 
 

@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
-import { USER_LEVEL } from '../../constants';
+import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
 
@@ -31,7 +31,6 @@ export class LoginPageNoRouter extends React.Component {
         this.onPasswordInputChanged = this.onPasswordInputChanged.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.passwordKeyPress = this.passwordKeyPress.bind(this);
-        this.doLogin = this.doLogin.bind(this);
     }
     passwordKeyPress(e) {
         if (!this.isPopupVisible) {
@@ -40,8 +39,6 @@ export class LoginPageNoRouter extends React.Component {
                 this.onLoginClick();
             }
         }
-
-
     }
     isEmailValid(email) {
         // http://emailregex.com
@@ -84,7 +81,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users')
+            fetch(RESET_PASSWORD_PATH) 
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -92,31 +89,9 @@ export class LoginPageNoRouter extends React.Component {
                 .catch(message => alert(message)) // TODO
         }
     }
-    doLogin() {
-        //TODO validate
-        //TODO delete this
-        switch (this.state.email) {
-            case 'user@zws.com':
-                authenticationStore.setUserLevel(USER_LEVEL.ZWS);
-                break;
-            case 'user@stva.com':
-                authenticationStore.setUserLevel(USER_LEVEL.STVA);
-                break;
-            case 'user@astva.com':
-                authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
-                break;
-            case 'user@tuev.com':
-                authenticationStore.setUserLevel(USER_LEVEL.TUEV);
-                break;
-            default:
-                authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
-                break;
-        }
 
-        this.props.history.push(HOME_PATH);
-    }
+    
     onLoginClick() {
-        var doTheLoginFetch = false;
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
@@ -136,24 +111,41 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-            if (doTheLoginFetch) {
-                fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
-                    {
-                        method: 'post',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: formBody
-                    })
-                    .then(response => response.json())
-                    .then(json => {
-                        this.doLogin();
-                    })
-                    .catch(message => {
-                        alert(message) // TODO
-                    })
-            } else {
-                this.doLogin();
-            }
+            
+            fetch(USER_LOGIN_PATH,
+                {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formBody
+                })
+                .then(response => response.json())
+                .then(json => {
+                    //TODO validate
+                    //TODO delete this
+                    console.log(json)
+                    switch (this.state.email) {
+                        case 'user@zws.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                            break;
+                        case 'user@stva.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.STVA);
+                            break;
+                        case 'user@astva.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
+                            break;
+                        case 'user@tuev.com':
+                            authenticationStore.setUserLevel(USER_LEVEL.TUEV);
+                            break;
+                        default:
+                            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+                            break;
+                    }
 
+                    this.props.history.push(HOME_PATH);
+                })
+                .catch(message => {
+                    alert(message) // TODO
+                })
         }
     }
     onModalClose() {

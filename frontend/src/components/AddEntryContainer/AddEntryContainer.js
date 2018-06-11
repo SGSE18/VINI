@@ -67,6 +67,9 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
+        if (!Number.isInteger(mileage)){
+            return false;
+        }
         if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway
             return false;
         }
@@ -75,8 +78,9 @@ class AddEntryContainer extends React.Component {
             return true;
         }
     }
-    setKmValue(e) {
-        if (this.isNewMileageValid(e.target.value)) {
+    setKmValue(e) {        
+        var mileage=Number(e.target.value);
+        if (this.isNewMileageValid(mileage)) {
             this.setState({
                 mileage: e.target.value
             });
@@ -88,6 +92,10 @@ class AddEntryContainer extends React.Component {
     }
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
+            alert(this.state.mileage);
+            alert(this.state.dateStr);
+            alert(this.isNewMileageValid(this.state.mileage));
+            alert(this.validateDateStr(this.state.dateStr));
             if (this.isNewMileageValid(this.state.mileage) && this.validateDateStr(this.state.dateStr)) {
                 this.submitData();
                 this.props.history.push(HOME_PATH)

@@ -1,6 +1,7 @@
 import React from 'react';
 import './AddEntrySTVA.css'
 import TextField from '@material-ui/core/TextField';
+import { CHANGE_MILEAGE_PATH, CHANGE_PREOWNER_PATH } from '../../../constants';
 
 class AddEntrySTVA extends React.Component {
     constructor(props) {
@@ -26,10 +27,10 @@ class AddEntrySTVA extends React.Component {
         const body = {
             ...headerData,
         };
-        let apiEndpoint = "http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/mileage";
-        if(this.state.preownerCount !== this.props.preownerCount) {
+        let apiEndpoint = CHANGE_MILEAGE_PATH;
+        if (this.state.preownerCount !== this.props.preownerCount) {
             body.preownerCount = this.state.preownerCount;
-            apiEndpoint = "http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/preowner";
+            apiEndpoint = CHANGE_PREOWNER_PATH;
         }
         fetch(apiEndpoint,
             {

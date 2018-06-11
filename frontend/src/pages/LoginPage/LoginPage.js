@@ -31,6 +31,7 @@ export class LoginPageNoRouter extends React.Component {
         this.onPasswordInputChanged = this.onPasswordInputChanged.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.passwordKeyPress = this.passwordKeyPress.bind(this);
+        this.doLogin = this.doLogin.bind(this);
     }
     passwordKeyPress(e) {
         if (!this.isPopupVisible) {
@@ -91,7 +92,31 @@ export class LoginPageNoRouter extends React.Component {
                 .catch(message => alert(message)) // TODO
         }
     }
+    doLogin() {
+        //TODO validate
+        //TODO delete this
+        switch (this.state.email) {
+            case 'user@zws.com':
+                authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                break;
+            case 'user@stva.com':
+                authenticationStore.setUserLevel(USER_LEVEL.STVA);
+                break;
+            case 'user@astva.com':
+                authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
+                break;
+            case 'user@tuev.com':
+                authenticationStore.setUserLevel(USER_LEVEL.TUEV);
+                break;
+            default:
+                authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+                break;
+        }
+
+        this.props.history.push(HOME_PATH);
+    }
     onLoginClick() {
+        var doTheLoginFetch = false;
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
@@ -111,39 +136,24 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
-                {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formBody
-                })
-                .then(response => response.json())
-                .then(json => {
-                    //TODO validate
-                    //TODO delete this
-                    switch (this.state.email) {
-                        case 'user@zws.com':
-                            authenticationStore.setUserLevel(USER_LEVEL.ZWS);
-                            break;
-                        case 'user@stva.com':
-                            authenticationStore.setUserLevel(USER_LEVEL.STVA);
-                            break;
-                        case 'user@astva.com':
-                            authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
-                            break;
-                        case 'user@tuev.com':
-                            authenticationStore.setUserLevel(USER_LEVEL.TUEV);
-                            break;
-                        default:
-                            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
-                            break;
-                    }
+            if (doTheLoginFetch) {
+                fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
+                    {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: formBody
+                    })
+                    .then(response => response.json())
+                    .then(json => {
+                        this.doLogin();
+                    })
+                    .catch(message => {
+                        alert(message) // TODO
+                    })
+            } else {
+                this.doLogin();
+            }
 
-                    this.props.history.push(HOME_PATH);
-                })
-                .catch(message => {
-                    alert(message) // TODO
-                }) 
         }
     }
     onModalClose() {

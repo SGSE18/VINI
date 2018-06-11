@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
-import { USER_LEVEL } from '../../constants';
+import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
 
@@ -39,8 +39,6 @@ export class LoginPageNoRouter extends React.Component {
                 this.onLoginClick();
             }
         }
-
-
     }
     isEmailValid(email) {
         // http://emailregex.com
@@ -83,7 +81,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users')
+            fetch(RESET_PASSWORD_PATH) 
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -112,7 +110,7 @@ export class LoginPageNoRouter extends React.Component {
             }
             formBody = formBody.join("&");
 
-            fetch('http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/users/login',
+            fetch(USER_LOGIN_PATH,
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -122,6 +120,7 @@ export class LoginPageNoRouter extends React.Component {
                 .then(json => {
                     //TODO validate
                     //TODO delete this
+                    console.log(json)
                     switch (this.state.email) {
                         case 'user@zws.com':
                             authenticationStore.setUserLevel(USER_LEVEL.ZWS);
@@ -144,7 +143,7 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .catch(message => {
                     alert(message) // TODO
-                }) 
+                })
         }
     }
     onModalClose() {

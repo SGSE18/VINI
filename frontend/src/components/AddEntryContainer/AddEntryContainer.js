@@ -86,9 +86,11 @@ class AddEntryContainer extends React.Component {
     }
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
-            this.validateAndSetKmValue("");
-            this.submitData();
-            this.props.history.push(HOME_PATH)
+            if(this.isNewMileageValid(this.state.mileage)){
+                this.submitData();
+                this.props.history.push(HOME_PATH)
+            }
+            
         }
         this.hidePopup();
     }

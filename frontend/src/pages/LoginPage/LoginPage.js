@@ -120,6 +120,7 @@ export class LoginPageNoRouter extends React.Component {
                 .then(json => {
                     //TODO validate
                     //TODO delete this
+                    console.log(json)
                     switch (this.state.email) {
                         case 'user@zws.com':
                             authenticationStore.setUserLevel(USER_LEVEL.ZWS);

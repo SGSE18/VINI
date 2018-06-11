@@ -66,7 +66,7 @@ class HomePage extends React.Component {
                             />
                         </React.Fragment>
                         :
-                        <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+                        <TransactionOverviewTable vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
                     }
                 </div>
 

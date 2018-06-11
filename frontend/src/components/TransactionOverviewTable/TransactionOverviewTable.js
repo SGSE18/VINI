@@ -5,151 +5,44 @@ import "react-table/react-table.css";
 import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
+import { READ_CAR_PATH } from '../../constants';
 
-const TRANSACTION_VALID_TEXT = "valid";
-const TRANSACTION_INVALID_TEXT = "invalid";
-const TRANSACTION_PENDING_TEXT = "offen";
+const TRANSACTION_VALID = "valid";
+const TRANSACTION_INVALID = "invalid";
+const TRANSACTION_PENDING = "open";
+const TRANSACTION_REJECTED = "rejected";
+
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
 class TransactionOverviewTable extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
         };
-        // TODO remove (when getting data from backend works)
-        const data = [{
-            date: "20.05.2018",
-            mileage: 100000,
-            preowner: 1,
-            entrant: "STVA",
-            mainInspection: true,
-            Inspection1: false,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_PENDING_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_INVALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_INVALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: true,
-            oilChange: true,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        },
-        {
-            date: "19.05.2018",
-            mileage: 90000,
-            preowner: 1,
-            entrant: "Werkstatt",
-            mainInspection: false,
-            Inspection1: true,
-            Inspection2: false,
-            oilChange: false,
-            state: TRANSACTION_VALID_TEXT
-        }]
         this.state = {
-            data,
+            data: [],
             isPopupVisible: false
         };
+        const query = "?car=" + props.vin;
+        fetch(READ_CAR_PATH + query,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json.transactionPayload)
+                this.setState({data: json.transactionPayload});
+            })
+            .catch(message => {
+                alert(message) // TODO
+            })
     }
-
 
     checkBox = (cell) => {
         return (
@@ -167,12 +60,14 @@ class TransactionOverviewTable extends React.Component {
     }
     getAnullmentColumnText(cellValue) {
         switch (cellValue) {
-            case TRANSACTION_VALID_TEXT:
+            case TRANSACTION_VALID:
                 return "Annullierung beantragen";
-            case TRANSACTION_INVALID_TEXT:
+            case TRANSACTION_INVALID:
                 return "Bereits annulliert";
-            case TRANSACTION_PENDING_TEXT:
+            case TRANSACTION_PENDING:
                 return "Annullierung beantragt"
+            case TRANSACTION_REJECTED:
+                return "Annullierung abgebrochen"  
             default:
                 return "invalid state";
         }
@@ -182,7 +77,7 @@ class TransactionOverviewTable extends React.Component {
         let className = "";
         const text = this.getAnullmentColumnText(cell.value);
 
-        if(cell.value === TRANSACTION_VALID_TEXT) {
+        if (cell.value === TRANSACTION_VALID) {
             className = "annulment-link";
             onClick = this.onAnnulmentClick;
         }
@@ -204,7 +99,7 @@ class TransactionOverviewTable extends React.Component {
             accessor: 'mileage'
         }, {
             Header: '# Vorbesitzer',
-            accessor: 'preowner'
+            accessor: 'ownerCount'
         }, {
             Header: 'Eintragender',
             accessor: 'entrant'
@@ -231,7 +126,7 @@ class TransactionOverviewTable extends React.Component {
                 Header: 'Annullieren',
                 accessor: 'state',
                 Cell: this.annulmentCell,
-                filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >=0
+                filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0
             });
         }
         return columnDefinition;
@@ -239,10 +134,12 @@ class TransactionOverviewTable extends React.Component {
     determineCellBackgroundColor(rowInfo) {
         let backgroundColor = "";
         if (rowInfo != null) {
-            if (rowInfo.row.state === TRANSACTION_INVALID_TEXT) {
+            if (rowInfo.row.state === TRANSACTION_INVALID) {
                 backgroundColor = "#ff3c3c";
-            } else if (rowInfo.row.state === TRANSACTION_PENDING_TEXT) {
+            } else if (rowInfo.row.state === TRANSACTION_PENDING) {
                 backgroundColor = "#d8d8d8";
+            } else if (rowInfo.row.state === TRANSACTION_REJECTED) {
+                backgroundColor = "#151515";
             }
         }
         return backgroundColor;
@@ -264,13 +161,13 @@ class TransactionOverviewTable extends React.Component {
                     title="Transaktion annullieren"
                     description="Soll die Transaktion wirklich annulliert werden?"
                 />
-                <ReactTable 
-                    style={{ width: '100%' }} 
+                <ReactTable
+                    style={{ width: '100%' }}
                     {...this.translationTexts}
                     data={this.state.data}
                     columns={this.getColumnDefinition()}
                     filterable
-                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value)).toUpperCase() >=0 }
+                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value)).toUpperCase() >= 0}
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {
@@ -287,6 +184,7 @@ class TransactionOverviewTable extends React.Component {
 
 const WrappedTransactionOverviewTable = observer(TransactionOverviewTable);
 WrappedTransactionOverviewTable.propTypes = {
-    userLevel: PropTypes.number.isRequired
+    userLevel: PropTypes.number.isRequired,
+    vin: PropTypes.string.isRequired
 }
 export default WrappedTransactionOverviewTable;

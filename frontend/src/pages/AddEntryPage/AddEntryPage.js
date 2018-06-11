@@ -12,7 +12,7 @@ const AddEntryPage = (props) => {
                 {/* TODO determine preowner count from table */}
                 <AddEntryContainer vin={dataStore.vin} preownerCount={0} />
             </div>
-            <TransactionOverviewTable userLevel={authenticationStore.userLevel} />
+            <TransactionOverviewTable vin={dataStore.vin}  userLevel={authenticationStore.userLevel} />
         </div>
     )
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import './AddEntryTUEV.css'
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { ADD_TUEV_PATH, CHANGE_MILEAGE_PATH } from '../../../constants';
+
 class AddEntryTUEV extends React.Component {
     constructor() {
         super();
@@ -32,10 +34,10 @@ class AddEntryTUEV extends React.Component {
         const body = {
             ...headerData,
         };
-        let apiEndpoint = "http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/mileage";
+        let apiEndpoint = CHANGE_MILEAGE_PATH;
         if(this.state.isHuAuChecked) {
             body.nextCheck = this.getNextCheckDate();
-            apiEndpoint = "http://vini-ethereum.westeurope.cloudapp.azure.com:4711/api/car/tuev";
+            apiEndpoint = ADD_TUEV_PATH;
         }
         fetch(apiEndpoint,
             {

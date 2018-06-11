@@ -17,3 +17,12 @@ export function getAuthorityString(authorityLevel) {
     }
 }
 
+const HOME_PATH = "http://vini-ethereum.westeurope.cloudapp.azure.com:4711/";
+const API_PATH = HOME_PATH + "api/";
+export const USER_LOGIN_PATH = API_PATH + "users/login";
+export const RESET_PASSWORD_PATH = API_PATH + ""
+export const CHANGE_PREOWNER_PATH = API_PATH + "car/preowner"
+export const CHANGE_MILEAGE_PATH = API_PATH + "car/mileage"
+export const ADD_TUEV_PATH = API_PATH + "car/tuev"
+export const ADD_SERVICE_PATH = API_PATH + "car/service"
+

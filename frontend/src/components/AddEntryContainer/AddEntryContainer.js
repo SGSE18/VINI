@@ -89,6 +89,8 @@ class AddEntryContainer extends React.Component {
             if(this.isNewMileageValid(this.state.mileage)){
                 this.submitData();
                 this.props.history.push(HOME_PATH)
+            }else{
+                alert("Fehler in der Eingabe");
             }
             
         }

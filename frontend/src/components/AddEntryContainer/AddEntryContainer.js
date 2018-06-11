@@ -42,7 +42,7 @@ class AddEntryContainer extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-        this.validateKmValue = this.validateKmValue.bind(this);
+        this.validateAndSetKmValue = this.validateAndSetKmValue.bind(this);
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.hidePopup = this.hidePopup.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
@@ -63,18 +63,24 @@ class AddEntryContainer extends React.Component {
     handleCheckboxChange() {
 
     }
-    validateKmValue(e) {
-        //TODO
-        this.setState({
-            mileage: e.target.value
-        });
+    validateAndSetKmValue(e) {        
+        if(authenticationStore.userLevel===USER_LEVEL.NOT_LOGGED_IN){
+            return;
+        }
+        var newMileage=e.target.value;
+        var oldMileage=this.state.mileage;
+        if(newMileage >= oldMileage || authenticationStore.userLevel===USER_LEVEL.ASTVA){
+            this.setState({
+                mileage: newMileage
+            });
+        }        
     }
     hidePopup() {
         this.setState({ isPopupVisible: false });
     }
     onModalClose(hasActionBeenConfirmed) {
         if (hasActionBeenConfirmed) {
-            // TODO validate and submit data
+            this.validateAndSetKmValue("");
             this.submitData();
             this.props.history.push(HOME_PATH)
         }

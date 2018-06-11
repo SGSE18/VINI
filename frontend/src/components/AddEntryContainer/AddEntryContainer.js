@@ -42,7 +42,7 @@ class AddEntryContainer extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-        this.isNewMilageValid=this.isNewMilageValid.bind(this);
+        this.isNewMileageValid=this.isNewMileageValid.bind(this);
         this.validateAndSetKmValue = this.validateAndSetKmValue.bind(this);
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.hidePopup = this.hidePopup.bind(this);
@@ -64,7 +64,7 @@ class AddEntryContainer extends React.Component {
     handleCheckboxChange() {
 
     }
-    isNewMilageValid(mileage) {
+    isNewMileageValid(mileage) {
         if(authenticationStore.userLevel===USER_LEVEL.NOT_LOGGED_IN){ //this case shouldnt happen anyway
             return false;
         }
@@ -74,7 +74,7 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateAndSetKmValue(e) {        
-        if(this.isNewMilageValid(e.target.value)){
+        if(this.isNewMileageValid(e.target.value)){
             this.setState({
                 mileage: e.target.value
             });
@@ -152,7 +152,7 @@ class AddEntryContainer extends React.Component {
                     label="KM"
                     margin="normal"
                     autoFocus
-                    onChange={this.validateKmValue}
+                    onChange={this.validateAndSetKmValue}
                     value={this.state.mileage}
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />

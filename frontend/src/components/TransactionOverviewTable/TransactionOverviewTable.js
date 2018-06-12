@@ -139,7 +139,7 @@ class TransactionOverviewTable extends React.Component {
             } else if (rowInfo.row.state === TRANSACTION_PENDING) {
                 backgroundColor = "#d8d8d8";
             } else if (rowInfo.row.state === TRANSACTION_REJECTED) {
-                backgroundColor = "#151515";
+                backgroundColor = "#eeee15";
             }
         }
         return backgroundColor;

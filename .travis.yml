@@ -14,7 +14,9 @@ script:
   - npm run test
   - npm run build
 deploy:
-  provider: azure_web_apps
-  site: "Vini-frontend"
+  provider: pages
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: frontend/build
   on:
     branch: master

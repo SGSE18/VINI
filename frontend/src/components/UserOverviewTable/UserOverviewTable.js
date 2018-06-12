@@ -23,7 +23,7 @@ class UserOverviewTable extends React.Component {
             data: [],
             isPopupVisible: false
         };
-        fetch(READ_USER_PATH + "?username=" + this.props.email,
+        fetch(READ_USER_PATH,
             {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -32,7 +32,7 @@ class UserOverviewTable extends React.Component {
             .then(json => {
                 console.log(json.transactionPayload)
                 const data = json.transactionPayload;
-                data.transactionPayload.action= "dummy";
+                data.action= "dummy";
                 this.setState({data});
             })
             .catch(message => {
@@ -84,7 +84,6 @@ class UserOverviewTable extends React.Component {
         }, {
             Header: 'Autoritätsebene',
             accessor: 'authorityLevel',
-            Cell: this.authorityLevelCell,
         }, {
             Header: 'Erstelldatum',
             accessor: 'date'

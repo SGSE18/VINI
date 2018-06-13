@@ -34,7 +34,7 @@ const getCurrentDate = () => {
 class AddEntryContainer extends React.Component {
     constructor(props) {
         super(props);
-        const todaywStr = getCurrentDate();
+        const todayStr = getCurrentDate();
         this.state = {
             oldMileage: 0,
             mileage:0, //should both be current value. See TODO AddEntryPage
@@ -147,6 +147,7 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateDateStr(dateStr) {
+        alert(dateStr);
         //var dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;
         var dateRegex = /^.*$/;//accept everything for now
         return dateRegex.test(dateStr);

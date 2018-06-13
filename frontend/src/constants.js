@@ -20,6 +20,8 @@ export function getAuthorityString(authorityLevel) {
 const HOME_PATH = "http://vini-ethereum.westeurope.cloudapp.azure.com/";
 const API_PATH = HOME_PATH + "api/";
 export const USER_LOGIN_PATH = API_PATH + "users/login";
+export const REGISTER_USER_PATH = API_PATH + "users/register";
+export const DELETE_USER_PATH = REGISTER_USER_PATH;
 export const RESET_PASSWORD_PATH = API_PATH + ""
 
 export const CHANGE_PREOWNER_PATH = API_PATH + "car/preowner"

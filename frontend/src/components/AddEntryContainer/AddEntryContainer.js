@@ -54,6 +54,9 @@ class AddEntryContainer extends React.Component {
         this.zwsRef = new React.createRef();
         this.tuevRef = new React.createRef();
         this.stvaRef = new React.createRef();
+        //refs for textfileds
+        this.mileageFieldRef=new React.createRef();
+        this.dateFieldRef=new React.createRef();
     }
 
 
@@ -191,6 +194,7 @@ class AddEntryContainer extends React.Component {
                     label="KM"
                     margin="normal"
                     autoFocus
+                    ref={this.mileageFieldRef}
                     onChange={this.setKmValue}
                     value={this.state.mileage}
                     style={{ marginLeft: '2em', marginRight: '2em' }}
@@ -203,6 +207,7 @@ class AddEntryContainer extends React.Component {
                         id="date"
                         label="Datum"
                         type="date"
+                        ref={this.dateFieldRef}
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
                         InputLabelProps={{

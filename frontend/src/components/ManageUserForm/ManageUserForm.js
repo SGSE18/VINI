@@ -47,7 +47,7 @@ const ManageUserForm = (props) => {
                 <TextField id="password"
                     label="Passwort"
                     type='password'
-                    autoComplete
+                    autoComplete="true"
                 />
             </form>
             <br></br>

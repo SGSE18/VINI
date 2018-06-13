@@ -81,7 +81,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch(RESET_PASSWORD_PATH) 
+            fetch(RESET_PASSWORD_PATH)
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
@@ -120,7 +120,6 @@ export class LoginPageNoRouter extends React.Component {
                 .then(json => {
                     //TODO validate
                     //TODO delete this
-                    console.log(json)
                     switch (this.state.email) {
                         case 'user@zws.com':
                             authenticationStore.setUserLevel(USER_LEVEL.ZWS);
@@ -181,7 +180,7 @@ export class LoginPageNoRouter extends React.Component {
                             label="Passwort"
                             type="password"
                             margin="normal"
-                            autoComplete="on"
+                            autoComplete="true"
                             style={{ width: '30em' }}
                             onChange={this.onPasswordInputChanged}
                             onKeyUp={this.passwordKeyPress}

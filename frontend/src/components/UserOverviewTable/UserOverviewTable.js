@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./UserOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { getAuthorityString } from '../../constants';
+import { getAuthorityString, DELETE_USER_PATH } from '../../constants';
 import { READ_USER_PATH } from '../../constants';
 
 class UserOverviewTable extends React.Component {
@@ -13,7 +13,6 @@ class UserOverviewTable extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
@@ -21,6 +20,7 @@ class UserOverviewTable extends React.Component {
         };
         this.state = {
             data: [],
+            clickedCellIndex: -1,
             isPopupVisible: false
         };
         fetch(READ_USER_PATH,
@@ -30,7 +30,6 @@ class UserOverviewTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                console.log(json.transactionPayload)
                 const data = json.transactionPayload;
                 data.action= "dummy";
                 this.setState({data});
@@ -52,17 +51,18 @@ class UserOverviewTable extends React.Component {
         );
     }
 
-    onAnnulmentClick() {
-        this.setState({ isPopupVisible: true })
+    onAnnulmentClick(clickedCellIndex) {
+
+        this.setState({clickedCellIndex, isPopupVisible: true })
     }
     authorityLevelCell = (cell) => {
         return getAuthorityString(cell.value);
     }
-    annulmentCell = () => {
+    annulmentCell = (row) => {
         return (
             <div
                 className="annulment-link"      // mimic anchor tag style for annulment links
-                onClick={this.onAnnulmentClick}     
+                onClick={this.onAnnulmentClick.bind(this, row.index)}     
             >
                 Löschen
             </div>
@@ -104,7 +104,23 @@ class UserOverviewTable extends React.Component {
     }
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
-            alert("Simulierte REST-Anfrage... :)");
+            const user = this.state.data[this.state.clickedCellIndex];
+            console.log("lösche user: " + this.state.clickedCellIndex);
+            fetch(DELETE_USER_PATH,
+                {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json',"Access-Control-Allow-Method": "DELETE" },
+                    body: JSON.stringify(user)
+                })
+                .then(response => {console.log(response);response.json()})
+                .then(json => {
+      
+
+
+                })
+                .catch(message => {
+                    alert(message) // TODO
+                })
         }
         this.setState({ isPopupVisible: false })
     }

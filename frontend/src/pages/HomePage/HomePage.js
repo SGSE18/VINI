@@ -1,9 +1,8 @@
 import React from 'react';
-import { TransactionOverviewTable,UserOverviewTable } from '../../components/'
+import { TransactionOverviewTable,UserOverviewTable, AddEntryButton, ManageUserForm } from '../../components/'
 import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
-import { AddEntryButton, ManageUserForm } from '../../components';
 import PersonIcon from '@material-ui/icons/Person';
 import './HomePage.css';
 import { USER_LEVEL } from '../../constants';

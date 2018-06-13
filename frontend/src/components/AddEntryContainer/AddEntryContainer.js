@@ -148,8 +148,9 @@ class AddEntryContainer extends React.Component {
     }
     validateDateStr(dateStr) {
         alert(dateStr);
-        //var dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;
-        var dateRegex = /^.*$/;//accept everything for now
+        var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        //var dateRegex = /^.*$/;//debug
+        alert(dateRegex.test(dateStr));
         return dateRegex.test(dateStr);
 
     }

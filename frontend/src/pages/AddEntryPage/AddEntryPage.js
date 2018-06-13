@@ -9,7 +9,7 @@ const AddEntryPage = (props) => {
     return (
         <div className="Home-Page">
             <div className="searchbar-container">
-                {/* TODO determine preowner count from table */}
+                {/* TODO determine preowner count and current mileage from table */}
                 <AddEntryContainer vin={dataStore.vin} preownerCount={0} />
             </div>
             <TransactionOverviewTable vin={dataStore.vin}  userLevel={authenticationStore.userLevel} />

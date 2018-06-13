@@ -34,9 +34,10 @@ const getCurrentDate = () => {
 class AddEntryContainer extends React.Component {
     constructor(props) {
         super(props);
-        const todayStr = getCurrentDate();
+        const todaywStr = getCurrentDate();
         this.state = {
             oldMileage: 0,
+            mileage:0, //should both be current value. See TODO AddEntryPage
             selectedDate: todayStr,
             isPopupVisible: false
         }

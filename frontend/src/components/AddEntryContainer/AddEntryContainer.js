@@ -36,6 +36,7 @@ class AddEntryContainer extends React.Component {
         super(props);
         const todayStr = getCurrentDate();
         this.state = {
+            oldMileage: 0,
             selectedDate: todayStr,
             isPopupVisible: false
         }
@@ -81,7 +82,7 @@ class AddEntryContainer extends React.Component {
         if(mileage<0){ //do not allow updating if negative
             return false;
         }
-        var oldValue=this.state.mileage;
+        var oldValue=this.state.oldMileage;
         if(isNaN(oldValue)&&!isNaN(mileage)){//special case if mileage wasnt set before
             return true;
         }        
@@ -160,6 +161,7 @@ class AddEntryContainer extends React.Component {
     }
     handleCalendarChange(e) {
         this.setDate(e.target.value);
+        
     }
     getUserLevelSpecificComponent() {
         switch (authenticationStore.userLevel) {

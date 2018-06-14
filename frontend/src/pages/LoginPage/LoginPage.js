@@ -89,6 +89,8 @@ export class LoginPageNoRouter extends React.Component {
                 .catch(message => alert(message)) // TODO
         }
     }
+
+    
     onLoginClick() {
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
@@ -109,7 +111,7 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-
+            
             fetch(USER_LOGIN_PATH,
                 {
                     method: 'post',

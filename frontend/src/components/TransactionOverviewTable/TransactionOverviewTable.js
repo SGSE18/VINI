@@ -168,7 +168,7 @@ class TransactionOverviewTable extends React.Component {
                     data={this.state.data}
                     columns={this.getColumnDefinition()}
                     filterable
-                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value)).toUpperCase() >= 0}
+                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0}
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {

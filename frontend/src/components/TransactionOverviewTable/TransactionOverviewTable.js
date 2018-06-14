@@ -36,7 +36,8 @@ class TransactionOverviewTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                this.setState({data: json.transactionPayload});
+                console.log(json.transactionPayload)
+                this.setState({ data: json.transactionPayload });
             })
             .catch(message => {
                 alert(message) // TODO
@@ -56,7 +57,7 @@ class TransactionOverviewTable extends React.Component {
 
     onAnnulmentClick(clickedCellIndex) {
 
-        this.setState({clickedCellIndex, isPopupVisible: true })
+        this.setState({ clickedCellIndex, isPopupVisible: true })
     }
     getAnullmentColumnText(cellValue) {
         switch (cellValue) {
@@ -67,7 +68,7 @@ class TransactionOverviewTable extends React.Component {
             case TRANSACTION_PENDING:
                 return "Annullierung beantragt"
             case TRANSACTION_REJECTED:
-                return "Annullierung abgebrochen"  
+                return "Annullierung abgebrochen"
             default:
                 return "invalid state";
         }
@@ -93,7 +94,18 @@ class TransactionOverviewTable extends React.Component {
     getColumnDefinition() {
         let columnDefinition = [{
             Header: 'Datum',
-            accessor: 'date' // String-based value accessors!
+            id: "date",
+            accessor: d => {
+                const date = new Date(d.timestamp);
+                let timestamp = date.toString(); // fallback
+                try {
+                    timestamp = date.toISOString().substring(0, 10); // yyyy-mm-dd
+                } catch (ex) {
+                    console.log(ex);
+                }
+                return timestamp;
+
+            }
         }, {
             Header: 'KM',
             accessor: 'mileage'
@@ -168,7 +180,7 @@ class TransactionOverviewTable extends React.Component {
                     data={this.state.data}
                     columns={this.getColumnDefinition()}
                     filterable
-                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value)).toUpperCase() >= 0}
+                    defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0}
                     defaultPageSize={10}
                     noDataText={NO_DATA_AVAILABLE_TEXT}
                     getTrProps={(state, rowInfo, column) => {

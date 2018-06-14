@@ -37,7 +37,7 @@ class TransactionOverviewTable extends React.Component {
             .then(response => response.json())
             .then(json => {
                 console.log(json.transactionPayload)
-                this.setState({data: json.transactionPayload});
+                this.setState({ data: json.transactionPayload });
             })
             .catch(message => {
                 alert(message) // TODO
@@ -57,7 +57,7 @@ class TransactionOverviewTable extends React.Component {
 
     onAnnulmentClick(clickedCellIndex) {
 
-        this.setState({clickedCellIndex, isPopupVisible: true })
+        this.setState({ clickedCellIndex, isPopupVisible: true })
     }
     getAnullmentColumnText(cellValue) {
         switch (cellValue) {
@@ -68,7 +68,7 @@ class TransactionOverviewTable extends React.Component {
             case TRANSACTION_PENDING:
                 return "Annullierung beantragt"
             case TRANSACTION_REJECTED:
-                return "Annullierung abgebrochen"  
+                return "Annullierung abgebrochen"
             default:
                 return "invalid state";
         }
@@ -97,9 +97,15 @@ class TransactionOverviewTable extends React.Component {
             id: "date",
             accessor: d => {
                 const date = new Date(d.timestamp);
-                return date.toISOString().substring(0, 10); // yyyy-mm-dd
-                  
-              }
+                let timestamp = date.toString(); // fallback
+                try {
+                    timestamp = date.toISOString().substring(0, 10); // yyyy-mm-dd
+                } catch (ex) {
+                    console.log(ex);
+                }
+                return timestamp;
+
+            }
         }, {
             Header: 'KM',
             accessor: 'mileage'

@@ -18,7 +18,6 @@ class TransactionOverviewTable extends React.Component {
 
     constructor(props) {
         super(props);
-        this.onAnnulmentClick = this.onAnnulmentClick.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.translationTexts = {
             previousText: 'Vorherige', nextText: 'Nächste', loadingText: 'Daten werden geladen...',
@@ -26,6 +25,7 @@ class TransactionOverviewTable extends React.Component {
         };
         this.state = {
             data: [],
+            clickedCellIndex: -1,
             isPopupVisible: false
         };
         const query = "?car=" + props.vin;
@@ -36,7 +36,6 @@ class TransactionOverviewTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                console.log(json.transactionPayload)
                 this.setState({data: json.transactionPayload});
             })
             .catch(message => {
@@ -55,8 +54,9 @@ class TransactionOverviewTable extends React.Component {
         );
     }
 
-    onAnnulmentClick() {
-        this.setState({ isPopupVisible: true })
+    onAnnulmentClick(clickedCellIndex) {
+
+        this.setState({clickedCellIndex, isPopupVisible: true })
     }
     getAnullmentColumnText(cellValue) {
         switch (cellValue) {
@@ -79,7 +79,7 @@ class TransactionOverviewTable extends React.Component {
 
         if (cell.value === TRANSACTION_VALID) {
             className = "annulment-link";
-            onClick = this.onAnnulmentClick;
+            onClick = this.onAnnulmentClick.bind(this, cell.index);
         }
         return (
             <div
@@ -109,11 +109,11 @@ class TransactionOverviewTable extends React.Component {
             Cell: this.checkBox
         }, {
             Header: 'Inspektion I',
-            accessor: 'Inspection1',
+            accessor: 'service1',
             Cell: this.checkBox
         }, {
             Header: 'Inspektion II',
-            accessor: 'Inspection2',
+            accessor: 'service2',
             Cell: this.checkBox
         }, {
             Header: 'Ölwechsel',
@@ -139,14 +139,15 @@ class TransactionOverviewTable extends React.Component {
             } else if (rowInfo.row.state === TRANSACTION_PENDING) {
                 backgroundColor = "#d8d8d8";
             } else if (rowInfo.row.state === TRANSACTION_REJECTED) {
-                backgroundColor = "#151515";
+                backgroundColor = "#eeee15";
             }
         }
         return backgroundColor;
     }
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
-            alert("Simulierte REST-Anfrage... :)");
+            const transaction = this.state.data[this.state.clickedCellIndex];
+            console.log("Beantrage Annullierung für: " + transaction.transactionId);
         }
         this.setState({ isPopupVisible: false })
     }

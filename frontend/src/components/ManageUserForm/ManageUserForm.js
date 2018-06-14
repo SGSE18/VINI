@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import './ManageUserForm.css';
 import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { USER_LEVEL, getAuthorityString } from '../../constants';
+import { REGISTER_USER_PATH } from '../../constants';
 
 let authoritylevels = [];
 for (var key in USER_LEVEL) {
@@ -12,49 +13,141 @@ for (var key in USER_LEVEL) {
     }
 }
 
-// TODO class
-const ManageUserForm = (props) => {
-    return (
-        <div>
-            <TextField
-                id="firstname"
-                label="Vorname" />
-            <br></br>
-            <TextField
-                id="lastname"
-                label="Nachname" />
-            <br></br>
-            <TextField
-                id="company"
-                label="Unternehmen" />
-            <br></br>
-            <TextField
-                autoFocus
-                id="email"
-                label="E-Mail" />
-            <br></br>
-            <FormControl style={{ width: '100%' }}>
-                <InputLabel htmlFor="age-simple">Authoritätslevel</InputLabel>
-                <Select
-                    value={authoritylevels[0]}
-                    id="authoritylevel"
-                >
-                    {authoritylevels.map((name, i) => <MenuItem style={{ backgroundColor: 'white' }} key={i}> {name}</MenuItem>)}
-                </Select>
-            </FormControl>
-            <br></br>
-            <form>
-                <TextField id="password"
-                    label="Passwort"
-                    type='password'
-                    autoComplete="true"
+export class ManageUserForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            forename: "",
+            surname: "",
+            company: "",
+            email: "",
+            authorityLevel: "",
+            password: "",
+            confirmPassword: "",
+            arePasswordsEqual: true,
+            helperText: ""
+        }
+        this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
+        this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
+    }
+    inputIsValid() {
+        if( this.state.forename !== "" 
+        &&  this.state.surname !== ""
+        &&  this.state.company !== ""
+        &&  this.state.email !== ""
+        &&  this.state.authorityLevel !== ""
+        &&  this.state.password !== ""
+        &&  this.state.arePasswordsEqual) {
+            return true;
+        }
+        return false;
+    }
+    setStateValue(valName, event) {
+        console.log(valName, event.target.value)
+        this.setState({ [valName]: event.target.value })
+    }
+    checkConfirmPassword() {
+        if(this.state.password !== "" 
+        && this.state.confirmPassword !== "" 
+        && this.state.confirmPassword !== this.state.password) {
+            this.setState({
+                arePasswordsEqual: false,
+                helperText: "Passwörter nicht identisch"
+            })
+        } else {
+            this.setState({
+                arePasswordsEqual: true,
+                helperText: ""
+            })
+        }
+
+    }
+    onBtnSaveClick() {
+        if (this.inputIsValid()) {
+            console.log(this.state)
+            const body = "";
+            console.log(REGISTER_USER_PATH)
+            fetch(REGISTER_USER_PATH,
+                {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                })
+                .then(response => response.json())
+                .then(json => {
+                    alert(JSON.stringify(json)) //TODO
+                })
+                .catch(message => {
+                    alert(message) // TODO
+                })
+        }
+    }
+    render() {
+        return (
+            <div>
+                <TextField
+                    id="forename"
+                    label="Vorname"
+                    onChange={this.setStateValue.bind(this, "forename")}
                 />
-            </form>
-            <br></br>
-            <Button variant="raised" id="save"
-            >Speichern</Button>
-        </div>
-    )
+                <br></br>
+                <TextField
+                    id="surename"
+                    label="Nachname"
+                    onChange={this.setStateValue.bind(this, "surname")}
+                />
+                <br></br>
+                <TextField
+                    id="company"
+                    label="Unternehmen"
+                    onChange={this.setStateValue.bind(this, "company")}
+                />
+                <br></br>
+                <TextField
+                    autoFocus
+                    id="email"
+                    label="E-Mail"
+                    onChange={this.setStateValue.bind(this, "email")}
+                />
+                <br></br>
+                <FormControl style={{ width: '100%' }}>
+                    <InputLabel htmlFor="age-simple">Authoritätslevel</InputLabel>
+                    <Select
+                        value={this.state.authorityLevel}
+                        id="authoritylevel"
+                        onChange={this.setStateValue.bind(this, "authorityLevel")}
+                    >
+                        {authoritylevels.map((name, i) => <MenuItem style={{ backgroundColor: 'white' }} key={i} value={name}> {name}</MenuItem>)}
+                    </Select>
+                </FormControl>
+                <br></br>
+                <form>
+                    <TextField id="password"
+                        label="Passwort"
+                        type='password'
+                        autoComplete="true"
+                        onChange={this.setStateValue.bind(this, "password")}
+                        onBlur={this.checkConfirmPassword}
+                    />
+                </form>
+                <form>
+                    <TextField id="confirm-password"
+                        label="Passwort bestätigen"
+                        type='password'
+                        autoComplete="false"
+                        onChange={this.setStateValue.bind(this, "confirmPassword")}
+                        onBlur={this.checkConfirmPassword}
+                        error={!this.state.arePasswordsEqual}
+                        helperText={this.state.helperText}
+                    />
+                </form>
+                <br></br>
+                <Button variant="raised" id="save" onClick={this.onBtnSaveClick}>
+                    Speichern
+            </Button>
+            </div>
+        )
+    }
 }
 
 export default ManageUserForm;

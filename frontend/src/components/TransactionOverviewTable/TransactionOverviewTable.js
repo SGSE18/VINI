@@ -36,6 +36,7 @@ class TransactionOverviewTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
+                console.log(json.transactionPayload)
                 this.setState({data: json.transactionPayload});
             })
             .catch(message => {
@@ -93,7 +94,12 @@ class TransactionOverviewTable extends React.Component {
     getColumnDefinition() {
         let columnDefinition = [{
             Header: 'Datum',
-            accessor: 'date' // String-based value accessors!
+            id: "date",
+            accessor: d => {
+                const date = new Date(d.timestamp);
+                return date.toISOString().substring(0, 10); // yyyy-mm-dd
+                  
+              }
         }, {
             Header: 'KM',
             accessor: 'mileage'

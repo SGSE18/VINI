@@ -101,7 +101,7 @@ class TransactionOverviewTable extends React.Component {
                 try {
                     timestamp = date.toISOString().substring(0, 10); // yyyy-mm-dd
                 } catch (ex) {
-                    console.log(ex);
+                    console.error(ex);
                 }
                 return timestamp;
 

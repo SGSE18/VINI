@@ -17,7 +17,7 @@ export function getAuthorityString(authorityLevel) {
     }
 }
 
-const HOME_PATH = "https://vini-ethereum.westeurope.cloudapp.azure.com/";
+const HOME_PATH = "https://vini-ethereum.westeurope.cloudapp.azure.com:4712/";
 const API_PATH = HOME_PATH + "api/";
 export const USER_LOGIN_PATH = API_PATH + "users/login";
 export const REGISTER_USER_PATH = API_PATH + "users/register";

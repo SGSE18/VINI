@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
-import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH } from '../../constants';
+import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
 
@@ -120,7 +120,7 @@ export class LoginPageNoRouter extends React.Component {
             }
             formBody = formBody.join("&");
 
-            fetch(USER_LOGIN_PATH,
+            fetch(USER_TOKEN_PATH,
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -128,37 +128,58 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json)
-                    if (json.loginStatus === "success") {
-                        authenticationStore.setToken(json.token);
-                        authenticationStore.setUserLevel(json.authorityLevel);
-                        //TODO delete this
-                        switch (this.state.email) {
-                            case 'user@zws.com':
-                                authenticationStore.setUserLevel(USER_LEVEL.ZWS);
-                                break;
-                            case 'user@stva.com':
-                                authenticationStore.setUserLevel(USER_LEVEL.STVA);
-                                break;
-                            case 'user@astva.com':
-                                authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
-                                break;
-                            case 'user@tuev.com':
-                                authenticationStore.setUserLevel(USER_LEVEL.TUEV);
-                                break;
-                            default:
-                                authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
-                                break;
-                        }
+                    if (json !== undefined) {
+                        const bearerToken = json.access_token
+                        authenticationStore.token = bearerToken;
+                        // Login
+                        fetch(USER_LOGIN_PATH,
+                            {
+                                method: 'get',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': "Bearer " + bearerToken
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(json => {
+                                console.log(json)
+                                if (json.loginStatus === "success") {
+                                    authenticationStore.setUserLevel(json.authorityLevel);
+                                    //TODO delete this
+                                    switch (this.state.email) {
+                                        case 'user@zws.com':
+                                            authenticationStore.setUserLevel(USER_LEVEL.ZWS);
+                                            break;
+                                        case 'user@stva.com':
+                                            authenticationStore.setUserLevel(USER_LEVEL.STVA);
+                                            break;
+                                        case 'user@astva.com':
+                                            authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
+                                            break;
+                                        case 'user@tuev.com':
+                                            authenticationStore.setUserLevel(USER_LEVEL.TUEV);
+                                            break;
+                                        default:
+                                            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
+                                            break;
+                                    }
 
-                        this.props.history.push(HOME_PATH);
-                    } else if (json.loginStatus === "failure") {
-                        alert("Login fehlgeschlagen!")
+                                    this.props.history.push(HOME_PATH);
+                                } else if (json.loginStatus === "failure") {
+                                    this.displayPopup("Fehler", "Login fehlgeschlagen!")
+                                }
+
+                            })
+                            .catch(message => {
+                                console.error("Fehler", "" + message)
+                            })
+                    } else {
+                        this.displayPopup("Fehler", "Login ungültig")
                     }
 
                 })
                 .catch(message => {
-                    alert(message) // TODO
+                    console.error("Fehler", "" + message)
                 })
         }
     }

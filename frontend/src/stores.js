@@ -3,8 +3,9 @@ import { action } from 'mobx';
 
 export let authenticationStore = observable({
     userLevel: 4,
-    token: "a74b0debd96954f807451074ac3eefe7918f1b7b",
-    setUserLevel: action((newVal) => authenticationStore.userLevel = newVal)
+    token: "",
+    setUserLevel: action((newVal) => authenticationStore.userLevel = newVal),
+    setToken: action((newVal) => authenticationStore.setToken = newVal)
 });
 
 export let dataStore = observable({

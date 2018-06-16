@@ -30,7 +30,7 @@ class AddEntrySTVA extends React.Component {
         };
         let apiEndpoint = CHANGE_MILEAGE_PATH;
         if (this.state.preownerCount !== this.props.preownerCount) {
-            body.preOwner = this.state.preownerCount;
+            body.ownerCount = this.state.preownerCount;
             apiEndpoint = CHANGE_PREOWNER_PATH;
         }
         console.log(body)

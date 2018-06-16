@@ -86,6 +86,7 @@ export class ManageUserForm extends React.Component {
         return (
             <div>
                 <TextField
+                    autoFocus
                     id="forename"
                     label="Vorname"
                     onChange={this.setStateValue.bind(this, "forename")}
@@ -104,7 +105,6 @@ export class ManageUserForm extends React.Component {
                 />
                 <br></br>
                 <TextField
-                    autoFocus
                     id="email"
                     label="E-Mail"
                     onChange={this.setStateValue.bind(this, "email")}

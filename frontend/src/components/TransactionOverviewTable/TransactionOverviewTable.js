@@ -36,7 +36,6 @@ class TransactionOverviewTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                console.log(json.transactionPayload)
                 this.setState({ data: json.transactionPayload });
             })
             .catch(message => {

@@ -98,8 +98,8 @@ export class LoginPageNoRouter extends React.Component {
             //TODO
             let details = {
                 'grant_type': 'password',
-                'username': "testuser", //this.state.email, // TODO
-                'password': "abc123", //this.state.password,
+                'username': this.state.email,
+                'password': "abc123", //TODO this.state.password,
                 'client_id': null,
                 'client_secret': null
             };

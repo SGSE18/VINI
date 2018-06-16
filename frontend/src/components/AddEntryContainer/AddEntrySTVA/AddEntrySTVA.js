@@ -2,6 +2,7 @@ import React from 'react';
 import './AddEntrySTVA.css'
 import TextField from '@material-ui/core/TextField';
 import { CHANGE_MILEAGE_PATH, CHANGE_PREOWNER_PATH } from '../../../constants';
+import { authenticationStore } from '../../../stores';
 
 class AddEntrySTVA extends React.Component {
     constructor(props) {
@@ -29,13 +30,17 @@ class AddEntrySTVA extends React.Component {
         };
         let apiEndpoint = CHANGE_MILEAGE_PATH;
         if (this.state.preownerCount !== this.props.preownerCount) {
-            body.preownerCount = this.state.preownerCount;
+            body.preOwner = this.state.preownerCount;
             apiEndpoint = CHANGE_PREOWNER_PATH;
         }
+        console.log(body)
         fetch(apiEndpoint,
             {
                 method: 'post',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
                 body: JSON.stringify(body)
             })
             .then(response => response.json())

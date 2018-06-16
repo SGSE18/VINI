@@ -4,6 +4,7 @@ import './AddEntryTUEV.css'
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { ADD_TUEV_PATH, CHANGE_MILEAGE_PATH } from '../../../constants';
+import { authenticationStore } from '../../../stores';
 
 class AddEntryTUEV extends React.Component {
     constructor() {
@@ -20,14 +21,14 @@ class AddEntryTUEV extends React.Component {
     handleCheckboxChange(_, checked) {
         this.setState({ isHuAuChecked: checked })
     }
-    getNextCheckDate = () => {
-        const today = new Date()
-        const todayStr = today.getFullYear()+2 + '-';
-        let month = today.getMonth() + 1;
+    getNextCheckDate = (timestamp) => {
+        const date = new Date(timestamp)
+        const dateYear = date.getFullYear()+2 + '-';
+        let month = date.getMonth() + 1;
         month = month < 10 ? "0" + month : month;
-        let day = today.getDate();
+        let day = date.getDate();
         day = day < 10 ? "0" + day : day
-        return todayStr + month + '-' + day;
+        return dateYear + month + '-' + day;
     }
     submit(headerData) {
 
@@ -36,13 +37,17 @@ class AddEntryTUEV extends React.Component {
         };
         let apiEndpoint = CHANGE_MILEAGE_PATH;
         if(this.state.isHuAuChecked) {
-            body.nextCheck = this.getNextCheckDate();
+            body.nextCheck = this.getNextCheckDate(body.timestamp);
             apiEndpoint = ADD_TUEV_PATH;
         }
+        console.log(body);
         fetch(apiEndpoint,
             {
                 method: 'post',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
                 body: JSON.stringify(body)
             })
             .then(response => response.json())

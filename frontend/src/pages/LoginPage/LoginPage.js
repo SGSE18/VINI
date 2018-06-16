@@ -81,7 +81,15 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
-            fetch(RESET_PASSWORD_PATH)
+            fetch(RESET_PASSWORD_PATH,
+                {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'Authorization': "Bearer " + authenticationStore.token
+                    },
+                    body: JSON.stringify(this.state.email)
+                })
                 .then(response => response.json())
                 .then(json => {
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")

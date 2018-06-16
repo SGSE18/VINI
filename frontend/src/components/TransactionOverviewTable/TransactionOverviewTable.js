@@ -6,6 +6,7 @@ import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { READ_CAR_PATH } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 const TRANSACTION_VALID = "valid";
 const TRANSACTION_INVALID = "invalid";
@@ -32,7 +33,10 @@ class TransactionOverviewTable extends React.Component {
         fetch(READ_CAR_PATH + query,
             {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
             })
             .then(response => response.json())
             .then(json => {

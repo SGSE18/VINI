@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './AddEntryZWS.css'
 import Checkbox from '@material-ui/core/Checkbox';
 import { ADD_SERVICE_PATH } from '../../../constants';
+import { authenticationStore } from '../../../stores';
 
 class AddEntryZWS extends React.Component {
 
@@ -48,7 +49,10 @@ class AddEntryZWS extends React.Component {
         fetch(ADD_SERVICE_PATH,
             {
                 method: 'post',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
                 body: JSON.stringify(body)
             })
             .then(response => response.json())

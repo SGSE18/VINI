@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransactionOverviewTable,UserOverviewTable, AddEntryButton, ManageUserForm } from '../../components/'
+import { TransactionOverviewTable, UserOverviewTable, AddEntryButton, ManageUserForm } from '../../components/'
 import { authenticationStore, dataStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
@@ -38,6 +38,7 @@ class HomePage extends React.Component {
                     {
                         authenticationStore.userLevel === USER_LEVEL.ASTVA
                             ?
+
                             <Button
                                 variant="raised"
                                 margin="normal"
@@ -45,9 +46,18 @@ class HomePage extends React.Component {
                                 onClick={this.toggleUserGUI}
                                 style={{ marginLeft: '1em' }}
                             >
-                                <PersonIcon />
-                                Benutzerverwaltung
-                        </Button>
+                                {
+                                    this.state.isUserManagmentGUIOpen
+                                        ?
+                                        "Transaktionsübersicht"
+                                        :
+                                        <React.Fragment>
+                                            <PersonIcon />
+                                            Benutzerverwaltung
+                                        </React.Fragment>
+                                }
+
+                            </Button>
                             :
                             null
                     }

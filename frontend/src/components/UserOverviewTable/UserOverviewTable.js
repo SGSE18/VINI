@@ -7,6 +7,7 @@ import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { getAuthorityString, DELETE_USER_PATH } from '../../constants';
 import { READ_USER_PATH } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 class UserOverviewTable extends React.Component {
 
@@ -26,7 +27,10 @@ class UserOverviewTable extends React.Component {
         fetch(READ_USER_PATH,
             {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
             })
             .then(response => response.json())
             .then(json => {
@@ -109,12 +113,16 @@ class UserOverviewTable extends React.Component {
             fetch(DELETE_USER_PATH,
                 {
                     method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json',"Access-Control-Allow-Method": "DELETE" },
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        "Access-Control-Allow-Method": "DELETE",
+                        'Authorization': "Bearer " + authenticationStore.token
+                    },
                     body: JSON.stringify(user)
                 })
                 .then(response => {console.log(response);response.json()})
                 .then(json => {
-      
+                    
 
 
                 })

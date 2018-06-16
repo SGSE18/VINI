@@ -4,6 +4,7 @@ import './ManageUserForm.css';
 import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { USER_LEVEL, getAuthorityString } from '../../constants';
 import { REGISTER_USER_PATH } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 let authoritylevels = [];
 for (var key in USER_LEVEL) {
@@ -70,7 +71,10 @@ export class ManageUserForm extends React.Component {
             fetch(REGISTER_USER_PATH,
                 {
                     method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'Authorization': "Bearer " + authenticationStore.token
+                    },
                     body: JSON.stringify(body)
                 })
                 .then(response => response.json())

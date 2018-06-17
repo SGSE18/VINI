@@ -38,7 +38,10 @@ class AddEntryContainer extends React.Component {
         this.state = {
             mileage: 0, //should both be current value. See TODO AddEntryPage
             selectedDate: todayStr,
-            isPopupVisible: false
+            isPopupVisible: false,
+            popupTitle: "",
+            popupDescription: "",
+            popupShowsError: false
         }
         this.handleSubmitClick = this.handleSubmitClick.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -61,9 +64,11 @@ class AddEntryContainer extends React.Component {
 
     handleSubmitClick() {
         if (!this.isNewMileageValid(this.state.mileage)) {
-            alert("Km-Wert zu niedrig!");
+            this.displayPopup("Fehler", "Kilometerstand zu niedrig.", true);
+        } else if(!this.validateDateStr(this.state.selectedDate)) {
+            this.displayPopup("Fehler", "Ungültiges Datum.", true);
         } else {
-            this.setState({ isPopupVisible: true });
+            this.displayPopup("Sind Sie sich sicher?", "Bitte überprüfen Sie die Eingaben.", false);
         }
 
     }
@@ -111,7 +116,7 @@ class AddEntryContainer extends React.Component {
         this.setState({ isPopupVisible: false });
     }
     onModalClose(hasActionBeenConfirmed) {
-        if (hasActionBeenConfirmed) {
+        if (!this.state.popupShowsError || hasActionBeenConfirmed) {
             if (this.isNewMileageValid(this.state.mileage) && this.validateDateStr(this.state.selectedDate)) {
                 this.submitData();
                 this.props.history.push(HOME_PATH)
@@ -120,6 +125,7 @@ class AddEntryContainer extends React.Component {
             }
 
         }
+        this.setState({popupShowsError: false});
         this.hidePopup();
     }
     submitData() {
@@ -145,6 +151,7 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateDateStr(dateStr) {
+        console.log(dateStr)
         var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
         //var dateRegex = /^.*$/;//debug
         return dateRegex.test(dateStr);
@@ -176,14 +183,24 @@ class AddEntryContainer extends React.Component {
                 return <React.Fragment />
         }
     }
+
+    displayPopup(title, description, showsError) {
+        this.setState({
+            isPopupVisible: true,
+            popupTitle: title,
+            popupDescription: description,
+            popupShowsError: showsError
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
                 <ModalPopup
                     isOpen={this.state.isPopupVisible}
                     onClose={this.onModalClose}
-                    title="Sind Sie sich sicher?"
-                    description="Bitte überprüfen Sie Ihre Eingaben."
+                    title={this.state.popupTitle}
+                    description={this.state.popupDescription}
                 />
                 <TextField
                     disabled

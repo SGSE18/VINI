@@ -17,6 +17,12 @@ export function getAuthorityString(authorityLevel) {
     }
 }
 
+export const TRANSACTION_VALID = "valid";
+export const TRANSACTION_INVALID = "invalid";
+export const TRANSACTION_PENDING = "open";
+export const TRANSACTION_REJECTED = "rejected";
+
+
 const HOME_PATH = "https://vini-ethereum.westeurope.cloudapp.azure.com/";
 const API_PATH = HOME_PATH + "api/";
 export const USER_LOGIN_PATH = API_PATH + "users/login";

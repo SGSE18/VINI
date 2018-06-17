@@ -107,7 +107,7 @@ export class LoginPageNoRouter extends React.Component {
             let details = {
                 'grant_type': 'password',
                 'username': this.state.email,
-                'password': "abc123", //TODO this.state.password,
+                'password': this.state.password,
                 'client_id': null,
                 'client_secret': null
             };
@@ -126,7 +126,11 @@ export class LoginPageNoRouter extends React.Component {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formBody
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (response !== null && response.status === 200) {
+                        return response.json()
+                    }
+                })
                 .then(json => {
                     if (json !== undefined) {
                         const bearerToken = json.access_token
@@ -140,9 +144,12 @@ export class LoginPageNoRouter extends React.Component {
                                     'Authorization': "Bearer " + bearerToken
                                 },
                             })
-                            .then(response => response.json())
+                            .then(response => {
+                                if (response !== null && response.status === 200) {
+                                    return response.json()
+                                }
+                            })
                             .then(json => {
-                                console.log(json)
                                 if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
                                     //TODO delete this

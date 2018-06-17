@@ -191,7 +191,6 @@ class AnullmentTransactionsTable extends React.Component {
     }
 
     render() {
-        console.log(this.props.userLevel)
         if (this.props.userLevel === undefined || (this.props.userLevel !== USER_LEVEL.STVA && this.props.userLevel !== USER_LEVEL.ASTVA)) {
             return <div style={{ margin: 'auto' }}> Nicht autorisiert! Bitte einloggen!</div>
         }

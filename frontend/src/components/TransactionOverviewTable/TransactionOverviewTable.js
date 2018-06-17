@@ -6,7 +6,7 @@ import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { READ_CAR_PATH } from '../../constants';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, dataStore } from '../../stores';
 
 const TRANSACTION_VALID = "valid";
 const TRANSACTION_INVALID = "invalid";
@@ -41,12 +41,24 @@ class TransactionOverviewTable extends React.Component {
             .then(response => response.json())
             .then(json => {
                 this.setState({ data: json.transactionPayload });
+                dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
             })
             .catch(message => {
                 alert(message) // TODO
             })
     }
-
+    getCurrentMileageOfCar() {
+        if(this.state.data !== null && this.state.data.length > 0) {
+            const mileages = this.state.data
+                .filter(row => row.state === TRANSACTION_PENDING || row.state=== TRANSACTION_VALID)
+                .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
+                .sort((rowA,rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
+            if(mileages !== null && mileages.length > 0) {
+                return mileages[0].mileage;
+            } 
+        }
+        return NaN;
+    }
     checkBox = (cell) => {
         return (
             <input

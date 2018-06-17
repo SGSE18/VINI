@@ -21,8 +21,13 @@ class AddEntrySTVA extends React.Component {
         return this.state.preownerCount;
     }
     handlePreownerChange(e) {
-        this.setState({ preownerCount: e.target.value });
+        // check if value is >= 0
+        const value = parseInt(e.target.value, 10);
+        if (!isNaN(value) && value >= 0) {
+            this.setState({ preownerCount: e.target.value });
+        }
     }
+
     submit(headerData) {
 
         const body = {
@@ -37,7 +42,7 @@ class AddEntrySTVA extends React.Component {
         fetch(apiEndpoint,
             {
                 method: 'post',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': "Bearer " + authenticationStore.token
                 },
@@ -55,7 +60,7 @@ class AddEntrySTVA extends React.Component {
         return (
             <div style={{ display: 'inline-block' }}>
                 <TextField
-                    id="date"
+                    id="preowner"
                     label="# Vorbesitzer"
                     type="number"
                     onChange={this.handlePreownerChange}

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
@@ -6,11 +7,12 @@ import { dataStore } from '../../stores';
 import './VinSearch.css';
 
 class VinSearch extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             vin: dataStore.vin,
             isVinInvalid: false,
+
         }
         this.handleClick = this.handleClick.bind(this);
         this.onVinInputChanged = this.onVinInputChanged.bind(this);
@@ -19,6 +21,9 @@ class VinSearch extends React.Component {
         const regexIsVinValid = /^[1234567890ABCDEFGHJKLMNPRSTUVWXYZ]{17}$/;
         if (regexIsVinValid.test(this.state.vin)) {
             this.setState({ isVinInvalid: false })
+            if(this.props.onSearchClick !== undefined) {
+                this.props.onSearchClick()
+            }
         } else {
             this.setState({ isVinInvalid: true })
         }
@@ -56,6 +61,9 @@ class VinSearch extends React.Component {
             </div>
         )
     }
+}
+VinSearch.propTypes = {
+    onSearchClick: PropTypes.func.isRequired
 }
 
 export default VinSearch;

@@ -5,13 +5,7 @@ import "react-table/react-table.css";
 import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { READ_CAR_PATH } from '../../constants';
-import { authenticationStore, dataStore } from '../../stores';
-
-const TRANSACTION_VALID = "valid";
-const TRANSACTION_INVALID = "invalid";
-const TRANSACTION_PENDING = "open";
-const TRANSACTION_REJECTED = "rejected";
+import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED } from '../../constants';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -25,40 +19,11 @@ class TransactionOverviewTable extends React.Component {
             pageText: 'Seite', ofText: 'von', rowsText: 'Einträge'
         };
         this.state = {
-            data: [],
             clickedCellIndex: -1,
             isPopupVisible: false
         };
-        const query = "?car=" + props.vin;
-        fetch(READ_CAR_PATH + query,
-            {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    'Authorization': "Bearer " + authenticationStore.token
-                },
-            })
-            .then(response => response.json())
-            .then(json => {
-                this.setState({ data: json.transactionPayload });
-                dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
-            })
-            .catch(message => {
-                alert(message) // TODO
-            })
     }
-    getCurrentMileageOfCar() {
-        if(this.state.data !== null && this.state.data.length > 0) {
-            const mileages = this.state.data
-                .filter(row => row.state === TRANSACTION_PENDING || row.state=== TRANSACTION_VALID)
-                .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
-                .sort((rowA,rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
-            if(mileages !== null && mileages.length > 0) {
-                return mileages[0].mileage;
-            } 
-        }
-        return NaN;
-    }
+
     checkBox = (cell) => {
         return (
             <input
@@ -92,8 +57,9 @@ class TransactionOverviewTable extends React.Component {
         let onClick = null;
         let className = "";
         const text = this.getAnullmentColumnText(cell.value);
+        if (this.props.userLevel > USER_LEVEL.NOT_LOGGED_IN && 
+            cell.value === TRANSACTION_VALID) {
 
-        if (cell.value === TRANSACTION_VALID) {
             className = "annulment-link";
             onClick = this.onAnnulmentClick.bind(this, cell.index);
         }
@@ -148,14 +114,12 @@ class TransactionOverviewTable extends React.Component {
             Cell: this.checkBox
         }];
 
-        if (this.props.userLevel > 0) {
-            columnDefinition.push({
-                Header: 'Annullieren',
-                accessor: 'state',
-                Cell: this.annulmentCell,
-                filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0
-            });
-        }
+        columnDefinition.push({
+            Header: 'Annullieren',
+            accessor: 'state',
+            Cell: this.annulmentCell,
+            filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0
+        });
         return columnDefinition;
     }
     determineCellBackgroundColor(rowInfo) {
@@ -173,7 +137,7 @@ class TransactionOverviewTable extends React.Component {
     }
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
-            const transaction = this.state.data[this.state.clickedCellIndex];
+            const transaction = this.props.carTransactionData[this.state.clickedCellIndex];
             console.log("Beantrage Annullierung für: " + transaction.transactionId);
         }
         this.setState({ isPopupVisible: false })
@@ -192,7 +156,7 @@ class TransactionOverviewTable extends React.Component {
                 <ReactTable
                     style={{ width: '100%' }}
                     {...this.translationTexts}
-                    data={this.state.data}
+                    data={this.props.carTransactionData}
                     columns={this.getColumnDefinition()}
                     filterable
                     defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0}
@@ -213,6 +177,5 @@ class TransactionOverviewTable extends React.Component {
 const WrappedTransactionOverviewTable = observer(TransactionOverviewTable);
 WrappedTransactionOverviewTable.propTypes = {
     userLevel: PropTypes.number.isRequired,
-    vin: PropTypes.string.isRequired
 }
 export default WrappedTransactionOverviewTable;

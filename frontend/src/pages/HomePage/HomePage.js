@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
 import PersonIcon from '@material-ui/icons/Person';
 import './HomePage.css';
-import { USER_LEVEL } from '../../constants';
+import { USER_LEVEL, READ_CAR_PATH, TRANSACTION_VALID, TRANSACTION_PENDING } from '../../constants';
 import { Button } from '@material-ui/core';
 
 class HomePage extends React.Component {
@@ -13,9 +13,10 @@ class HomePage extends React.Component {
         super(props);
 
         this.state = {
+            carTransactionData: [],
             isUserManagmentGUIOpen: false,
         };
-
+        this.onSearchClick = this.onSearchClick.bind(this);
         this.toggleUserGUI = this.toggleUserGUI.bind(this);
     }
     toggleUserGUI() {
@@ -23,11 +24,42 @@ class HomePage extends React.Component {
             isUserManagmentGUIOpen: !this.state.isUserManagmentGUIOpen,
         });
     }
+    getCurrentMileageOfCar() {
+        if(this.state.carTransactionData !== null && this.state.carTransactionData.length > 0) {
+            const mileages = this.state.carTransactionData
+                .filter(row => row.state === TRANSACTION_PENDING || row.state=== TRANSACTION_VALID)
+                .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
+                .sort((rowA,rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
+            if(mileages !== null && mileages.length > 0) {
+                return mileages[0].mileage;
+            } 
+        }
+        return NaN;
+    }
+    onSearchClick() {
+        const query = "?car=" + dataStore.vin;
+        fetch(READ_CAR_PATH + query,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + authenticationStore.token
+                },
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.setState({ carTransactionData: json.transactionPayload });
+                dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
+            })
+            .catch(message => {
+                alert(message) // TODO
+            })
+    }
     render() {
         return (
             <div className="Home-Page">
                 <div className="searchbar-container">
-                    <VinSearch vin={dataStore.vin} />
+                    <VinSearch onSearchClick={this.onSearchClick} />
                     {
                         authenticationStore.userLevel > USER_LEVEL.NOT_LOGGED_IN
                             ?
@@ -75,7 +107,7 @@ class HomePage extends React.Component {
                             />
                         </React.Fragment>
                         :
-                        <TransactionOverviewTable vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
+                        <TransactionOverviewTable carTransactionData={this.state.carTransactionData} userLevel={authenticationStore.userLevel} />
                     }
                 </div>
 

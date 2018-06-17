@@ -8,7 +8,7 @@ import { ModalPopup } from '../';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, dataStore } from '../../stores';
 import AddEntryTUEV from './AddEntryTUEV/AddEntryTUEV';
 import AddEntryZWS from './AddEntryZWS/AddEntryZWS';
 import AddEntrySTVA from './AddEntrySTVA/AddEntrySTVA';
@@ -36,12 +36,11 @@ class AddEntryContainer extends React.Component {
         super(props);
         const todayStr = getCurrentDate();
         this.state = {
-            oldMileage: 0,
-            mileage:0, //should both be current value. See TODO AddEntryPage
+            mileage: 0, //should both be current value. See TODO AddEntryPage
             selectedDate: todayStr,
             isPopupVisible: false
         }
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmitClick = this.handleSubmitClick.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
         this.isNewMileageValid = this.isNewMileageValid.bind(this);
@@ -50,18 +49,23 @@ class AddEntryContainer extends React.Component {
         this.hidePopup = this.hidePopup.bind(this);
         this.onModalClose = this.onModalClose.bind(this);
         this.submitData = this.submitData.bind(this);
-        this.setDate=this.setDate.bind(this);
-        this.validateDateStr=this.validateDateStr.bind(this);
+        this.setDate = this.setDate.bind(this);
+        this.validateDateStr = this.validateDateStr.bind(this);
         // references to the child components to retreive the data
         this.zwsRef = new React.createRef();
         this.tuevRef = new React.createRef();
         this.stvaRef = new React.createRef();
-        
+
     }
 
 
-    handleClick() {
-        this.setState({ isPopupVisible: true });
+    handleSubmitClick() {
+        if (!this.isNewMileageValid(this.state.mileage)) {
+            alert("Km-Wert zu niedrig!");
+        } else {
+            this.setState({ isPopupVisible: true });
+        }
+
     }
     handleSearchClick() {
         this.props.history.push(HOME_PATH)
@@ -70,38 +74,38 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
+        if (isNaN(mileage)) {
+            return false;
+        }
         if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway 
             return false;
-        }       
-        if (isNaN(mileage)){ //do not allow updating if not a number
+        }
+        if (isNaN(mileage)) { //do not allow updating if not a number
             return false;
-        }else{
-            mileage=Number(mileage);
+        } else {
+            mileage = Number(mileage);
         }
-        if(mileage<0){ //do not allow updating if negative
+        if (mileage < 0) { //do not allow updating if negative
             return false;
         }
-        var oldValue=this.state.oldMileage;
-        if(isNaN(oldValue)&&!isNaN(mileage)){//special case if mileage wasnt set before
-            return true;
-        }        
-        if(authenticationStore === USER_LEVEL.ASTVA){//ASTVA is allowed to do everything
-            return true;
-        }       
-        oldValue=Number(oldValue);
-        if (mileage >= oldValue) {//otherwise update is onle allowed if mileage increased
+        var oldValue = dataStore.currentMileageOfCar;
+        if (isNaN(oldValue)) {//special case if mileage wasnt set before
             return true;
         }
-
+        if (authenticationStore.userLevel === USER_LEVEL.ASTVA
+            || authenticationStore.userLevel === USER_LEVEL.STVA) {//(A)STVA is allowed to do everything
+            return true;
+        }
+        oldValue = Number(oldValue);
+        if (mileage >= oldValue) {//otherwise update is only allowed if mileage increased
+            return true;
+        }
+        return false;
     }
-    setKmValue(e) {        
-        var mileage=e.target.value;        
-        if (this.isNewMileageValid(mileage)) {
-            this.setState({
-                mileage: e.target.value
-            });
-        }
-
+    setKmValue(e) {
+        this.setState({
+            mileage: e.target.value
+        });
     }
     hidePopup() {
         this.setState({ isPopupVisible: false });
@@ -156,7 +160,7 @@ class AddEntryContainer extends React.Component {
     }
     handleCalendarChange(e) {
         this.setDate(e.target.value);
-        
+
     }
     getUserLevelSpecificComponent() {
         switch (authenticationStore.userLevel) {
@@ -215,7 +219,7 @@ class AddEntryContainer extends React.Component {
                     color="primary"
                     margin="normal"
                     style={{ marginLeft: '1em' }}
-                    onClick={this.handleClick}
+                    onClick={this.handleSubmitClick}
                 >
                     Bestätigen
                 </Button>

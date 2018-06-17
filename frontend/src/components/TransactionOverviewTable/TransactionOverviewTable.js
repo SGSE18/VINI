@@ -48,7 +48,6 @@ class TransactionOverviewTable extends React.Component {
             })
     }
     getCurrentMileageOfCar() {
-        let currentMileage = NaN;
         if(this.state.data !== null && this.state.data.length > 0) {
             const mileages = this.state.data
                 .filter(row => row.state === TRANSACTION_PENDING || row.state=== TRANSACTION_VALID)
@@ -56,11 +55,9 @@ class TransactionOverviewTable extends React.Component {
                 .sort((rowA,rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
             if(mileages !== null && mileages.length > 0) {
                 return mileages[0].mileage;
-            } else {
-                return NaN;
-            }
+            } 
         }
-        console.log(currentMileage)
+        return NaN;
     }
     checkBox = (cell) => {
         return (

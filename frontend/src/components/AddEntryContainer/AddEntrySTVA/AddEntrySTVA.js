@@ -22,13 +22,12 @@ class AddEntrySTVA extends React.Component {
     }
     handlePreownerChange(e) {
         // check if value is >= 0
-        const value = e.target.value;
-        if (!isNaN(parseInt(value, 10))) {
-            if (parseInt(value, 10) >= 0) {
-                this.setState({ preownerCount: e.target.value });
-            }
+        const value = parseInt(e.target.value, 10);
+        if (!isNaN(value) && value >= 0) {
+            this.setState({ preownerCount: e.target.value });
         }
     }
+
     submit(headerData) {
 
         const body = {

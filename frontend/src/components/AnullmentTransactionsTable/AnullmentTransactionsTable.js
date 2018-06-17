@@ -150,6 +150,9 @@ class AnullmentTransactionsTable extends React.Component {
 
             }
         }, {
+            Header: 'FIN',
+            accessor: 'vin'
+        }, {
             Header: 'KM',
             accessor: 'mileage'
         }, {
@@ -174,10 +177,13 @@ class AnullmentTransactionsTable extends React.Component {
             Header: 'Ölwechsel',
             accessor: 'oilChange',
             Cell: this.checkBox
+        }, {
+            Header: 'Antragsteller',
+            accessor: 'applicant'
         }];
 
         columnDefinition.push({
-            Header: 'Annullieren',
+            Header: 'Antrag',
             accessor: 'state',
             Cell: this.annulmentCell,
         });

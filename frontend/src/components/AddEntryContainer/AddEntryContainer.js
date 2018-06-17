@@ -65,7 +65,7 @@ class AddEntryContainer extends React.Component {
     handleSubmitClick() {
         if (!this.isNewMileageValid(this.state.mileage)) {
             this.displayPopup("Fehler", "Kilometerstand zu niedrig.", true);
-        } else if(!this.validateDateStr(this.state.selectedDate)) {
+        } else if (!this.validateDateStr(this.state.selectedDate)) {
             this.displayPopup("Fehler", "Ungültiges Datum.", true);
         } else {
             this.displayPopup("Sind Sie sich sicher?", "Bitte überprüfen Sie die Eingaben.", false);
@@ -108,9 +108,13 @@ class AddEntryContainer extends React.Component {
         return false;
     }
     setKmValue(e) {
-        this.setState({
-            mileage: e.target.value
-        });
+        const value = e.target.value;
+        const parsedValue = parseInt(value, 10);
+        if (value === '' || (!isNaN(parsedValue) && parsedValue >= 0)) {
+            this.setState({
+                mileage: value
+            });
+        }
     }
     hidePopup() {
         this.setState({ isPopupVisible: false });
@@ -125,7 +129,7 @@ class AddEntryContainer extends React.Component {
             }
 
         }
-        this.setState({popupShowsError: false});
+        this.setState({ popupShowsError: false });
         this.hidePopup();
     }
     submitData() {
@@ -212,6 +216,7 @@ class AddEntryContainer extends React.Component {
                     label="KM"
                     margin="normal"
                     autoFocus
+                    type="number"
                     onChange={this.setKmValue}
                     value={this.state.mileage}
                     style={{ marginLeft: '2em', marginRight: '2em' }}

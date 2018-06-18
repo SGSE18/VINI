@@ -8,11 +8,11 @@ import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
 import { USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
+import sha256 from 'sha256';
+
 import './LoginPage.css'
 
-
 function getProgressStyle() {
-
     // sets the modal into the mid of the screen
     return {
         top: '20%',
@@ -118,20 +118,18 @@ export class LoginPageNoRouter extends React.Component {
         }
     }
 
-
     onLoginClick() {
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
-            //TODO
             let details = {
                 'grant_type': 'password',
                 'username': this.state.email,
-                'password': this.state.password,
+                'password': sha256(this.state.password),
                 'client_id': null,
                 'client_secret': null
             };
-
+            console.log(details);
             let formBody = [];
             for (let property in details) {
                 let encodedKey = encodeURIComponent(property);
@@ -274,7 +272,6 @@ export class LoginPageNoRouter extends React.Component {
                     <div>user@stva.com</div>
                     <div>user@astva.com</div>
                     <div>user@tuev.com</div>
-                    <div>Else: not logged in</div>
                 </div>
             </React.Fragment>
         )

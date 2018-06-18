@@ -6,6 +6,16 @@ export const USER_LEVEL = {
     ASTVA: 4
 }
 
+export function getAuthorityInt(authorityString) {
+    switch (authorityString) {
+        case "Ausgeloggt": return USER_LEVEL.NOT_LOGGED_IN
+        case "ZWS": return USER_LEVEL.ZWS
+        case "TÜV": return USER_LEVEL.TUEV
+        case "STVA": return USER_LEVEL.STVA
+        case "Admin STVA": return USER_LEVEL.ASTVA
+        default: return -1
+    }
+}
 export function getAuthorityString(authorityLevel) {
     switch (authorityLevel) {
         case USER_LEVEL.NOT_LOGGED_IN: return "Ausgeloggt"

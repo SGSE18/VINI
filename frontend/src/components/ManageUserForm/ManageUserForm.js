@@ -2,9 +2,10 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import './ManageUserForm.css';
 import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
-import { USER_LEVEL, getAuthorityString } from '../../constants';
+import { USER_LEVEL, getAuthorityString, getAuthorityInt } from '../../constants';
 import { REGISTER_USER_PATH } from '../../constants';
 import { authenticationStore } from '../../stores';
+import sha256 from 'sha256';
 
 let authoritylevels = [];
 for (var key in USER_LEVEL) {
@@ -65,9 +66,16 @@ export class ManageUserForm extends React.Component {
     }
     onBtnSaveClick() {
         if (this.inputIsValid()) {
-            console.log(this.state)
-            const body = "";
-            console.log(REGISTER_USER_PATH)
+            const body = {
+                email: this.state.email,
+                password: sha256(this.state.password),
+                authorityLevel: getAuthorityInt(this.state.authorityLevel),
+                forename: this.state.forename,
+                surname: this.state.surname,
+                companyName: this.state.company,
+                creationDate: new Date().toISOString()
+            }
+            console.log(body)
             fetch(REGISTER_USER_PATH,
                 {
                     method: 'post',

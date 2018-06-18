@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { TransactionOverviewTable, AnullmentTransactionsTable, AddEntryContainer } from '../../components/'
+import { TransactionOverviewTable, AnnulmentTransactionsTable, AddEntryContainer } from '../../components/'
 import { authenticationStore, dataStore } from '../../stores';
 import { USER_LEVEL } from '../../constants';
 import { observer } from 'mobx-react';
@@ -52,7 +52,7 @@ class AddEntryPage extends React.Component {
                 {
                     this.state.showPendingAnullmentTable
                         ?
-                        <AnullmentTransactionsTable vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
+                        <AnnulmentTransactionsTable vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
                         :
                         <TransactionOverviewTable carTransactionData={dataStore.carTransactionData} vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
                 }

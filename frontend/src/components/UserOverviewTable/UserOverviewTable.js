@@ -24,25 +24,28 @@ class UserOverviewTable extends React.Component {
             clickedCellIndex: -1,
             isPopupVisible: false
         };
+        this.updateUserData = this.updateUserData.bind(this);
+        this.updateUserData();
+    }
+
+    updateUserData() {
         fetch(READ_USER_PATH,
             {
                 method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json', 
+                headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': "Bearer " + authenticationStore.token
                 },
             })
             .then(response => response.json())
             .then(json => {
-                const data = json.transactionPayload;
-                data.action= "dummy";
-                this.setState({data});
+                const data = json.users;
+                this.setState({ data });
             })
             .catch(message => {
                 alert(message) // TODO
             })
     }
-
 
     checkBox = (cell) => {
         return (
@@ -57,7 +60,21 @@ class UserOverviewTable extends React.Component {
 
     onAnnulmentClick(clickedCellIndex) {
 
-        this.setState({clickedCellIndex, isPopupVisible: true })
+        this.setState({ clickedCellIndex, isPopupVisible: true })
+    }
+    dateCell = (cell) => {
+        try {
+            const date = new Date(cell.value);
+            const dateStr = date.getFullYear() + '-';
+            let month = date.getMonth() + 1;
+            month = month < 10 ? "0" + month : month;
+            let day = date.getDate();
+            day = day < 10 ? "0" + day : day
+            return dateStr + month + '-' + day;
+        } catch (ex) {
+            return cell.value;
+        }
+
     }
     authorityLevelCell = (cell) => {
         return getAuthorityString(cell.value);
@@ -66,7 +83,7 @@ class UserOverviewTable extends React.Component {
         return (
             <div
                 className="annulment-link"      // mimic anchor tag style for annulment links
-                onClick={this.onAnnulmentClick.bind(this, row.index)}     
+                onClick={this.onAnnulmentClick.bind(this, row.index)}
             >
                 Löschen
             </div>
@@ -88,12 +105,13 @@ class UserOverviewTable extends React.Component {
         }, {
             Header: 'Autoritätsebene',
             accessor: 'authorityLevel',
+            Cell: this.authorityLevelCell
         }, {
             Header: 'Erstelldatum',
-            accessor: 'date'
+            accessor: 'date',
+            Cell: this.dateCell
         }, {
             Header: 'Aktion',
-            accessor: 'action',
             Cell: this.annulmentCell,
         }
         ];
@@ -113,17 +131,16 @@ class UserOverviewTable extends React.Component {
             fetch(DELETE_USER_PATH,
                 {
                     method: 'DELETE',
-                    headers: { 
-                        'Content-Type': 'application/json', 
+                    headers: {
+                        'Content-Type': 'application/json',
                         "Access-Control-Allow-Method": "DELETE",
                         'Authorization': "Bearer " + authenticationStore.token
                     },
                     body: JSON.stringify(user)
                 })
-                .then(response => {console.log(response);response.json()})
+                .then(response => response.json() )
                 .then(json => {
-                    
-
+                    this.updateUserData();
 
                 })
                 .catch(message => {

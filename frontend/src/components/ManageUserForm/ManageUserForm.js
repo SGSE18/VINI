@@ -45,7 +45,6 @@ export class ManageUserForm extends React.Component {
         return false;
     }
     setStateValue(valName, event) {
-        console.log(valName, event.target.value)
         this.setState({ [valName]: event.target.value })
     }
     checkConfirmPassword() {

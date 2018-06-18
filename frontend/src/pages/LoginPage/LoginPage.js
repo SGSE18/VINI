@@ -119,6 +119,10 @@ export class LoginPageNoRouter extends React.Component {
     }
 
     onLoginClick() {
+        if(this.state.loginInProgess) {
+            return;
+        }
+        this.setState({loginInProgess: true});
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
@@ -165,6 +169,7 @@ export class LoginPageNoRouter extends React.Component {
                             .then(response => {
                                 if (response !== null && response.status === 200) {
                                     this.setState({ showProgressbar: false });
+                                    this.setState({loginInProgess: false});
                                     return response.json()
                                 }
                             })
@@ -173,25 +178,30 @@ export class LoginPageNoRouter extends React.Component {
                                     this.displayPopup("Fehler", json.message)
                                 } else if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
+                                    this.setState({loginInProgess: false});
                                     this.props.history.push(HOME_PATH);
 
                                 } else if (json.loginStatus === "failure") {
                                     this.displayPopup("Fehler", "Login fehlgeschlagen!")
                                 }
                                 this.setState({ showProgressbar: false });
+                                this.setState({loginInProgess: false});
                             })
                             .catch(message => {
                                 this.setState({ showProgressbar: false });
+                                this.setState({loginInProgess: false});
                                 console.error("Fehler", "" + message)
                             })
                     } else {
                         this.setState({ showProgressbar: false });
+                        this.setState({loginInProgess: false});
                         this.displayPopup("Fehler", "Login ungültig")
                     }
                 })
                 .catch(message => {
                     this.setState({ showProgressbar: false });
                     console.error("Fehler", "" + message)
+                    this.setState({loginInProgess: false});
                 })
         }
     }
@@ -248,15 +258,6 @@ export class LoginPageNoRouter extends React.Component {
                             Login
                         </Button>
                         <br></br>
-                        <Button
-                            variant="raised"
-                            margin="normal"
-                            className="button"
-                            style={{ width: '30em' }}
-                            onClick={this.onResetPasswordClick}
-                        >
-                            Passwort zurücksetzen
-                        </Button>
                     </form>
                 </div>
                 {

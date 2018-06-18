@@ -32,6 +32,7 @@ export const DELETE_USER_PATH = REGISTER_USER_PATH;
 export const RESET_PASSWORD_PATH = API_PATH + ""
 
 export const CHANGE_PREOWNER_PATH = API_PATH + "car/register"
+export const ANNULMENT_PATH = API_PATH + "car/annulment"
 export const CHANGE_MILEAGE_PATH = API_PATH + "car/mileage"
 export const ADD_TUEV_PATH = API_PATH + "car/tuev"
 export const ADD_SERVICE_PATH = API_PATH + "car/service"

@@ -5,8 +5,8 @@ import "react-table/react-table.css";
 import "./AnullmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, READ_CAR_PATH, TRANSACTION_PENDING } from '../../constants';
-import { authenticationStore, dataStore } from '../../stores';
+import { USER_LEVEL, ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -30,12 +30,12 @@ class AnullmentTransactionsTable extends React.Component {
             clickedCellIndex: -1,
             isPopupVisible: false,
             data: [],
+            popupTitle: "",
+            popupDescription: ""
         };
         this.displayPopup = this.displayPopup.bind(this);
 
-        // TODO FETCH pending anullments
-        const query = "?car=" + dataStore.vin;
-        fetch(READ_CAR_PATH + query,
+        fetch(ANNULMENT_PATH,
             {
                 method: 'GET',
                 headers: {
@@ -45,16 +45,18 @@ class AnullmentTransactionsTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
+                console.log(json)
+                if(json.transactionPayload === undefined) throw new TypeError("invalid response body (annulment)")
                 // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.transactionPayload;
-                data = data
+                    data = data
                     .filter(row => row.state === TRANSACTION_PENDING)
                     .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
                     .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
                 this.setState({ data });
             })
             .catch(message => {
-                alert(message) // TODO
+                console.error(message)
             })
     }
 
@@ -202,7 +204,7 @@ class AnullmentTransactionsTable extends React.Component {
                     isOpen={this.state.isPopupVisible}
                     onClose={this.onModalClose}
                     title={this.state.popupTitle}
-                    description={this.state.description}
+                    description={this.state.popupDescription}
                 />
                 <ReactTable
                     style={{ width: '100%' }}

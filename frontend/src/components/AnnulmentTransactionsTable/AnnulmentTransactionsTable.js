@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import "./AnullmentTransactionsTable.css";
+import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, READ_CAR_PATH, TRANSACTION_PENDING } from '../../constants';
-import { authenticationStore, dataStore } from '../../stores';
+import { USER_LEVEL, ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -16,7 +16,7 @@ const ButtonStatus = {
     DECLINE_CLICKED: 2
 }
 
-class AnullmentTransactionsTable extends React.Component {
+class AnnulmentTransactionsTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,12 +30,12 @@ class AnullmentTransactionsTable extends React.Component {
             clickedCellIndex: -1,
             isPopupVisible: false,
             data: [],
+            popupTitle: "",
+            popupDescription: ""
         };
         this.displayPopup = this.displayPopup.bind(this);
 
-        // TODO FETCH pending anullments
-        const query = "?car=" + dataStore.vin;
-        fetch(READ_CAR_PATH + query,
+        fetch(ANNULMENT_PATH,
             {
                 method: 'GET',
                 headers: {
@@ -45,16 +45,18 @@ class AnullmentTransactionsTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
+                console.log(json)
+                if(json.transactionPayload === undefined) throw new TypeError("invalid response body (annulment)")
                 // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.transactionPayload;
-                data = data
+                    data = data
                     .filter(row => row.state === TRANSACTION_PENDING)
                     .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
                     .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
                 this.setState({ data });
             })
             .catch(message => {
-                alert(message) // TODO
+                console.error(message)
             })
     }
 
@@ -191,7 +193,6 @@ class AnullmentTransactionsTable extends React.Component {
     }
 
     render() {
-        console.log(this.props.userLevel)
         if (this.props.userLevel === undefined || (this.props.userLevel !== USER_LEVEL.STVA && this.props.userLevel !== USER_LEVEL.ASTVA)) {
             return <div style={{ margin: 'auto' }}> Nicht autorisiert! Bitte einloggen!</div>
         }
@@ -203,7 +204,7 @@ class AnullmentTransactionsTable extends React.Component {
                     isOpen={this.state.isPopupVisible}
                     onClose={this.onModalClose}
                     title={this.state.popupTitle}
-                    description={this.state.description}
+                    description={this.state.popupDescription}
                 />
                 <ReactTable
                     style={{ width: '100%' }}
@@ -220,8 +221,8 @@ class AnullmentTransactionsTable extends React.Component {
     }
 };
 
-const WrappedAnullmentTransactionsTable = observer(AnullmentTransactionsTable);
-WrappedAnullmentTransactionsTable.propTypes = {
+const WrappedAnnulmentTransactionsTable = observer(AnnulmentTransactionsTable);
+WrappedAnnulmentTransactionsTable.propTypes = {
     userLevel: PropTypes.number.isRequired,
 }
-export default WrappedAnullmentTransactionsTable;
+export default WrappedAnnulmentTransactionsTable;

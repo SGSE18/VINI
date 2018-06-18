@@ -6,9 +6,7 @@ import Home from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { LOGIN_PATH, HOME_PATH } from '../../app-config';
 import { USER_LEVEL, getAuthorityString } from '../../constants';
-// TODO DELETE-------------------------------------------
 import { authenticationStore } from '../../stores';
-//-------------------------------------------------------
 
 class LoginButton extends React.Component {
     constructor(props) {

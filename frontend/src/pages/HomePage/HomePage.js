@@ -7,6 +7,18 @@ import PersonIcon from '@material-ui/icons/Person';
 import './HomePage.css';
 import { USER_LEVEL, READ_CAR_PATH, TRANSACTION_VALID, TRANSACTION_PENDING } from '../../constants';
 import { Button } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+function getProgressStyle() {
+
+    // sets the modal into the mid of the screen
+    return {
+        top: '20%',
+        left: '45%',
+        position: 'absolute',
+        zIndex: 100
+    };
+}
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -15,6 +27,7 @@ class HomePage extends React.Component {
         this.state = {
             carTransactionData: props.carTransactionData,
             isUserManagmentGUIOpen: false,
+            showProgressbar: false
         };
         this.onSearchClick = this.onSearchClick.bind(this);
         this.toggleUserGUI = this.toggleUserGUI.bind(this);
@@ -37,6 +50,7 @@ class HomePage extends React.Component {
         return NaN;
     }
     onSearchClick() {
+        this.setState({ showProgressbar: true });
         const query = "?car=" + dataStore.vin;
         fetch(READ_CAR_PATH + query,
             {
@@ -48,11 +62,12 @@ class HomePage extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                this.setState({ carTransactionData: json.transactionPayload });
+                this.setState({ showProgressbar: false, carTransactionData: json.transactionPayload });
                 dataStore.carTransactionData = json.transactionPayload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
             })
             .catch(message => {
+                this.setState({ showProgressbar: false });
                 alert(message) // TODO
             })
     }
@@ -60,6 +75,13 @@ class HomePage extends React.Component {
         return (
             <div className="Home-Page">
                 <div className="searchbar-container">
+                    {
+                        this.state.showProgressbar
+                            ?
+                            <CircularProgress size={100} style={getProgressStyle()} />
+                            :
+                            null
+                    }
                     <VinSearch onSearchClick={this.onSearchClick} />
                     {
                         authenticationStore.userLevel > USER_LEVEL.NOT_LOGGED_IN
@@ -72,7 +94,6 @@ class HomePage extends React.Component {
                     {
                         authenticationStore.userLevel === USER_LEVEL.ASTVA
                             ?
-
                             <Button
                                 variant="raised"
                                 margin="normal"

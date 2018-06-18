@@ -11,7 +11,8 @@
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
-    "react-table": "^6.8.5"
+    "react-table": "^6.8.5",
+    "sha256": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

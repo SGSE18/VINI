@@ -6,6 +6,16 @@ export const USER_LEVEL = {
     ASTVA: 4
 }
 
+export function getAuthorityInt(authorityString) {
+    switch (authorityString) {
+        case "Ausgeloggt": return USER_LEVEL.NOT_LOGGED_IN
+        case "ZWS": return USER_LEVEL.ZWS
+        case "TÜV": return USER_LEVEL.TUEV
+        case "STVA": return USER_LEVEL.STVA
+        case "Admin STVA": return USER_LEVEL.ASTVA
+        default: return -1
+    }
+}
 export function getAuthorityString(authorityLevel) {
     switch (authorityLevel) {
         case USER_LEVEL.NOT_LOGGED_IN: return "Ausgeloggt"
@@ -32,6 +42,7 @@ export const DELETE_USER_PATH = REGISTER_USER_PATH;
 export const RESET_PASSWORD_PATH = API_PATH + ""
 
 export const CHANGE_PREOWNER_PATH = API_PATH + "car/register"
+export const ANNULMENT_PATH = API_PATH + "car/annulment"
 export const CHANGE_MILEAGE_PATH = API_PATH + "car/mileage"
 export const ADD_TUEV_PATH = API_PATH + "car/tuev"
 export const ADD_SERVICE_PATH = API_PATH + "car/service"

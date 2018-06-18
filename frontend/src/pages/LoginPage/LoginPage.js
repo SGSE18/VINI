@@ -2,12 +2,25 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
 import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
+
+
+function getProgressStyle() {
+
+    // sets the modal into the mid of the screen
+    return {
+        top: '20%',
+        left: '45%',
+        position: 'absolute',
+        zIndex: 100
+    };
+}
 
 export class LoginPageNoRouter extends React.Component {
     constructor(props) {
@@ -20,7 +33,8 @@ export class LoginPageNoRouter extends React.Component {
             password: "",
             passwordErrorText: "",
             popupDescription: "",
-            popupTitle: ""
+            popupTitle: "",
+            showProgressbar: false
         }
 
         this.validateEmail = this.validateEmail.bind(this);
@@ -81,6 +95,7 @@ export class LoginPageNoRouter extends React.Component {
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
+            this.setState({ showProgressbar: true });
             fetch(RESET_PASSWORD_PATH,
                 {
                     method: 'POST',
@@ -92,9 +107,14 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .then(response => response.json())
                 .then(json => {
+                    this.setState({ showProgressbar: false });
                     this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
                 })
-                .catch(message => alert(message)) // TODO
+                .catch(message => {
+                    this.setState({ showProgressbar: false }); 
+                    console.log(message);
+                }) // TODO
+
         }
     }
 
@@ -119,7 +139,7 @@ export class LoginPageNoRouter extends React.Component {
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-
+            this.setState({ showProgressbar: true });
             fetch(USER_TOKEN_PATH,
                 {
                     method: 'post',
@@ -146,6 +166,7 @@ export class LoginPageNoRouter extends React.Component {
                             })
                             .then(response => {
                                 if (response !== null && response.status === 200) {
+                                    this.setState({ showProgressbar: false });
                                     return response.json()
                                 }
                             })
@@ -173,19 +194,23 @@ export class LoginPageNoRouter extends React.Component {
 
                                     this.props.history.push(HOME_PATH);
                                 } else if (json.loginStatus === "failure") {
+                                    this.setState({ showProgressbar: false });
                                     this.displayPopup("Fehler", "Login fehlgeschlagen!")
                                 }
 
                             })
                             .catch(message => {
+                                this.setState({ showProgressbar: false });
                                 console.error("Fehler", "" + message)
                             })
                     } else {
+                        this.setState({ showProgressbar: false });
                         this.displayPopup("Fehler", "Login ungültig")
                     }
 
                 })
                 .catch(message => {
+                    this.setState({ showProgressbar: false });
                     console.error("Fehler", "" + message)
                 })
         }
@@ -193,6 +218,7 @@ export class LoginPageNoRouter extends React.Component {
     onModalClose() {
         this.hidePopup();
     }
+
     render() {
         return (
             <React.Fragment>
@@ -250,9 +276,16 @@ export class LoginPageNoRouter extends React.Component {
                             onClick={this.onResetPasswordClick}
                         >
                             Passwort zurücksetzen
-                    </Button>
+                        </Button>
                     </form>
                 </div>
+                {
+                    this.state.showProgressbar
+                        ?
+                        <CircularProgress size={100} style={getProgressStyle()} />
+                        :
+                        null
+                }
                 {/* TODO DELETE*/}
                 <div>
                     <div>user@zws.com</div>
@@ -260,7 +293,6 @@ export class LoginPageNoRouter extends React.Component {
                     <div>user@astva.com</div>
                     <div>user@tuev.com</div>
                     <div>Else: not logged in</div>
-                    <div>Any password.</div>
                 </div>
             </React.Fragment>
         )

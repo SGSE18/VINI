@@ -78,7 +78,7 @@ class HomePage extends React.Component {
                     {
                         this.state.showProgressbar
                             ?
-                            <CircularProgress size={100} style={getProgressStyle()}/>
+                            <CircularProgress size={100} style={getProgressStyle()} />
                             :
                             null
                     }
@@ -94,7 +94,6 @@ class HomePage extends React.Component {
                     {
                         authenticationStore.userLevel === USER_LEVEL.ASTVA
                             ?
-
                             <Button
                                 variant="raised"
                                 margin="normal"

@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
 import { authenticationStore } from '../../stores';
-import { USER_LEVEL, USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
+import { USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import './LoginPage.css'
 
@@ -175,26 +175,8 @@ export class LoginPageNoRouter extends React.Component {
                                     this.displayPopup("Fehler", json.message)
                                 } else if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
-                                    //TODO delete this
-                                    switch (this.state.email) {
-                                        case 'user@zws.com':
-                                            authenticationStore.setUserLevel(USER_LEVEL.ZWS);
-                                            break;
-                                        case 'user@stva.com':
-                                            authenticationStore.setUserLevel(USER_LEVEL.STVA);
-                                            break;
-                                        case 'user@astva.com':
-                                            authenticationStore.setUserLevel(USER_LEVEL.ASTVA);
-                                            break;
-                                        case 'user@tuev.com':
-                                            authenticationStore.setUserLevel(USER_LEVEL.TUEV);
-                                            break;
-                                        default:
-                                            authenticationStore.setUserLevel(USER_LEVEL.NOT_LOGGED_IN);
-                                            break;
-                                    }
-
                                     this.props.history.push(HOME_PATH);
+
                                 } else if (json.loginStatus === "failure") {
                                     this.displayPopup("Fehler", "Login fehlgeschlagen!")
                                 }
@@ -208,7 +190,6 @@ export class LoginPageNoRouter extends React.Component {
                         this.setState({ showProgressbar: false });
                         this.displayPopup("Fehler", "Login ungültig")
                     }
-
                 })
                 .catch(message => {
                     this.setState({ showProgressbar: false });

@@ -171,7 +171,9 @@ export class LoginPageNoRouter extends React.Component {
                                 }
                             })
                             .then(json => {
-                                if (json.loginStatus === "success") {
+                                if(json.message !== undefined) {
+                                    this.displayPopup("Fehler", json.message)
+                                } else if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
                                     //TODO delete this
                                     switch (this.state.email) {
@@ -194,10 +196,9 @@ export class LoginPageNoRouter extends React.Component {
 
                                     this.props.history.push(HOME_PATH);
                                 } else if (json.loginStatus === "failure") {
-                                    this.setState({ showProgressbar: false });
                                     this.displayPopup("Fehler", "Login fehlgeschlagen!")
                                 }
-
+                                this.setState({ showProgressbar: false });
                             })
                             .catch(message => {
                                 this.setState({ showProgressbar: false });

@@ -120,7 +120,7 @@ class AddEntryContainer extends React.Component {
         this.setState({ isPopupVisible: false });
     }
     onModalClose(hasActionBeenConfirmed) {
-        if (!this.state.popupShowsError || hasActionBeenConfirmed) {
+        if (!this.state.popupShowsError && hasActionBeenConfirmed) {
             if (this.isNewMileageValid(this.state.mileage) && this.validateDateStr(this.state.selectedDate)) {
                 this.submitData();
                 this.props.history.push(HOME_PATH)

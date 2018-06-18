@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import "./AnullmentTransactionsTable.css";
+import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { USER_LEVEL, ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
@@ -16,7 +16,7 @@ const ButtonStatus = {
     DECLINE_CLICKED: 2
 }
 
-class AnullmentTransactionsTable extends React.Component {
+class AnnulmentTransactionsTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -221,8 +221,8 @@ class AnullmentTransactionsTable extends React.Component {
     }
 };
 
-const WrappedAnullmentTransactionsTable = observer(AnullmentTransactionsTable);
-WrappedAnullmentTransactionsTable.propTypes = {
+const WrappedAnnulmentTransactionsTable = observer(AnnulmentTransactionsTable);
+WrappedAnnulmentTransactionsTable.propTypes = {
     userLevel: PropTypes.number.isRequired,
 }
-export default WrappedAnullmentTransactionsTable;
+export default WrappedAnnulmentTransactionsTable;

@@ -198,7 +198,7 @@ class AddEntryContainer extends React.Component {
     }
 
     render() {
-        if (authenticationStore.userLevel === undefined || (authenticationStore.userLevel <= USER_LEVEL.NOT_LOGGED_IN)) {
+        if (!authenticationStore.userLevel || (authenticationStore.userLevel <= USER_LEVEL.NOT_LOGGED_IN)) {
             return <div style={{ margin: 'auto' }}> Nicht autorisiert! Bitte einloggen!</div>
         }
         return (

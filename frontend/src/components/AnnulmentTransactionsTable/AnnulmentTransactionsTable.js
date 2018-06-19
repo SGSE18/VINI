@@ -46,7 +46,7 @@ class AnnulmentTransactionsTable extends React.Component {
             .then(response => response.json())
             .then(json => {
                 console.log(json)
-                if(json.transactionPayload === undefined) throw new TypeError("invalid response body (annulment)")
+                if(!json.transactionPayload) throw new TypeError("invalid response body (annulment)")
                 // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.transactionPayload;
                     data = data
@@ -193,7 +193,7 @@ class AnnulmentTransactionsTable extends React.Component {
     }
 
     render() {
-        if (this.props.userLevel === undefined || (this.props.userLevel !== USER_LEVEL.STVA && this.props.userLevel !== USER_LEVEL.ASTVA)) {
+        if (!this.props.userLevel || (this.props.userLevel !== USER_LEVEL.STVA && this.props.userLevel !== USER_LEVEL.ASTVA)) {
             return <div style={{ margin: 'auto' }}> Nicht autorisiert! Bitte einloggen!</div>
         }
         return (

@@ -154,7 +154,7 @@ export class LoginPageNoRouter extends React.Component {
                     }
                 })
                 .then(json => {
-                    if (json !== undefined) {
+                    if (json) {
                         const bearerToken = json.access_token
                         authenticationStore.token = bearerToken;
                         // Login
@@ -174,7 +174,7 @@ export class LoginPageNoRouter extends React.Component {
                             })
                             .then(json => {
                                 this.setState({loginInProgess: false});
-                                if(json.message !== undefined) {
+                                if(json.message) {
                                     this.displayPopup("Fehler", json.message)
                                 } else if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);

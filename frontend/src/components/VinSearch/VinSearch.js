@@ -21,7 +21,7 @@ class VinSearch extends React.Component {
         const regexIsVinValid = /^[1234567890ABCDEFGHJKLMNPRSTUVWXYZ]{17}$/;
         if (regexIsVinValid.test(this.state.vin)) {
             this.setState({ isVinInvalid: false })
-            if(this.props.onSearchClick !== undefined) {
+            if(this.props.onSearchClick) {
                 this.props.onSearchClick()
             }
         } else {

@@ -51,7 +51,7 @@ class HomePage extends React.Component {
     }
     onSearchClick() {
         this.setState({ showProgressbar: true });
-        const query = "?car=" + dataStore.vin;
+        const query = "?vin=" + dataStore.vin;
         fetch(READ_CAR_PATH + query,
             {
                 method: 'GET',
@@ -62,7 +62,8 @@ class HomePage extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                this.setState({ showProgressbar: false, carTransactionData: json.transactionPayload });
+                const newCarTransactionData = json.transactionPayload ? json.transactionPayload : [];
+                this.setState({ showProgressbar: false, carTransactionData: newCarTransactionData });
                 dataStore.carTransactionData = json.transactionPayload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
             })

@@ -135,10 +135,18 @@ class UserOverviewTable extends React.Component {
                 .then(response => response.json() )
                 .then(json => {
                     this.updateUserData();
-
+                    if (json && json.message) {
+                        alert(json.message)
+                    } else {
+                        alert(JSON.stringify(json)) 
+                    }
                 })
-                .catch(message => {
-                    alert(message) // TODO
+                .catch(error => {
+                    if (error && error.message) {
+                        alert(error.message) 
+                    } else {
+                        alert(JSON.stringify(error))
+                    }
                 })
         }
         this.setState({ isPopupVisible: false })

@@ -86,7 +86,11 @@ export class ManageUserForm extends React.Component {
                 })
                 .then(response => response.json())
                 .then(json => {
-                    alert(JSON.stringify(json)) //TODO
+                    if (json && json.message) {
+                        alert(json.message) //TODO
+                    } else {
+                        alert(JSON.stringify(json)) //TODO
+                    }
                 })
                 .catch(message => {
                     alert(message) // TODO

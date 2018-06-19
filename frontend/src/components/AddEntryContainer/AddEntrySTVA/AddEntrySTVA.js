@@ -38,7 +38,6 @@ class AddEntrySTVA extends React.Component {
             body.ownerCount = this.state.preownerCount;
             apiEndpoint = CHANGE_PREOWNER_PATH;
         }
-        console.log(body)
         fetch(apiEndpoint,
             {
                 method: 'post',
@@ -50,7 +49,11 @@ class AddEntrySTVA extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                alert(JSON.stringify(json)) //TODO
+                if (json && json.message) {
+                    alert(json.message) //TODO
+                } else {
+                    alert(JSON.stringify(json)) //TODO
+                }
             })
             .catch(message => {
                 alert(message) // TODO

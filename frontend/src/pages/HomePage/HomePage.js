@@ -62,14 +62,18 @@ class HomePage extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                const newCarTransactionData = json.transactionPayload ? json.transactionPayload : [];
+                const newCarTransactionData = json.payload ? json.payload : [];
                 this.setState({ showProgressbar: false, carTransactionData: newCarTransactionData });
-                dataStore.carTransactionData = json.transactionPayload;
+                dataStore.carTransactionData = json.payload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
             })
-            .catch(message => {
+            .catch(error => {
                 this.setState({ showProgressbar: false });
-                alert(message) // TODO
+                if (error && error.message) {
+                    alert(error.message) //TODO
+                } else {
+                    alert(JSON.stringify(error)) //TODO
+                }
             })
     }
     render() {

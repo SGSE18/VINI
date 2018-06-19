@@ -40,7 +40,6 @@ class AddEntryTUEV extends React.Component {
             body.nextCheck = this.getNextCheckDate(body.timestamp);
             apiEndpoint = ADD_TUEV_PATH;
         }
-        console.log(body);
         fetch(apiEndpoint,
             {
                 method: 'post',

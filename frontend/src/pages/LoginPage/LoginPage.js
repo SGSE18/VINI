@@ -112,8 +112,8 @@ export class LoginPageNoRouter extends React.Component {
                 })
                 .catch(message => {
                     this.setState({ loginInProgess: false }); 
-                    console.log(message);
-                }) // TODO
+                    console.error(message);
+                })
 
         }
     }
@@ -133,8 +133,7 @@ export class LoginPageNoRouter extends React.Component {
                 'client_id': null,
                 'client_secret': null
             };
-            console.log(details);
-            let formBody = [];
+              let formBody = [];
             for (let property in details) {
                 let encodedKey = encodeURIComponent(property);
                 let encodedValue = encodeURIComponent(details[property]);

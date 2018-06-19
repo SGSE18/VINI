@@ -23,7 +23,7 @@ class AddEntryTUEV extends React.Component {
     }
     getNextCheckDate = (timestamp) => {
         const date = new Date(timestamp)
-        const dateYear = date.getFullYear()+2 + '-';
+        const dateYear = date.getFullYear() + 2 + '-';
         let month = date.getMonth() + 1;
         month = month < 10 ? "0" + month : month;
         let day = date.getDate();
@@ -36,22 +36,26 @@ class AddEntryTUEV extends React.Component {
             ...headerData,
         };
         let apiEndpoint = CHANGE_MILEAGE_PATH;
-        if(this.state.isHuAuChecked) {
+        if (this.state.isHuAuChecked) {
             body.nextCheck = this.getNextCheckDate(body.timestamp);
             apiEndpoint = ADD_TUEV_PATH;
         }
         fetch(apiEndpoint,
             {
                 method: 'post',
-                headers: { 
-                    'Content-Type': 'application/json', 
+                headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': "Bearer " + authenticationStore.token
                 },
                 body: JSON.stringify(body)
             })
             .then(response => response.json())
             .then(json => {
-                alert(JSON.stringify(json)) //TODO
+                if (json && json.message) {
+                    alert(json.message) //TODO
+                } else {
+                    alert(JSON.stringify(json)) //TODO
+                }
             })
             .catch(message => {
                 alert(message) // TODO

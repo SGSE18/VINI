@@ -138,7 +138,11 @@ class UserOverviewTable extends React.Component {
 
                 })
                 .catch(message => {
-                    alert(message) // TODO
+                    if (json && json.message) {
+                        alert(json.message) //TODO
+                    } else {
+                        alert(JSON.stringify(json)) //TODO
+                    }
                 })
         }
         this.setState({ isPopupVisible: false })

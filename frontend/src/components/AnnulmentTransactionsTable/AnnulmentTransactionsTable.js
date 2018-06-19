@@ -92,10 +92,10 @@ class AnnulmentTransactionsTable extends React.Component {
 
             if (this.state.clickedState === ButtonStatus.ACCEPT_CLICKED) {
                 const transaction = this.state.data[this.state.clickedCellIndex];
-                console.log("Bestätige Annullierung für: " + transaction.transactionId);
+                console.log("Bestätige Annullierung für: " + transaction.transactionHash);
             } else if (this.state.clickedState === ButtonStatus.DECLINE_CLICKED) {
                 const transaction = this.state.data[this.state.clickedCellIndex];
-                console.log("Lehne ab: " + transaction.transactionId);
+                console.log("Lehne ab: " + transaction.transactionHash);
             }
         }
 

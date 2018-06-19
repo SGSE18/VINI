@@ -12,7 +12,7 @@ class VinSearch extends React.Component {
         this.state = {
             vin: dataStore.vin,
             isVinInvalid: false,
-
+            showProgressbar: false,
         }
         this.handleClick = this.handleClick.bind(this);
         this.onVinInputChanged = this.onVinInputChanged.bind(this);

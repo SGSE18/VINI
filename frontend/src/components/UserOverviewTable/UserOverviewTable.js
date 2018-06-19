@@ -118,12 +118,6 @@ class UserOverviewTable extends React.Component {
 
         return columnDefinition;
     }
-    determineCellBackgroundColor(rowInfo) {
-        let backgroundColor = "";
-        if (rowInfo != null) {
-        }
-        return backgroundColor;
-    }
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
             const user = this.state.data[this.state.clickedCellIndex];
@@ -167,12 +161,6 @@ class UserOverviewTable extends React.Component {
                     columns={this.getColumnDefinition()}
                     defaultPageSize={10}
                     noDataText="Keine User gefunden."
-                    getTrProps={(state, rowInfo, column) => {
-                        let backgroundColor = this.determineCellBackgroundColor(rowInfo)
-                        return {
-                            style: { backgroundColor }
-                        };
-                    }}
                 />
             </ React.Fragment>
         )

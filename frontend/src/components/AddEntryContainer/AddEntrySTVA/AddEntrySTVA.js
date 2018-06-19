@@ -8,7 +8,7 @@ class AddEntrySTVA extends React.Component {
     constructor(props) {
         super(props);
         let preownerCount = -1;
-        if (props.preownerCount !== undefined && props.preownerCount !== null) {
+        if (props.preownerCount) {
             preownerCount = props.preownerCount
         }
         this.state = {

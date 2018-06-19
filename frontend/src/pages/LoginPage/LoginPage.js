@@ -16,7 +16,7 @@ function getProgressStyle() {
     // sets the modal into the mid of the screen
     return {
         top: '20%',
-        left: '45%',
+        left: '47%',
         position: 'absolute',
         zIndex: 100
     };
@@ -149,7 +149,7 @@ export class LoginPageNoRouter extends React.Component {
                     body: formBody
                 })
                 .then(response => {
-                    if (response !== null && response.status === 200) {
+                    if (response && response.status === 200) {
                         return response.json()
                     }
                 })
@@ -167,7 +167,7 @@ export class LoginPageNoRouter extends React.Component {
                                 },
                             })
                             .then(response => {
-                                if (response !== null && response.status === 200) {
+                                if (response && response.status === 200) {
                                     this.setState({ showProgressbar: false });
                                     this.setState({loginInProgess: false});
                                     return response.json()

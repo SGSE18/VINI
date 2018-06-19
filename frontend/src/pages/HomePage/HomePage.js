@@ -38,12 +38,12 @@ class HomePage extends React.Component {
         });
     }
     getCurrentMileageOfCar() {
-        if (this.state.carTransactionData !== null && this.state.carTransactionData.length > 0) {
+        if (this.state.carTransactionData && this.state.carTransactionData.length > 0) {
             const mileages = this.state.carTransactionData
                 .filter(row => row.state === TRANSACTION_PENDING || row.state === TRANSACTION_VALID)
                 .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
                 .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
-            if (mileages !== null && mileages.length > 0) {
+            if (mileages && mileages.length > 0) {
                 return mileages[0].mileage;
             }
         }

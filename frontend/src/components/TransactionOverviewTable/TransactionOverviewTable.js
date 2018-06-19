@@ -124,7 +124,7 @@ class TransactionOverviewTable extends React.Component {
     }
     determineCellBackgroundColor(rowInfo) {
         let backgroundColor = "";
-        if (rowInfo != null) {
+        if (rowInfo) {
             if (rowInfo.row.state === TRANSACTION_INVALID) {
                 backgroundColor = "#ff3c3c";
             } else if (rowInfo.row.state === TRANSACTION_PENDING) {

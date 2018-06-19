@@ -135,13 +135,17 @@ class UserOverviewTable extends React.Component {
                 .then(response => response.json() )
                 .then(json => {
                     this.updateUserData();
-
-                })
-                .catch(message => {
                     if (json && json.message) {
-                        alert(json.message) //TODO
+                        alert(json.message)
                     } else {
-                        alert(JSON.stringify(json)) //TODO
+                        alert(JSON.stringify(json)) 
+                    }
+                })
+                .catch(error => {
+                    if (error && error.message) {
+                        alert(error.message) 
+                    } else {
+                        alert(JSON.stringify(error))
                     }
                 })
         }

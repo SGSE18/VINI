@@ -27,7 +27,7 @@ class AddEntryPage extends React.Component {
                             ?
                             null
                             :
-                            <AddEntryContainer style={{ display: 'inline' }} vin={dataStore.vin} preownerCount={0} />}
+                            <AddEntryContainer style={{ display: 'inline' }} vin={dataStore.vin} preownerCount={dataStore.preownerCount} />}
                     {/*Transaktions-Annullierungen*/
                         authenticationStore.userLevel === USER_LEVEL.STVA || authenticationStore.userLevel === USER_LEVEL.ASTVA
                             ?

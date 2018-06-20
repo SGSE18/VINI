@@ -74,7 +74,6 @@ export class ManageUserForm extends React.Component {
                 companyName: this.state.company,
                 creationDate: new Date().toISOString()
             }
-            console.log(body)
             fetch(REGISTER_USER_PATH,
                 {
                     method: 'post',

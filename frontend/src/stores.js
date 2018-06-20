@@ -5,12 +5,15 @@ export let authenticationStore = observable({
     userLevel: 0,
     token: "",
     setUserLevel: action((newVal) => authenticationStore.userLevel = newVal),
-    setToken: action((newVal) => authenticationStore.setToken = newVal)
+    setToken: action((newVal) => authenticationStore.setToken = newVal),
+
 });
 
 export let dataStore = observable({
-    vin: "W0L000051T2123456", // TODO remove default value
+    vin: "A0L000051T4567893", // TODO remove default value
     currentMileageOfCar: NaN,
+    preownerCount: -1,
     setVin: action((newVal) => dataStore.vin = newVal),
     setCurrentMileageOfCar: action((newVal) => dataStore.currentMileageOfCar = newVal),
+    setPreowner: action((newVal) => authenticationStore.preownerCount = newVal)
 })

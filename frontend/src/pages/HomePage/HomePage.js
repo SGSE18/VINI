@@ -63,6 +63,7 @@ class HomePage extends React.Component {
             .then(response => response.json())
             .then(json => {
                 const newCarTransactionData = json.payload ? json.payload : [];
+                this.fillOwnerCount(newCarTransactionData);
                 this.setState({ showProgressbar: false, carTransactionData: newCarTransactionData });
                 dataStore.carTransactionData = json.payload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
@@ -76,6 +77,19 @@ class HomePage extends React.Component {
                 }
             })
     }
+    fillOwnerCount(newCarTransactionData) {
+        let lastPreownerCount = 0;
+        for (let i = newCarTransactionData.length - 1; i >= 0; --i) {
+            let curTransaction = newCarTransactionData[i];
+            if (!curTransaction.ownerCount) {
+                curTransaction.ownerCount = lastPreownerCount;
+            }
+            else if (curTransaction.ownerCount && Number(curTransaction.ownerCount) !== lastPreownerCount) {
+                lastPreownerCount = curTransaction.ownerCount;
+            }
+        }
+    }
+
     render() {
         return (
             <div className="Home-Page">

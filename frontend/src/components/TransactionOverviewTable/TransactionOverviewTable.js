@@ -25,6 +25,9 @@ class TransactionOverviewTable extends React.Component {
     }
 
     checkBox = (cell) => {
+        if(cell.value === null || cell.value === undefined) {
+            cell.value = false;
+        }
         return (
             <input
                 type="checkbox"

@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
+import { USER_LEVEL, GET_ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
 import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
@@ -35,7 +35,7 @@ class AnnulmentTransactionsTable extends React.Component {
         };
         this.displayPopup = this.displayPopup.bind(this);
 
-        fetch(ANNULMENT_PATH,
+        fetch(GET_ANNULMENT_PATH,
             {
                 method: 'GET',
                 headers: {
@@ -46,9 +46,9 @@ class AnnulmentTransactionsTable extends React.Component {
             .then(response => response.json())
             .then(json => {
                 console.log(json)
-                if(!json.transactionPayload) throw new TypeError("invalid response body (annulment)")
+                if(!json.annulments) throw new TypeError("invalid response body (annulment)")
                 // filter out every transaction that's state is not pending (should not be the case though!)
-                let data = json.transactionPayload;
+                let data = json.annulments;
                     data = data
                     .filter(row => row.state === TRANSACTION_PENDING)
                     .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps

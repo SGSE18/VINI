@@ -33,13 +33,13 @@ export class ManageUserForm extends React.Component {
         this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
     }
     inputIsValid() {
-        if( this.state.forename !== "" 
-        &&  this.state.surname !== ""
-        &&  this.state.company !== ""
-        &&  this.state.email !== ""
-        &&  this.state.authorityLevel !== ""
-        &&  this.state.password !== ""
-        &&  this.state.arePasswordsEqual) {
+        if (this.state.forename !== ""
+            && this.state.surname !== ""
+            && this.state.company !== ""
+            && this.state.email !== ""
+            && this.state.authorityLevel !== ""
+            && this.state.password !== ""
+            && this.state.arePasswordsEqual) {
             return true;
         }
         return false;
@@ -48,9 +48,9 @@ export class ManageUserForm extends React.Component {
         this.setState({ [valName]: event.target.value })
     }
     checkConfirmPassword() {
-        if(this.state.password !== "" 
-        && this.state.confirmPassword !== "" 
-        && this.state.confirmPassword !== this.state.password) {
+        if (this.state.password !== ""
+            && this.state.confirmPassword !== ""
+            && this.state.confirmPassword !== this.state.password) {
             this.setState({
                 arePasswordsEqual: false,
                 helperText: "Passwörter nicht identisch"
@@ -68,7 +68,7 @@ export class ManageUserForm extends React.Component {
             const body = {
                 email: this.state.email,
                 password: sha256(this.state.password),
-                authorityLevel: getAuthorityInt(this.state.authorityLevel),
+                authLevel: getAuthorityInt(this.state.authorityLevel),
                 forename: this.state.forename,
                 surname: this.state.surname,
                 companyName: this.state.company,
@@ -78,8 +78,8 @@ export class ManageUserForm extends React.Component {
             fetch(REGISTER_USER_PATH,
                 {
                     method: 'post',
-                    headers: { 
-                        'Content-Type': 'application/json', 
+                    headers: {
+                        'Content-Type': 'application/json',
                         'Authorization': "Bearer " + authenticationStore.token
                     },
                     body: JSON.stringify(body)

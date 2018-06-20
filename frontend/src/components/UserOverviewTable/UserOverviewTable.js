@@ -163,6 +163,7 @@ class UserOverviewTable extends React.Component {
                     description="Soll der Benutzer wirklich gelöscht werden?"
                 />
                 <ReactTable
+                    filterable
                     style={{ width: '100%' }}
                     {...this.translationTexts}
                     data={this.state.data}

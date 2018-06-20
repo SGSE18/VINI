@@ -62,6 +62,7 @@ class HomePage extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
+                console.log(json)
                 const newCarTransactionData = json.payload ? json.payload : [];
                 this.fillOwnerCount(newCarTransactionData);
                 this.setState({ showProgressbar: false, carTransactionData: newCarTransactionData });
@@ -88,6 +89,7 @@ class HomePage extends React.Component {
                 lastPreownerCount = curTransaction.ownerCount;
             }
         }
+        dataStore.preownerCount = lastPreownerCount;
     }
 
     render() {

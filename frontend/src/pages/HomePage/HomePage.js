@@ -82,11 +82,14 @@ class HomePage extends React.Component {
         let lastPreownerCount = 0;
         for (let i = newCarTransactionData.length - 1; i >= 0; --i) {
             let curTransaction = newCarTransactionData[i];
-            if (!curTransaction.ownerCount) {
-                curTransaction.ownerCount = lastPreownerCount;
-            }
-            else if (curTransaction.ownerCount && Number(curTransaction.ownerCount) !== lastPreownerCount) {
-                lastPreownerCount = curTransaction.ownerCount;
+            console.log("todo test this");
+            if (curTransaction.state === TRANSACTION_PENDING || curTransaction.state === TRANSACTION_VALID) {
+                if (!curTransaction.ownerCount) {
+                    curTransaction.ownerCount = lastPreownerCount;
+                }
+                else if (curTransaction.ownerCount && Number(curTransaction.ownerCount) !== lastPreownerCount) {
+                    lastPreownerCount = curTransaction.ownerCount;
+                }
             }
         }
         dataStore.preownerCount = lastPreownerCount;

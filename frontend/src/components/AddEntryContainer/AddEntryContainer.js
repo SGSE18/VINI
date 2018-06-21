@@ -36,7 +36,7 @@ class AddEntryContainer extends React.Component {
         super(props);
         const todayStr = getCurrentDate();
         this.state = {
-            mileage: 0, //should both be current value. See TODO AddEntryPage
+            mileage: dataStore.currentMileageOfCar,
             selectedDate: todayStr,
             isPopupVisible: false,
             popupTitle: "",
@@ -54,13 +54,12 @@ class AddEntryContainer extends React.Component {
         this.submitData = this.submitData.bind(this);
         this.setDate = this.setDate.bind(this);
         this.validateDateStr = this.validateDateStr.bind(this);
-        // references to the child components to retreive the data
+        // references to the child components to retrieve the data
         this.zwsRef = new React.createRef();
         this.tuevRef = new React.createRef();
         this.stvaRef = new React.createRef();
 
     }
-
 
     handleSubmitClick() {
         if (!this.isNewMileageValid(this.state.mileage)) {
@@ -79,10 +78,7 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
-        if (isNaN(mileage)) {
-            return false;
-        }
-        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway 
+        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldn't happen anyway 
             return false;
         }
         if (isNaN(mileage)) { //do not allow updating if not a number
@@ -98,7 +94,7 @@ class AddEntryContainer extends React.Component {
             return true;
         }
         if (authenticationStore.userLevel === USER_LEVEL.ASTVA
-            || authenticationStore.userLevel === USER_LEVEL.STVA) {//(A)STVA is allowed to do everything
+            || authenticationStore.userLevel === USER_LEVEL.STVA) {//(A)STVA is allowed to do everything (>0)
             return true;
         }
         oldValue = Number(oldValue);

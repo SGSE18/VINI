@@ -23,14 +23,18 @@ const entryLabelStyle = {
 }
 
 const getCurrentDate = () => {
-    return new Date();
     const today = new Date()
     const todayStr = today.getFullYear() + '-';
     let month = today.getMonth() + 1;
     month = month < 10 ? "0" + month : month;
     let day = today.getDate();
-    day = day < 10 ? "0" + day : day
-    return todayStr + month + '-' + day;
+    day = day < 10 ? "0" + day : day;
+    let hours = today.getHours();
+    hours = hours < 10 ? "0" + hours : hours;
+    let minutes = today.getMinutes();
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return todayStr + month + '-' + day + "T" + hours + ":" + minutes;
 }
 class AddEntryContainer extends React.Component {
     constructor(props) {
@@ -152,8 +156,7 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateDateStr(dateStr) {
-        var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        //var dateRegex = /^.*$/;//debug
+        var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$$/;
         return dateRegex.test(dateStr);
 
     }

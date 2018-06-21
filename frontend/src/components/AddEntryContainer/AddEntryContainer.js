@@ -28,15 +28,20 @@ const getCurrentDate = () => {
     let month = today.getMonth() + 1;
     month = month < 10 ? "0" + month : month;
     let day = today.getDate();
-    day = day < 10 ? "0" + day : day
-    return todayStr + month + '-' + day;
+    day = day < 10 ? "0" + day : day;
+    let hours = today.getHours();
+    hours = hours < 10 ? "0" + hours : hours;
+    let minutes = today.getMinutes();
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return todayStr + month + '-' + day + "T" + hours + ":" + minutes;
 }
 class AddEntryContainer extends React.Component {
     constructor(props) {
         super(props);
         const todayStr = getCurrentDate();
         this.state = {
-            mileage: 0, //should both be current value. See TODO AddEntryPage
+            mileage: dataStore.currentMileageOfCar,
             selectedDate: todayStr,
             isPopupVisible: false,
             popupTitle: "",
@@ -54,13 +59,12 @@ class AddEntryContainer extends React.Component {
         this.submitData = this.submitData.bind(this);
         this.setDate = this.setDate.bind(this);
         this.validateDateStr = this.validateDateStr.bind(this);
-        // references to the child components to retreive the data
+        // references to the child components to retrieve the data
         this.zwsRef = new React.createRef();
         this.tuevRef = new React.createRef();
         this.stvaRef = new React.createRef();
 
     }
-
 
     handleSubmitClick() {
         if (!this.isNewMileageValid(this.state.mileage)) {
@@ -79,10 +83,7 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
-        if (isNaN(mileage)) {
-            return false;
-        }
-        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldnt happen anyway 
+        if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldn't happen anyway 
             return false;
         }
         if (isNaN(mileage)) { //do not allow updating if not a number
@@ -98,7 +99,7 @@ class AddEntryContainer extends React.Component {
             return true;
         }
         if (authenticationStore.userLevel === USER_LEVEL.ASTVA
-            || authenticationStore.userLevel === USER_LEVEL.STVA) {//(A)STVA is allowed to do everything
+            || authenticationStore.userLevel === USER_LEVEL.STVA) {//(A)STVA is allowed to do everything (>0)
             return true;
         }
         oldValue = Number(oldValue);
@@ -155,8 +156,7 @@ class AddEntryContainer extends React.Component {
         }
     }
     validateDateStr(dateStr) {
-        var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        //var dateRegex = /^.*$/;//debug
+        var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$$/;
         return dateRegex.test(dateStr);
 
     }
@@ -230,7 +230,7 @@ class AddEntryContainer extends React.Component {
                     <TextField
                         id="date"
                         label="Datum"
-                        type="date"
+                        type="datetime-local"
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
                         InputLabelProps={{

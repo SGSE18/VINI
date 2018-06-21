@@ -92,6 +92,9 @@ export class LoginPageNoRouter extends React.Component {
         }
     }
     onResetPasswordClick() {
+        if(this.state.loginInProgess) {
+            return;
+        }
         if (this.state.email === "" || this.state.isEmailInvalid) {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
@@ -122,10 +125,10 @@ export class LoginPageNoRouter extends React.Component {
         if(this.state.loginInProgess) {
             return;
         }
-        this.setState({loginInProgess: true});
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
+            this.setState({loginInProgess: true});
             let details = {
                 'grant_type': 'password',
                 'username': this.state.email,

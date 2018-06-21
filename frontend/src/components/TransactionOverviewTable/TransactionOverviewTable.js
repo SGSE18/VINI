@@ -104,11 +104,11 @@ class TransactionOverviewTable extends React.Component {
             accessor: 'mainInspection',
             Cell: this.checkBox
         }, {
-            Header: 'Inspektion I',
+            Header: 'Service I',
             accessor: 'service1',
             Cell: this.checkBox
         }, {
-            Header: 'Inspektion II',
+            Header: 'Service II',
             accessor: 'service2',
             Cell: this.checkBox
         }, {

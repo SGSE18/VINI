@@ -44,6 +44,7 @@ class HomePage extends React.Component {
                 .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
                 .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
             if (mileages && mileages.length > 0) {
+                console.log(mileages)
                 return mileages[0].mileage;
             }
         }
@@ -82,11 +83,14 @@ class HomePage extends React.Component {
         let lastPreownerCount = 0;
         for (let i = newCarTransactionData.length - 1; i >= 0; --i) {
             let curTransaction = newCarTransactionData[i];
-            if (!curTransaction.ownerCount) {
-                curTransaction.ownerCount = lastPreownerCount;
-            }
-            else if (curTransaction.ownerCount && Number(curTransaction.ownerCount) !== lastPreownerCount) {
-                lastPreownerCount = curTransaction.ownerCount;
+            console.log("todo test this");
+            if (curTransaction.state === TRANSACTION_PENDING || curTransaction.state === TRANSACTION_VALID) {
+                if (!curTransaction.ownerCount) {
+                    curTransaction.ownerCount = lastPreownerCount;
+                }
+                else if (curTransaction.ownerCount && Number(curTransaction.ownerCount) !== lastPreownerCount) {
+                    lastPreownerCount = curTransaction.ownerCount;
+                }
             }
         }
         dataStore.preownerCount = lastPreownerCount;

@@ -17,8 +17,10 @@ class AddEntryButton extends React.Component {
         const regexIsVinValid = /^[1234567890ABCDEFGHJKLMNPRSTUVWXYZ]{17}$/;
         if (regexIsVinValid.test(dataStore.vin)) {
             this.props.history.push(ADD_ENTRY_PATH)
+            return true;
         } else {
             alert("FIN ungültig!");
+            return false;
         }
     }
 

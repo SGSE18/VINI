@@ -23,6 +23,7 @@ const entryLabelStyle = {
 }
 
 const getCurrentDate = () => {
+    return new Date();
     const today = new Date()
     const todayStr = today.getFullYear() + '-';
     let month = today.getMonth() + 1;
@@ -226,7 +227,7 @@ class AddEntryContainer extends React.Component {
                     <TextField
                         id="date"
                         label="Datum"
-                        type="date"
+                        type="datetime-local"
                         onChange={this.handleCalendarChange}
                         value={this.state.selectedDate}
                         InputLabelProps={{

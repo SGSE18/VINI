@@ -25,7 +25,7 @@ class HomePage extends React.Component {
         super(props);
 
         this.state = {
-            carTransactionData: props.carTransactionData,
+            carTransactionData: dataStore.carTransactionData,
             isUserManagmentGUIOpen: false,
             showProgressbar: false
         };
@@ -83,7 +83,6 @@ class HomePage extends React.Component {
         let lastPreownerCount = 0;
         for (let i = newCarTransactionData.length - 1; i >= 0; --i) {
             let curTransaction = newCarTransactionData[i];
-            console.log("todo test this");
             if (curTransaction.state === TRANSACTION_PENDING || curTransaction.state === TRANSACTION_VALID) {
                 if (!curTransaction.ownerCount) {
                     curTransaction.ownerCount = lastPreownerCount;
@@ -93,7 +92,7 @@ class HomePage extends React.Component {
                 }
             }
         }
-        dataStore.preownerCount = lastPreownerCount;
+        dataStore.preownerCount = Number(lastPreownerCount);
     }
 
     render() {

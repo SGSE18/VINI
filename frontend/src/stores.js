@@ -11,7 +11,7 @@ export const authenticationStore = observable({
 class DataStore {
     vin = "A0L000051T4567893"; // TODO remove default value
     currentMileageOfCar = 0;
-    preownerCount: 0;
+    preownerCount = 0;
     carTransactionData = [];
     setVin(newVal) {
         this.vin = newVal;

@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, GET_ANNULMENT_PATH, TRANSACTION_PENDING, TRANSACTION_INVALID } from '../../constants';
+import { USER_LEVEL, GET_ANNULMENT_PATH, DECLINE_ANNULMENT_PATH, ACCEPT_ANNULMENT_PATH, TRANSACTION_PENDING, TRANSACTION_INVALID } from '../../constants';
 import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
@@ -105,15 +105,64 @@ class AnnulmentTransactionsTable extends React.Component {
 
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
-
+            const transaction = this.state.data[this.state.clickedCellIndex];
+            const body = {
+                vin: transaction.vin,
+                transactionHash: transaction.transactionHash,
+                timestamp: new Date().toISOString()
+            }
             if (this.state.clickedState === ButtonStatus.ACCEPT_CLICKED) {
-                const transaction = this.state.data[this.state.clickedCellIndex];
-                console.log("Bestätige Annullierung für: " + transaction.transactionHash);
-                // email, vin und timestamp der Antragsstellung.
+                fetch(ACCEPT_ANNULMENT_PATH,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': "Bearer " + authenticationStore.token
+                        },
+                        body: JSON.stringify(body)
+                    })
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json && json.message) {
+                            alert(json.message)
+                        } else {
+                            alert(JSON.stringify(json))
+                        }
+                    })
+                    .catch(error => {
+                        if (error && error.message) {
+                            alert(error.message)
+                        } else {
+                            alert(JSON.stringify(error))
+                        }
+                    })
+
             } else if (this.state.clickedState === ButtonStatus.DECLINE_CLICKED) {
-                const transaction = this.state.data[this.state.clickedCellIndex];
-                console.log("Lehne ab: " + transaction.transactionHash);
-                // email, vin und timestamp der Antragsstellung.
+                fetch(DECLINE_ANNULMENT_PATH,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Access-Control-Allow-Method": "DELETE",
+                            'Authorization': "Bearer " + authenticationStore.token
+                        },
+                        body: JSON.stringify(body)
+                    })
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json && json.message) {
+                            alert(json.message)
+                        } else {
+                            alert(JSON.stringify(json))
+                        }
+                    })
+                    .catch(error => {
+                        if (error && error.message) {
+                            alert(error.message)
+                        } else {
+                            alert(JSON.stringify(error))
+                        }
+                    })
             }
         }
 

@@ -109,7 +109,8 @@ class AnnulmentTransactionsTable extends React.Component {
             const body = {
                 vin: transaction.vin,
                 transactionHash: transaction.transactionHash,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                email: transaction.applicant
             }
             if (this.state.clickedState === ButtonStatus.ACCEPT_CLICKED) {
                 fetch(ACCEPT_ANNULMENT_PATH,

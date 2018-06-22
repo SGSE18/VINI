@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import { authenticationStore, dataStore } from '../../stores';
+import { authenticationStore, dataStore, popupStore } from '../../stores';
 import Button from '@material-ui/core/Button';
 import Add from '@material-ui/icons/Add';
 import { ADD_ENTRY_PATH } from '../../app-config';
@@ -19,7 +19,7 @@ class AddEntryButton extends React.Component {
             this.props.history.push(ADD_ENTRY_PATH)
             return true;
         } else {
-            alert("FIN ungültig!");
+            popupStore.showPopup("Fehler", "Die FIN ungültig!")
             return false;
         }
     }

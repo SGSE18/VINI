@@ -4,7 +4,7 @@ import './ManageUserForm.css';
 import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { USER_LEVEL, getAuthorityString, getAuthorityInt } from '../../constants';
 import { REGISTER_USER_PATH } from '../../constants';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, popupStore } from '../../stores';
 import sha256 from 'sha256';
 
 let authoritylevels = [];
@@ -86,13 +86,17 @@ export class ManageUserForm extends React.Component {
                 .then(response => response.json())
                 .then(json => {
                     if (json && json.message) {
-                        alert(json.message) //TODO
+                        popupStore.showPopup("", json.message)
                     } else {
-                        alert(JSON.stringify(json)) //TODO
+                        popupStore.showPopup("", JSON.stringify(json))
                     }
                 })
-                .catch(message => {
-                    alert(message) // TODO
+                .catch(error => {
+                    if (error && error.message) {
+                        popupStore.showPopup("Fehler", error.message)
+                    } else {
+                        popupStore.showPopup("Fehler", JSON.stringify(error))
+                    }
                 })
         }
     }

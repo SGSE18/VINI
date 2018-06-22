@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { ModalPopup } from '../../components/';
 import { observer } from 'mobx-react';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, popupStore } from '../../stores';
 import { USER_LOGIN_PATH, RESET_PASSWORD_PATH, USER_TOKEN_PATH } from '../../constants';
 import { HOME_PATH } from '../../app-config';
 import sha256 from 'sha256';
@@ -111,14 +111,18 @@ export class LoginPageNoRouter extends React.Component {
                 .then(json => {
                     this.setState({ loginInProgess: false });
                     if (json && json.message) {
-                        alert(json.message)
+                        popupStore.showPopup("", json.message)
                     } else {
-                        alert(JSON.stringify(json))
+                        popupStore.showPopup("", JSON.stringify(json))
                     }
                 })
-                .catch(message => {
+                .catch(error => {
                     this.setState({ loginInProgess: false });
-                    alert(message)
+                    if (error && error.message) {
+                        popupStore.showPopup("Fehler", error.message)
+                    } else {
+                        popupStore.showPopup("Fehler", JSON.stringify(error))
+                    }
                 })
 
         }

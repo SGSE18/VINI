@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './AddEntryZWS.css'
 import Checkbox from '@material-ui/core/Checkbox';
 import { ADD_SERVICE_PATH } from '../../../constants';
-import { authenticationStore } from '../../../stores';
+import { authenticationStore, popupStore } from '../../../stores';
 
 class AddEntryZWS extends React.Component {
 
@@ -58,13 +58,17 @@ class AddEntryZWS extends React.Component {
             .then(response => response.json())
             .then(json => {
                 if (json && json.message) {
-                    alert(json.message) //TODO
+                    popupStore.showPopup("", json.message)
                 } else {
-                    alert(JSON.stringify(json)) //TODO
+                    popupStore.showPopup("", JSON.stringify(json))
                 }
             })
-            .catch(message => {
-                alert(message) // TODO
+            .catch(error => {
+                if (error && error.message) {
+                    popupStore.showPopup("Fehler", error.message)
+                } else {
+                    popupStore.showPopup("Fehler", JSON.stringify(error))
+                }
             })
 
     }

@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED, SUBMIT_ANNULMENT_PATH } from '../../constants';
+import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED, SUBMIT_ANNULMENT_PATH, READ_CAR_PATH } from '../../constants';
 import { authenticationStore, popupStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
@@ -21,7 +21,7 @@ class TransactionOverviewTable extends React.Component {
         };
         this.state = {
             clickedCellIndex: -1,
-            isPopupVisible: false
+            isPopupVisible: false,
         };
     }
 
@@ -141,7 +141,7 @@ class TransactionOverviewTable extends React.Component {
     }
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
-            const transaction = this.props.carTransactionData[this.state.clickedCellIndex];
+            const transaction = this.props.dataStore.carTransactionData[this.state.clickedCellIndex];
             const body = {
                 timestamp: new Date().toISOString(), 
                 transactionHash: transaction.hash
@@ -157,11 +157,34 @@ class TransactionOverviewTable extends React.Component {
                 })
                 .then(response => response.json())
                 .then(json => {
+                    const query = "?vin=" + this.props.dataStore.vin;
+                    fetch(READ_CAR_PATH + query,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': "Bearer " + authenticationStore.token
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(json => {
+                            const newCarTransactionData = json.payload ? json.payload : [];
+                            this.props.dataStore.setCarTransactionData(newCarTransactionData);
+                        })
+                        .catch(error => {
+                            this.setState({ showProgressbar: false });
+                            if (error && error.message) {
+                                popupStore.showPopup("Fehler", error.message)
+                            } else {
+                                popupStore.showPopup("Fehler", JSON.stringify(error))
+                            }
+                        })
                     if (json && json.message) {
                         popupStore.showPopup("", json.message)
                     } else {
                         popupStore.showPopup("", JSON.stringify(json))
                     }
+                    
                 })
                 .catch(error => {
                     if (error && error.message) {
@@ -187,7 +210,7 @@ class TransactionOverviewTable extends React.Component {
                 <ReactTable
                     style={{ width: '100%' }}
                     {...this.translationTexts}
-                    data={this.props.carTransactionData}
+                    data={this.props.dataStore.carTransactionData}
                     columns={this.getColumnDefinition()}
                     filterable
                     defaultFilterMethod={(filter, row) => String(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0}

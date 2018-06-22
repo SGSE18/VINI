@@ -54,7 +54,7 @@ class AddEntryPage extends React.Component {
                         ?
                         <AnnulmentTransactionsTable vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
                         :
-                        <TransactionOverviewTable carTransactionData={dataStore.carTransactionData} vin={dataStore.vin} userLevel={authenticationStore.userLevel} />
+                        <TransactionOverviewTable dataStore={dataStore} userLevel={authenticationStore.userLevel} />
                 }
 
             </div >

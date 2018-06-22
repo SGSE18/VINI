@@ -157,7 +157,7 @@ class HomePage extends React.Component {
                             />
                         </React.Fragment>
                         :
-                        <TransactionOverviewTable carTransactionData={this.state.carTransactionData} userLevel={authenticationStore.userLevel} />
+                        <TransactionOverviewTable dataStore={dataStore} userLevel={authenticationStore.userLevel} />
                     }
                 </div>
 

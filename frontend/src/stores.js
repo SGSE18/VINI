@@ -8,13 +8,33 @@ export const authenticationStore = observable({
 
 });
 
-export const dataStore = observable({
-    vin: "A0L000051T4567893", // TODO remove default value
-    currentMileageOfCar: 0,
-    preownerCount: 0,
-    setVin: action((newVal) => dataStore.vin = newVal),
-    setCurrentMileageOfCar: action((newVal) => dataStore.currentMileageOfCar = newVal),
-    setPreowner: action((newVal) => dataStore.preownerCount = newVal)
+class DataStore {
+    vin = "A0L000051T4567893"; // TODO remove default value
+    currentMileageOfCar = 0;
+    preownerCount: 0;
+    carTransactionData = [];
+    setVin(newVal) {
+        this.vin = newVal;
+    }
+    setCurrentMileageOfCar(newVal) {
+        this.currentMileageOfCar = newVal;
+    }
+    setPreowner(newVal) {
+        this.preownerCount = newVal;
+    }
+    setCarTransactionData(newVal) {
+        this.carTransactionData = newVal;
+    }
+}
+decorate(DataStore, {
+    carTransactionData: observable,
+    vin: observable,
+    currentMileageOfCar: observable,
+    preownerCount: observable,
+    setVin: action,
+    setCurrentMileageOfCar: action,
+    setCarTransactionData: action,
+    setPreowner: action,
 })
 
 class PopupStore {
@@ -40,4 +60,5 @@ decorate(PopupStore, {
     closePopup: action,
 })
 
+export const dataStore = new DataStore();
 export const popupStore = new PopupStore();

@@ -8,7 +8,7 @@ import { ModalPopup } from '../';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
-import { authenticationStore, dataStore } from '../../stores';
+import { authenticationStore, dataStore, popupStore } from '../../stores';
 import AddEntryTUEV from './AddEntryTUEV/AddEntryTUEV';
 import AddEntryZWS from './AddEntryZWS/AddEntryZWS';
 import AddEntrySTVA from './AddEntrySTVA/AddEntrySTVA';
@@ -126,7 +126,7 @@ class AddEntryContainer extends React.Component {
                 this.submitData();
                 this.props.history.push(HOME_PATH)
             } else {
-                alert("Fehler in der Eingabe");
+                popupStore.showPopup("Fehler", "Die Eingabe ist fehlerhaft.")
             }
 
         }

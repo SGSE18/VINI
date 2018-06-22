@@ -6,7 +6,7 @@ import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { USER_LEVEL, GET_ANNULMENT_PATH, DECLINE_ANNULMENT_PATH, ACCEPT_ANNULMENT_PATH, TRANSACTION_PENDING, TRANSACTION_INVALID } from '../../constants';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, popupStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -125,16 +125,16 @@ class AnnulmentTransactionsTable extends React.Component {
                     .then(response => response.json())
                     .then(json => {
                         if (json && json.message) {
-                            alert(json.message)
+                            popupStore.showPopup("", json.message)
                         } else {
-                            alert(JSON.stringify(json))
+                            popupStore.showPopup("", JSON.stringify(json))
                         }
                     })
                     .catch(error => {
                         if (error && error.message) {
-                            alert(error.message)
+                            popupStore.showPopup("Fehler", error.message)
                         } else {
-                            alert(JSON.stringify(error))
+                            popupStore.showPopup("Fehler", JSON.stringify(error))
                         }
                     })
 
@@ -152,16 +152,16 @@ class AnnulmentTransactionsTable extends React.Component {
                     .then(response => response.json())
                     .then(json => {
                         if (json && json.message) {
-                            alert(json.message)
+                            popupStore.showPopup("", json.message)
                         } else {
-                            alert(JSON.stringify(json))
+                            popupStore.showPopup("", JSON.stringify(json))
                         }
                     })
                     .catch(error => {
                         if (error && error.message) {
-                            alert(error.message)
+                            popupStore.showPopup("Fehler", error.message)
                         } else {
-                            alert(JSON.stringify(error))
+                            popupStore.showPopup("Fehler", JSON.stringify(error))
                         }
                     })
             }

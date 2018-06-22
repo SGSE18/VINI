@@ -4,7 +4,7 @@ import './AddEntryTUEV.css'
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { ADD_TUEV_PATH, CHANGE_MILEAGE_PATH } from '../../../constants';
-import { authenticationStore } from '../../../stores';
+import { authenticationStore, popupStore } from '../../../stores';
 
 class AddEntryTUEV extends React.Component {
     constructor() {
@@ -52,13 +52,17 @@ class AddEntryTUEV extends React.Component {
             .then(response => response.json())
             .then(json => {
                 if (json && json.message) {
-                    alert(json.message) //TODO
+                    popupStore.showPopup("", json.message)
                 } else {
-                    alert(JSON.stringify(json)) //TODO
+                    popupStore.showPopup("", JSON.stringify(json))
                 }
             })
-            .catch(message => {
-                alert(message) // TODO
+            .catch(error => {
+                if (error && error.message) {
+                    popupStore.showPopup("Fehler", error.message)
+                } else {
+                    popupStore.showPopup("Fehler", JSON.stringify(error))
+                }
             })
 
     }

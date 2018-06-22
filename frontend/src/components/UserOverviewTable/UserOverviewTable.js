@@ -7,7 +7,7 @@ import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { getAuthorityString, DELETE_USER_PATH } from '../../constants';
 import { READ_USER_PATH } from '../../constants';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, popupStore } from '../../stores';
 
 class UserOverviewTable extends React.Component {
 
@@ -42,8 +42,12 @@ class UserOverviewTable extends React.Component {
                 const data = json.users;
                 this.setState({ data });
             })
-            .catch(message => {
-                alert(message) // TODO
+            .catch(error => {
+                if (error && error.message) {
+                    popupStore.showPopup("Fehler", error.message)
+                } else {
+                    popupStore.showPopup("Fehler", JSON.stringify(error))
+                }
             })
     }
 
@@ -136,16 +140,16 @@ class UserOverviewTable extends React.Component {
                 .then(json => {
                     this.updateUserData();
                     if (json && json.message) {
-                        alert(json.message)
+                        popupStore.showPopup("", json.message)
                     } else {
-                        alert(JSON.stringify(json)) 
+                        popupStore.showPopup("", JSON.stringify(json))
                     }
                 })
                 .catch(error => {
                     if (error && error.message) {
-                        alert(error.message) 
+                        popupStore.showPopup("Fehler", error.message)
                     } else {
-                        alert(JSON.stringify(error))
+                        popupStore.showPopup("Fehler", JSON.stringify(error))
                     }
                 })
         }

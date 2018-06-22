@@ -2,7 +2,7 @@ import React from 'react';
 import './AddEntrySTVA.css'
 import TextField from '@material-ui/core/TextField';
 import { CHANGE_MILEAGE_PATH, CHANGE_PREOWNER_PATH } from '../../../constants';
-import { authenticationStore } from '../../../stores';
+import { authenticationStore, popupStore } from '../../../stores';
 
 class AddEntrySTVA extends React.Component {
     constructor(props) {
@@ -50,13 +50,17 @@ class AddEntrySTVA extends React.Component {
             .then(response => response.json())
             .then(json => {
                 if (json && json.message) {
-                    alert(json.message) //TODO
+                    popupStore.showPopup("", json.message)
                 } else {
-                    alert(JSON.stringify(json)) //TODO
+                    popupStore.showPopup("", JSON.stringify(json))
                 }
             })
-            .catch(message => {
-                alert(message) // TODO
+            .catch(error => {
+                if (error && error.message) {
+                    popupStore.showPopup("Fehler", "" + error.message)
+                } else {
+                    popupStore.showPopup("Fehler", JSON.stringify(error))
+                }
             })
     }
     render() {

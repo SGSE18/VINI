@@ -6,7 +6,7 @@ import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED, SUBMIT_ANNULMENT_PATH } from '../../constants';
-import { authenticationStore } from '../../stores';
+import { authenticationStore, popupStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -158,13 +158,17 @@ class TransactionOverviewTable extends React.Component {
                 .then(response => response.json())
                 .then(json => {
                     if (json && json.message) {
-                        alert(json.message) //TODO
+                        popupStore.showPopup("", json.message)
                     } else {
-                        alert(JSON.stringify(json)) //TODO
+                        popupStore.showPopup("", JSON.stringify(json))
                     }
                 })
-                .catch(message => {
-                    alert(message) // TODO
+                .catch(error => {
+                    if (error && error.message) {
+                        popupStore.showPopup("Fehler", error.message)
+                    } else {
+                        popupStore.showPopup("Fehler", JSON.stringify(error))
+                    }
                 })
         }
         this.setState({ isPopupVisible: false })

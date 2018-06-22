@@ -1,6 +1,6 @@
 import React from 'react';
 import { TransactionOverviewTable, UserOverviewTable, AddEntryButton, ManageUserForm } from '../../components/'
-import { authenticationStore, dataStore } from '../../stores';
+import { authenticationStore, dataStore, popupStore } from '../../stores';
 import { observer } from 'mobx-react';
 import { VinSearch } from '../../components';
 import PersonIcon from '@material-ui/icons/Person';
@@ -51,6 +51,7 @@ class HomePage extends React.Component {
         return NaN;
     }
     onSearchClick() {
+
         this.setState({ showProgressbar: true });
         const query = "?vin=" + dataStore.vin;
         fetch(READ_CAR_PATH + query,
@@ -69,15 +70,15 @@ class HomePage extends React.Component {
                 dataStore.carTransactionData = json.payload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
                 if (json && json.message) {
-                    alert(json.message) //TODO
+                    popupStore.showPopup("", json.message)
                 }
             })
             .catch(error => {
                 this.setState({ showProgressbar: false });
                 if (error && error.message) {
-                    alert(error.message) //TODO
+                    popupStore.showPopup("Fehler", error.message)
                 } else {
-                    alert(JSON.stringify(error)) //TODO
+                    popupStore.showPopup("Fehler", JSON.stringify(error))
                 }
             })
     }

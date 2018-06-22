@@ -6,6 +6,7 @@ import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
 import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED } from '../../constants';
+import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
 
@@ -45,7 +46,7 @@ class TransactionOverviewTable extends React.Component {
     getAnullmentColumnText(cellValue) {
         switch (cellValue) {
             case TRANSACTION_VALID:
-                return "Annullierung beantragen";
+                return authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN ? "Keine Annullierung" : "Annullierung beantragen";
             case TRANSACTION_INVALID:
                 return "Bereits annulliert";
             case TRANSACTION_PENDING:
@@ -118,7 +119,7 @@ class TransactionOverviewTable extends React.Component {
         }];
 
         columnDefinition.push({
-            Header: 'Annullieren',
+            Header: 'Annullierung',
             accessor: 'state',
             Cell: this.annulmentCell,
             filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0

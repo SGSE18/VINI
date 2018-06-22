@@ -43,6 +43,8 @@ export const RESET_PASSWORD_PATH = API_PATH + ""
 
 export const CHANGE_PREOWNER_PATH = API_PATH + "car/register"
 export const GET_ANNULMENT_PATH = API_PATH + "car/cancelTransaction"
+export const DECLINE_ANNULMENT_PATH = GET_ANNULMENT_PATH
+export const ACCEPT_ANNULMENT_PATH = GET_ANNULMENT_PATH
 export const CHANGE_MILEAGE_PATH = API_PATH + "car/mileage"
 export const ADD_TUEV_PATH = API_PATH + "car/tuev"
 export const ADD_SERVICE_PATH = API_PATH + "car/service"

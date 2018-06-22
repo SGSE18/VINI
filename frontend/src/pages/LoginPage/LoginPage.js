@@ -92,7 +92,7 @@ export class LoginPageNoRouter extends React.Component {
         }
     }
     onResetPasswordClick() {
-        if(this.state.loginInProgess) {
+        if (this.state.loginInProgess) {
             return;
         }
         if (this.state.email === "" || this.state.isEmailInvalid) {
@@ -104,31 +104,34 @@ export class LoginPageNoRouter extends React.Component {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': "Bearer " + authenticationStore.token
                     },
                     body: JSON.stringify(this.state.email)
                 })
                 .then(response => response.json())
                 .then(json => {
                     this.setState({ loginInProgess: false });
-                    this.displayPopup("Fetch erfolgreich... Hier muss dann die Antwort ausgewertet werden.")
+                    if (json && json.message) {
+                        alert(json.message)
+                    } else {
+                        alert(JSON.stringify(json))
+                    }
                 })
                 .catch(message => {
-                    this.setState({ loginInProgess: false }); 
-                    console.error(message);
+                    this.setState({ loginInProgess: false });
+                    alert(message)
                 })
 
         }
     }
 
     onLoginClick() {
-        if(this.state.loginInProgess) {
+        if (this.state.loginInProgess) {
             return;
         }
         if (this.state.email === "" || this.state.isEmailInvalid || this.state.password === "") {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse und Passwort eingeben")
         } else {
-            this.setState({loginInProgess: true});
+            this.setState({ loginInProgess: true });
             let details = {
                 'grant_type': 'password',
                 'username': this.state.email,
@@ -136,7 +139,7 @@ export class LoginPageNoRouter extends React.Component {
                 'client_id': null,
                 'client_secret': null
             };
-              let formBody = [];
+            let formBody = [];
             for (let property in details) {
                 let encodedKey = encodeURIComponent(property);
                 let encodedValue = encodeURIComponent(details[property]);
@@ -170,13 +173,13 @@ export class LoginPageNoRouter extends React.Component {
                             })
                             .then(response => {
                                 if (response && response.status === 200) {
-                                    this.setState({loginInProgess: false});
+                                    this.setState({ loginInProgess: false });
                                     return response.json()
                                 }
                             })
                             .then(json => {
-                                this.setState({loginInProgess: false});
-                                if(json.message) {
+                                this.setState({ loginInProgess: false });
+                                if (json.message) {
                                     this.displayPopup("Fehler", json.message)
                                 } else if (json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
@@ -187,17 +190,17 @@ export class LoginPageNoRouter extends React.Component {
                                 }
                             })
                             .catch(message => {
-                                this.setState({loginInProgess: false});
+                                this.setState({ loginInProgess: false });
                                 console.error("Fehler", "" + message)
                             })
                     } else {
-                        this.setState({loginInProgess: false});
+                        this.setState({ loginInProgess: false });
                         this.displayPopup("Fehler", "Login ungültig")
                     }
                 })
                 .catch(message => {
                     console.error("Fehler", "" + message)
-                    this.setState({loginInProgess: false});
+                    this.setState({ loginInProgess: false });
                 })
         }
     }
@@ -255,6 +258,15 @@ export class LoginPageNoRouter extends React.Component {
                             Login
                         </Button>
                         <br></br>
+                        <Button
+                            variant="raised"
+                            margin="normal"
+                            className="button"
+                            style={{ width: '30em' }}
+                            onClick={this.onResetPasswordClick}
+                        >
+                            Passwort zurücksetzen
+                        </Button>
                     </form>
                 </div>
                 {

@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./TransactionOverviewTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED } from '../../constants';
+import { USER_LEVEL, TRANSACTION_VALID, TRANSACTION_INVALID, TRANSACTION_PENDING, TRANSACTION_REJECTED, SUBMIT_ANNULMENT_PATH } from '../../constants';
 import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
@@ -142,7 +142,30 @@ class TransactionOverviewTable extends React.Component {
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
             const transaction = this.props.carTransactionData[this.state.clickedCellIndex];
-            console.log("Beantrage Annullierung für: " + transaction.transactionId);
+            const body = {
+                timestamp: new Date().toISOString(), 
+                transactionHash: transaction.hash
+            }
+            fetch(SUBMIT_ANNULMENT_PATH,
+                {
+                    method: 'post',
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'Authorization': "Bearer " + authenticationStore.token
+                    },
+                    body: JSON.stringify(body)
+                })
+                .then(response => response.json())
+                .then(json => {
+                    if (json && json.message) {
+                        alert(json.message) //TODO
+                    } else {
+                        alert(JSON.stringify(json)) //TODO
+                    }
+                })
+                .catch(message => {
+                    alert(message) // TODO
+                })
         }
         this.setState({ isPopupVisible: false })
     }

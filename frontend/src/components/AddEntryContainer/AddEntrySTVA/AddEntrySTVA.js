@@ -7,7 +7,7 @@ import { authenticationStore } from '../../../stores';
 class AddEntrySTVA extends React.Component {
     constructor(props) {
         super(props);
-        let preownerCount = -1;
+        let preownerCount;
         if (props.preownerCount) {
             preownerCount = props.preownerCount
         }

@@ -137,7 +137,7 @@ class AddEntryContainer extends React.Component {
         const headerData = {
             vin: this.props.vin,
             mileage: this.state.mileage,
-            timestamp: this.state.selectedDate
+            timestamp: this.state.selectedDate + ":00"
         };
         switch (authenticationStore.userLevel) {
             case USER_LEVEL.ZWS:

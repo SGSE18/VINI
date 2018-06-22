@@ -11,7 +11,7 @@ export let authenticationStore = observable({
 
 export let dataStore = observable({
     vin: "A0L000051T4567893", // TODO remove default value
-    currentMileageOfCar: NaN,
+    currentMileageOfCar: 0,
     preownerCount: 0,
     setVin: action((newVal) => dataStore.vin = newVal),
     setCurrentMileageOfCar: action((newVal) => dataStore.currentMileageOfCar = newVal),

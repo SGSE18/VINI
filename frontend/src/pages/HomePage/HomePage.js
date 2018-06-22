@@ -63,12 +63,14 @@ class HomePage extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                console.log(json)
                 const newCarTransactionData = json.payload ? json.payload : [];
                 this.fillOwnerCount(newCarTransactionData);
                 this.setState({ showProgressbar: false, carTransactionData: newCarTransactionData });
                 dataStore.carTransactionData = json.payload;
                 dataStore.currentMileageOfCar = this.getCurrentMileageOfCar();
+                if (json && json.message) {
+                    alert(json.message) //TODO
+                }
             })
             .catch(error => {
                 this.setState({ showProgressbar: false });

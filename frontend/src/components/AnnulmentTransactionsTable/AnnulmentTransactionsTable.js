@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import "./AnnulmentTransactionsTable.css";
 import { ModalPopup } from '../';
 import { observer } from 'mobx-react';
-import { USER_LEVEL, GET_ANNULMENT_PATH, TRANSACTION_PENDING } from '../../constants';
+import { USER_LEVEL, GET_ANNULMENT_PATH, TRANSACTION_PENDING, TRANSACTION_INVALID } from '../../constants';
 import { authenticationStore } from '../../stores';
 
 const NO_DATA_AVAILABLE_TEXT = "Keine Daten vorhanden";
@@ -46,13 +46,29 @@ class AnnulmentTransactionsTable extends React.Component {
             .then(response => response.json())
             .then(json => {
                 console.log(json)
-                if(!json.annulments) throw new TypeError("invalid response body (annulment)")
+                if (!json.annulments) throw new TypeError("invalid response body (annulment)")
                 // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.annulments;
-                    data = data
-                    .filter(row => row.state === TRANSACTION_PENDING)
-                    .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
-                    .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
+                data = data
+                    .filter(row => row.state === TRANSACTION_PENDING || row.state === TRANSACTION_INVALID)
+                    // ascending by time, pending first
+                    .sort((rowA, rowB) => {
+                        const aState = rowA.state;
+                        const bState = rowB.state;
+
+                        if (aState === TRANSACTION_PENDING && bState === TRANSACTION_INVALID) {
+                            return -1;
+                        }
+                        if (bState === TRANSACTION_PENDING && aState === TRANSACTION_INVALID) {
+                            return 1;
+                        }
+
+                        const aTime = this.parseDateString(rowA.date).getTime();
+                        if (!aTime) return -1;
+                        const bTime = this.parseDateString(rowB.date).getTime();
+                        if (!bTime) return 1;
+                        return aTime - bTime;
+                    })
                 this.setState({ data });
             })
             .catch(message => {
@@ -93,9 +109,11 @@ class AnnulmentTransactionsTable extends React.Component {
             if (this.state.clickedState === ButtonStatus.ACCEPT_CLICKED) {
                 const transaction = this.state.data[this.state.clickedCellIndex];
                 console.log("Bestätige Annullierung für: " + transaction.transactionHash);
+                // email, vin und timestamp der Antragsstellung.
             } else if (this.state.clickedState === ButtonStatus.DECLINE_CLICKED) {
                 const transaction = this.state.data[this.state.clickedCellIndex];
                 console.log("Lehne ab: " + transaction.transactionHash);
+                // email, vin und timestamp der Antragsstellung.
             }
         }
 
@@ -116,7 +134,7 @@ class AnnulmentTransactionsTable extends React.Component {
             onDeclineClick = this.onDeclineClick.bind(this, cell.index);
 
         } else {
-            return <div /> // should not happen!
+            return <div> angenommen</div>
         }
         return (
             <React.Fragment>
@@ -136,17 +154,24 @@ class AnnulmentTransactionsTable extends React.Component {
             </React.Fragment>
         );
     }
+    parseDateString(s) {
+        if (!s) {
+            return new Date("invalid"); // invlid date
+        }
+        var b = s.split(/\D+/);
+        return new Date(Date.UTC(b[0], b[1], b[2], b[3], b[4], b[5], 0));
+    }
     getColumnDefinition() {
         let columnDefinition = [{
             Header: 'Datum',
             id: "date",
             accessor: d => {
-                const date = new Date(d.timestamp);
+                const date = this.parseDateString(d.date);
                 let timestamp = date.toString(); // fallback
                 try {
                     timestamp = date.toISOString().substring(0, 10); // yyyy-mm-dd
                 } catch (ex) {
-                    console.error(ex);
+                    console.error(timestamp, ex);
                 }
                 return timestamp;
 

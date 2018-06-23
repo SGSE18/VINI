@@ -99,13 +99,14 @@ export class LoginPageNoRouter extends React.Component {
             this.displayPopup("Eingabe ungültig", "Bitte gültige E-Mail Adresse eingeben")
         } else {
             this.setState({ loginInProgess: true });
+            const body = { email: this.state.email }
             fetch(RESET_PASSWORD_PATH,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(this.state.email)
+                    body: JSON.stringify(body)
                 })
                 .then(response => response.json())
                 .then(json => {

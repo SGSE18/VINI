@@ -39,7 +39,7 @@ export const USER_LOGIN_PATH = API_PATH + "users/login";
 export const USER_TOKEN_PATH = API_PATH + "users/token";
 export const REGISTER_USER_PATH = API_PATH + "users/register";
 export const DELETE_USER_PATH = REGISTER_USER_PATH;
-export const RESET_PASSWORD_PATH = API_PATH + "";
+export const RESET_PASSWORD_PATH = API_PATH + "users/resetPassword";
 
 export const CHANGE_PREOWNER_PATH = API_PATH + "car/register";
 export const GET_ANNULMENT_PATH = API_PATH + "car/cancelTransaction";

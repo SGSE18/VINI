@@ -31,7 +31,13 @@ export class ManageUserForm extends React.Component {
         this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
         this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
     }
+    isEmailValid(email) {
+        // http://emailregex.com
+        const isEmailValidRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return isEmailValidRegex.test(email);
+    }
     inputIsValid() {
+
         if (this.state.forename !== ""
             && this.state.surname !== ""
             && this.state.company !== ""
@@ -39,8 +45,14 @@ export class ManageUserForm extends React.Component {
             && this.state.authorityLevel !== ""
             && this.state.password !== ""
             && this.state.arePasswordsEqual) {
+
+            if (!this.isEmailValid(this.state.email)) {
+                popupStore.showPopup("Fehler", "Ungültige E-Mail.")
+                return false;
+            }
             return true;
         }
+        popupStore.showPopup("Fehler", "Bitte Benutzerdaten vollständig eingeben.")
         return false;
     }
     setStateValue(valName, event) {

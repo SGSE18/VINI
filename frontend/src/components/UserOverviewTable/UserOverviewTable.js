@@ -125,7 +125,6 @@ class UserOverviewTable extends React.Component {
     onModalClose(isActionConfirmed) {
         if (isActionConfirmed === true) {
             const user = this.state.data[this.state.clickedCellIndex];
-            console.log("lösche user: " + this.state.clickedCellIndex);
             fetch(DELETE_USER_PATH,
                 {
                     method: 'DELETE',

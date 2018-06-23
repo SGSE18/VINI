@@ -35,6 +35,9 @@ class AnnulmentTransactionsTable extends React.Component {
         };
         this.displayPopup = this.displayPopup.bind(this);
 
+        this.refreshAnnulments();
+    }
+    refreshAnnulments() {
         fetch(GET_ANNULMENT_PATH,
             {
                 method: 'GET',
@@ -74,7 +77,6 @@ class AnnulmentTransactionsTable extends React.Component {
                 console.error(message)
             })
     }
-
     checkBox = (cell) => {
         return (
             <input
@@ -123,6 +125,7 @@ class AnnulmentTransactionsTable extends React.Component {
                     })
                     .then(response => response.json())
                     .then(json => {
+                        this.refreshAnnulments();
                         if (json && json.message) {
                             popupStore.showPopup("", json.message)
                         } else {
@@ -150,6 +153,7 @@ class AnnulmentTransactionsTable extends React.Component {
                     })
                     .then(response => response.json())
                     .then(json => {
+                        this.refreshAnnulments();
                         if (json && json.message) {
                             popupStore.showPopup("", json.message)
                         } else {

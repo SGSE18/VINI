@@ -83,6 +83,9 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
+        if(mileage === '' || isNaN(mileage)) {
+            return false;
+        }
         if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldn't happen anyway 
             return false;
         }

@@ -48,7 +48,6 @@ class AnnulmentTransactionsTable extends React.Component {
             })
             .then(response => response.json())
             .then(json => {
-                console.log(json)
                 if (!json.annulments) throw new TypeError("invalid response body (annulment)")
                 let data = json.annulments;
                 data = data
@@ -78,6 +77,9 @@ class AnnulmentTransactionsTable extends React.Component {
             })
     }
     checkBox = (cell) => {
+        if (cell.value === null || cell.value === undefined) {
+            cell.value = false;
+        }
         return (
             <input
                 type="checkbox"

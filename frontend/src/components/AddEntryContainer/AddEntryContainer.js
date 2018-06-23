@@ -108,10 +108,13 @@ class AddEntryContainer extends React.Component {
         }
         return false;
     }
+    isNumber(value) {
+        const isNumberRegex = /[0-9]+/
+        return isNumberRegex.test(value)
+    }
     setKmValue(e) {
         const value = e.target.value;
-        const parsedValue = parseInt(value, 10);
-        if (value === '' || (!isNaN(parsedValue) && parsedValue >= 0)) {
+        if (value === '' || this.isNumber(value)) {
             this.setState({
                 mileage: value
             });

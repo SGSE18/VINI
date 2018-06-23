@@ -83,6 +83,9 @@ class AddEntryContainer extends React.Component {
 
     }
     isNewMileageValid(mileage) {
+        if(mileage === '' || isNaN(mileage)) {
+            return false;
+        }
         if (authenticationStore.userLevel === USER_LEVEL.NOT_LOGGED_IN) { //this case shouldn't happen anyway 
             return false;
         }
@@ -109,15 +112,19 @@ class AddEntryContainer extends React.Component {
         return false;
     }
     isNumber(value) {
-        const isNumberRegex = /[0-9]+/
+        const isNumberRegex = /^0$|^[1-9][0-9]*$/
         return isNumberRegex.test(value)
     }
     setKmValue(e) {
         const value = e.target.value;
+
         if (value === '' || this.isNumber(value)) {
+            console.log(value)
             this.setState({
                 mileage: value
             });
+        } else {
+            return false;
         }
     }
     hidePopup() {
@@ -221,8 +228,8 @@ class AddEntryContainer extends React.Component {
                     label="KM"
                     margin="normal"
                     autoFocus
-                    type="number"
                     onChange={this.setKmValue}
+                    onKeyDown={this.setKmValue}
                     value={this.state.mileage}
                     style={{ marginLeft: '2em', marginRight: '2em' }}
                 />

@@ -35,6 +35,9 @@ class AnnulmentTransactionsTable extends React.Component {
         };
         this.displayPopup = this.displayPopup.bind(this);
 
+        this.refreshAnnulments();
+    }
+    refreshAnnulments() {
         fetch(GET_ANNULMENT_PATH,
             {
                 method: 'GET',
@@ -47,7 +50,6 @@ class AnnulmentTransactionsTable extends React.Component {
             .then(json => {
                 console.log(json)
                 if (!json.annulments) throw new TypeError("invalid response body (annulment)")
-                // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.annulments;
                 data = data
                     .filter(row => row.state === TRANSACTION_PENDING || row.state === TRANSACTION_INVALID)
@@ -75,7 +77,6 @@ class AnnulmentTransactionsTable extends React.Component {
                 console.error(message)
             })
     }
-
     checkBox = (cell) => {
         return (
             <input
@@ -124,6 +125,7 @@ class AnnulmentTransactionsTable extends React.Component {
                     })
                     .then(response => response.json())
                     .then(json => {
+                        this.refreshAnnulments();
                         if (json && json.message) {
                             popupStore.showPopup("", json.message)
                         } else {
@@ -151,6 +153,7 @@ class AnnulmentTransactionsTable extends React.Component {
                     })
                     .then(response => response.json())
                     .then(json => {
+                        this.refreshAnnulments();
                         if (json && json.message) {
                             popupStore.showPopup("", json.message)
                         } else {

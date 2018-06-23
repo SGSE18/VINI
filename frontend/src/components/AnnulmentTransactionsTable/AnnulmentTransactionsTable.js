@@ -47,7 +47,6 @@ class AnnulmentTransactionsTable extends React.Component {
             .then(json => {
                 console.log(json)
                 if (!json.annulments) throw new TypeError("invalid response body (annulment)")
-                // filter out every transaction that's state is not pending (should not be the case though!)
                 let data = json.annulments;
                 data = data
                     .filter(row => row.state === TRANSACTION_PENDING || row.state === TRANSACTION_INVALID)

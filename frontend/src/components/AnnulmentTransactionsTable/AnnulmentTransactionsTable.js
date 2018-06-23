@@ -241,8 +241,8 @@ class AnnulmentTransactionsTable extends React.Component {
             Header: '# Vorbesitzer',
             accessor: 'ownerCount'
         }, {
-            Header: 'Eintragender',
-            accessor: 'entrant'
+            Header: 'Angenommen von',
+            accessor: 'applicant'
         }, {
             Header: 'TÜV',
             accessor: 'mainInspection',
@@ -261,7 +261,7 @@ class AnnulmentTransactionsTable extends React.Component {
             Cell: this.checkBox
         }, {
             Header: 'Antragsteller',
-            accessor: 'applicant'
+            accessor: 'entrant'
         }];
 
         columnDefinition.push({

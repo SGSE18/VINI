@@ -236,7 +236,8 @@ class AnnulmentTransactionsTable extends React.Component {
             accessor: 'vin'
         }, {
             Header: 'KM',
-            accessor: 'mileage'
+            accessor: 'mileage',
+            width: 120
         }, {
             Header: '# Vorbesitzer',
             accessor: 'ownerCount'
@@ -246,19 +247,23 @@ class AnnulmentTransactionsTable extends React.Component {
         }, {
             Header: 'TÜV',
             accessor: 'mainInspection',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Service I',
             accessor: 'service1',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Service II',
             accessor: 'service2',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Ölwechsel',
             accessor: 'oilChange',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Antragsteller',
             accessor: 'entrant'
@@ -268,6 +273,7 @@ class AnnulmentTransactionsTable extends React.Component {
             Header: 'Antrag',
             accessor: 'state',
             Cell: this.annulmentCell,
+            width: 300
         });
         return columnDefinition;
     }

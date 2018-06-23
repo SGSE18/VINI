@@ -203,8 +203,8 @@ export class LoginPageNoRouter extends React.Component {
                     }
                 })
                 .catch(message => {
-                    console.error("Fehler", "" + message)
                     this.setState({ loginInProgess: false });
+                    this.displayPopup("Fehler", "" + message);
                 })
         }
     }

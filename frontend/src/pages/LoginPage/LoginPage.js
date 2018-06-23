@@ -56,13 +56,13 @@ export class LoginPageNoRouter extends React.Component {
     }
     isEmailValid(email) {
         // http://emailregex.com
-        const isEmailInvalidRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return !isEmailInvalidRegex.test(email);
+        const isEmailValidRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return isEmailValidRegex.test(email);
     }
     validateEmail(event) {
         if (event.target.value !== "") {
             this.setState({
-                isEmailInvalid: this.isEmailValid(event.target.value),
+                isEmailInvalid: !this.isEmailValid(event.target.value),
             })
         }
     }

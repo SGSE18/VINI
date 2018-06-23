@@ -5,7 +5,6 @@ import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-
 import { USER_LEVEL, getAuthorityString, getAuthorityInt } from '../../constants';
 import { REGISTER_USER_PATH } from '../../constants';
 import { authenticationStore, popupStore } from '../../stores';
-import sha256 from 'sha256';
 
 let authoritylevels = [];
 for (var key in USER_LEVEL) {
@@ -67,7 +66,7 @@ export class ManageUserForm extends React.Component {
         if (this.inputIsValid()) {
             const body = {
                 email: this.state.email,
-                password: sha256(this.state.password),
+                password: this.state.password,
                 authLevel: getAuthorityInt(this.state.authorityLevel),
                 forename: this.state.forename,
                 surname: this.state.surname,

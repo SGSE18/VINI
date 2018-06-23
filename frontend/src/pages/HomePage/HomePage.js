@@ -44,7 +44,6 @@ class HomePage extends React.Component {
                 .filter(row => !isNaN(Date.parse(row.timestamp))) // filter invalid timestamps
                 .sort((rowA, rowB) => new Date(rowB.timestamp).getTime() - new Date(rowA.timestamp).getTime()) // descending by time
             if (mileages && mileages.length > 0) {
-                console.log(mileages)
                 return mileages[0].mileage;
             }
         }

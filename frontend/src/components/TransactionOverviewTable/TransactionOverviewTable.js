@@ -93,7 +93,8 @@ class TransactionOverviewTable extends React.Component {
             }
         }, {
             Header: 'KM',
-            accessor: 'mileage'
+            accessor: 'mileage',
+            width: 120
         }, {
             Header: '# Vorbesitzer',
             accessor: 'ownerCount'
@@ -103,25 +104,30 @@ class TransactionOverviewTable extends React.Component {
         }, {
             Header: 'TÜV',
             accessor: 'mainInspection',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Service I',
             accessor: 'service1',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Service II',
             accessor: 'service2',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }, {
             Header: 'Ölwechsel',
             accessor: 'oilChange',
-            Cell: this.checkBox
+            Cell: this.checkBox,
+            width: 90
         }];
 
         columnDefinition.push({
             Header: 'Annullierung',
             accessor: 'state',
             Cell: this.annulmentCell,
+            width: 300,
             filterMethod: (filter, row) => this.getAnullmentColumnText(row[filter.id]).toUpperCase().indexOf(String(filter.value).toUpperCase()) >= 0
         });
         return columnDefinition;

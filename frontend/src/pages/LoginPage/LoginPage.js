@@ -277,12 +277,11 @@ export class LoginPageNoRouter extends React.Component {
                         :
                         null
                 }
-                {/* TODO DELETE*/}
                 <div>
                     <div>user@zws.com</div>
+                    <div>user@tuev.com</div>
                     <div>user@stva.com</div>
                     <div>user@astva.com</div>
-                    <div>user@tuev.com</div>
                 </div>
             </React.Fragment>
         )

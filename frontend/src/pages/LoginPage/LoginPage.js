@@ -177,20 +177,16 @@ export class LoginPageNoRouter extends React.Component {
                                 },
                             })
                             .then(response => {
-                                if (response && response.status === 200) {
-                                    this.setState({ loginInProgess: false });
-                                    return response.json()
-                                }
+                                this.setState({ loginInProgess: false });
+                                return response.json()
                             })
                             .then(json => {
                                 this.setState({ loginInProgess: false });
-                                if (json.message) {
-                                    this.displayPopup("Fehler", json.message)
-                                } else if (json.loginStatus === "success") {
+                                if (json && json.loginStatus === "success") {
                                     authenticationStore.setUserLevel(json.authorityLevel);
                                     this.props.history.push(HOME_PATH);
 
-                                } else if (json.loginStatus === "failure") {
+                                } else {
                                     this.displayPopup("Fehler", "Login fehlgeschlagen!")
                                 }
                             })
